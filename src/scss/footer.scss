@@ -1,0 +1,10 @@
+.footer {
+	&__content {
+		color: rgb(177, 175, 175);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		padding: 30px 10px;
+	}
+}
