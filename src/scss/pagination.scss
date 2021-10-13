@@ -1,0 +1,21 @@
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 20px;
+	font-size: 18px;
+	
+	&__item {
+		padding: 10px 0 5px;
+		margin-bottom: 5px;
+		&-active{
+			border-bottom: 1px solid white;
+			font-weight: bold;
+		}
+	}
+
+	&__link {
+		color: white;
+	}
+}

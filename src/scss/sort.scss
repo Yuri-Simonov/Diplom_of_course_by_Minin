@@ -1,0 +1,41 @@
+.sort {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin-bottom: -15px;
+
+	&__title.title {
+	}
+
+	&__items {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 15px;
+	}
+
+	&__item {
+		position: relative;
+		padding-right: 20px;
+		margin-bottom: 25px;
+		&::after {
+			content: "";
+			position: absolute;
+			width: 8px;
+			height: 8px;
+			top: 30%;
+			right: 0px;
+			display: block;
+			border: 8px solid transparent;
+			border-top: 8px solid $color-red;
+			transition: 0.3s;
+		}
+		&-active {
+			&::after {
+				transform: translateY(-50%) rotate(180deg);
+			}
+		}
+	}
+}

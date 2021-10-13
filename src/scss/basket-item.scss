@@ -1,0 +1,52 @@
+.basket-item {
+	position: relative;
+	display: flex;
+	gap: 20px;
+	transition: all 0.3s ease;
+	&:hover {
+		box-shadow: 0 0 15px 2px rgb(255, 255, 255);
+	}
+
+	&__column-left {
+		img {
+			max-width: 100%;
+			max-height: 200px;
+		}
+	}
+
+	&__column-right {
+		padding: 20px;
+	}
+
+	&__title {
+	}
+
+	&__id {
+		padding: 10px 0;
+		margin-top: -10px;
+	}
+
+	&__amount {
+		display: flex;
+	}
+
+	&__price {
+	}
+
+	&__close-btn {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		background-color: $color-red;
+		width: 20px;
+		height: 20px;
+		text-align: center;
+		padding-top: 3px;
+		border-radius: 50%;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		&:hover {
+			background-color: rgb(73, 9, 9);
+		}
+	}
+}
