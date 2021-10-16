@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import propTypes from "prop-types";
 
-const Header = ({basketCount,favoritesCount}) => {
+const Header = ({ basketCount, favoritesCount }) => {
     return (
         <div className="header">
             <div className="container">
@@ -29,7 +30,9 @@ const Header = ({basketCount,favoritesCount}) => {
                                 <Link to="/basket" className="header__link">
                                     Корзина
                                 </Link>
-                                <span className="header__count-basket">{basketCount}</span>
+                                <span className="header__count-basket">
+                                    {basketCount}
+                                </span>
                             </li>
                         </ul>
                     </nav>
@@ -40,6 +43,10 @@ const Header = ({basketCount,favoritesCount}) => {
             </div>
         </div>
     );
+};
+Header.propTypes = {
+    basketCount: propTypes.number.isRequired,
+    favoritesCount: propTypes.number.isRequired
 };
 
 export default Header;

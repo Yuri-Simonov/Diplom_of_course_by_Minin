@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Registration = () => {
     return (
@@ -23,6 +24,12 @@ const Registration = () => {
                             value="Зарегистрироваться"
                         />
                     </form>
+					<Link
+                            to="/authorization"
+                            className="authorization__registration hover"
+                        >
+                            Войти
+                        </Link>
                 </section>
             </div>
         </main>

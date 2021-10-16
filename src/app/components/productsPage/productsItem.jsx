@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import propTypes from "prop-types";
 
 const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
     let reviewWord;
@@ -63,7 +64,7 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
                     <div className="product__price">{product.price} руб.</div>
                     <button
                         className="product__add-basket item-body__buy"
-                        onClick={()=>addItemToBasket()}
+                        onClick={() => addItemToBasket()}
                     >
                         Добавить в корзину
                     </button>
@@ -88,6 +89,11 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
             </div>
         </div>
     );
+};
+ProductsItem.propTypes = {
+    product: propTypes.object.isRequired,
+    addItemToBasket: propTypes.func.isRequired,
+    addItemToFavorites: propTypes.func.isRequired
 };
 
 export default ProductsItem;

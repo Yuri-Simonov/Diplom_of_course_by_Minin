@@ -6,14 +6,17 @@
 	&__items {
 		display: flex;
 		justify-content: center;
+		align-items: flex-start;
 		flex-wrap: wrap;
 		flex-direction: column;
 		gap: 20px;
 	}
 
 	&__item {
+		background-color: transparent;
 		color: white;
 		transition: all 0.3s ease;
+		padding-left: 20px;
 	}
 	&__reset {
 		margin: 30px 0;

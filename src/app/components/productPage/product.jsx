@@ -19,7 +19,7 @@ const ProductPage = () => {
                     </form>
                 </section>
                 <section className="shop__item">
-                    <h3 className="shop__item__breadcrumbs"></h3>
+                    <h3 className="shop__item__breadcrumbs">Хлебные крошки</h3>
                     <div className="shop__item-body item-body">
                         <div className="item-body__flex">
                             <div className="item-body__column-left">
@@ -42,9 +42,9 @@ const ProductPage = () => {
                                 </div>
                                 <div className="item-body__id">id товара</div>
                                 <div className="item-body__sum">100 руб.</div>
-                                <a href="#" className="item-body__buy">
+                                <button className="item-body__buy">
                                     Купить
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>

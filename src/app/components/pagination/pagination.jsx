@@ -1,5 +1,6 @@
 import React from "react";
 import _ from "lodash";
+import propTypes from "prop-types";
 
 const Pagination = ({
     allAmountProducts,
@@ -25,19 +26,24 @@ const Pagination = ({
                             }
                             key={page}
                         >
-                            <a
+                            <button
                                 className="pagination__link"
-                                href="#"
                                 onClick={() => pageChange(page)}
                             >
                                 {page}
-                            </a>
+                            </button>
                         </li>
                     );
                 })}
             </ul>
         </nav>
     );
+};
+Pagination.propTypes = {
+    allAmountProducts: propTypes.number.isRequired,
+    sizeOnePage: propTypes.number.isRequired,
+    pageChange: propTypes.func.isRequired,
+    currentPage: propTypes.number.isRequired
 };
 
 export default Pagination;

@@ -13,10 +13,9 @@ const App = () => {
 	//добавление товара в корзину (хедер)===============================================
 	const [basketCount, setBasketCount] = useState(0);
 	const addItemToBasket = () => {
-		console.log(1);
 		setBasketCount(basketCount + 1);
 	};
-
+	
 	useEffect(() => {
 		const basketNumber = document.querySelector(".header__count-basket");
 		basketNumber.textContent = basketCount;
@@ -27,7 +26,7 @@ const App = () => {
 		}
 	});
 	//===================================================================================
-
+	
 	//добавление товара в избранное (хедер)===============================================
 	const [favoritesCount, setFavoritesCount] = useState(0);
 	const addItemToFavorites = (event) => {
