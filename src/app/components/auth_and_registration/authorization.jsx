@@ -31,6 +31,12 @@ const Authorization = () => {
                         >
                             Зарегистрироваться
                         </Link>
+                        <Link
+                            to="/registration"
+                            className="authorization__registration hover"
+                        >
+                            Забыли пароль?
+                        </Link>
                     </section>
                 </div>
             </main>

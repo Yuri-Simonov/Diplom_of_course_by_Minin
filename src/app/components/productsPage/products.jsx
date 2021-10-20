@@ -16,14 +16,42 @@ const ProductsPage = ({ ...rest }) => {
 
     //Pagination=========================================================================
     const [currentPage, setCurrentPage] = useState(1);
-    /*  const allAmountProducts = products.length; */
-    const allAmountProducts = 11;
-    const sizeOnePage = 3;
+
+    const sizeOnePage = 1;
     const pageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-    const cropProducts = paginate(products, currentPage, sizeOnePage);
+
+    //выбор категории в левом меню
+    const [selectedCategoryItem, setSelectedCategoryItem] = useState();
+    const changeCategoryItems = (item) => {
+        setSelectedCategoryItem(item);
+    };
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedCategoryItem]);
+
+    //фильтрация продуктов по категориям
+    const filteredProductsCategory = selectedCategoryItem
+        ? products.filter((item) => item.category === selectedCategoryItem)
+        : products;
+    //пагинация
+    const allAmountProducts = filteredProductsCategory
+        ? filteredProductsCategory.length
+        : 0;
+
+    const cropProducts = paginate(
+        filteredProductsCategory,
+        currentPage,
+        sizeOnePage
+    );
     //===================================================================================
+
+    //очистка выбора категорий
+    const clearCategory = () => {
+        setSelectedCategoryItem();
+    };
 
     let downloadProducts;
     if (products) {
@@ -42,7 +70,11 @@ const ProductsPage = ({ ...rest }) => {
             <div className="container">
                 <Search />
                 <section className="shop__content content">
-                    <Category />
+                    <Category
+                        selectedCategoryItem={selectedCategoryItem}
+                        changeCategoryItems={changeCategoryItems}
+                        clearCategory={clearCategory}
+                    />
                     <article className="content__body">
                         <Sort />
                         <article className="content__products products">
