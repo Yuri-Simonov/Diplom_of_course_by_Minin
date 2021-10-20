@@ -6,7 +6,8 @@ const products = [
         rating: "4.8",
         price: "39",
         reviews: "379",
-        imgSrc: "img/doshik.jpg"
+        imgSrc: "img/doshik.jpg",
+		category: "Продукты"
     },
     {
         _id: "67rdca3eeb7f6fgeed471816",
@@ -15,7 +16,8 @@ const products = [
         rating: "4.5",
         price: "23",
         reviews: "231",
-        imgSrc: "img/rollton.jpg"
+        imgSrc: "img/rollton.jpg",
+		category: "Продукты"
     },
     {
         _id: "67rdca3eeb7f6fgeed471817",
@@ -24,7 +26,8 @@ const products = [
         rating: "4.4",
         price: "71",
         reviews: "12",
-        imgSrc: "img/milk.jpg"
+        imgSrc: "img/milk.jpg",
+		category: "Молочная продукция"
     },
     {
         _id: "67rdca3eeb7f6fgeed471818",
@@ -33,7 +36,8 @@ const products = [
         rating: "4.9",
         price: "300",
         reviews: "999",
-        imgSrc: "img/shlepki.jpg"
+        imgSrc: "img/shlepki.jpg",
+		category: "Обувь"
     },
     {
         _id: "67rdca3eeb7f6fgeed471819",
@@ -42,7 +46,8 @@ const products = [
         rating: "4.0",
         price: "3500",
         reviews: "9",
-        imgSrc: "img/kurtka.jpg"
+        imgSrc: "img/kurtka.jpg",
+		category: "Одежда"
     },
     {
         _id: "67rdca3eeb7f6fgeed471820",
@@ -51,7 +56,8 @@ const products = [
         rating: "3.8",
         price: "500",
         reviews: "76",
-        imgSrc: "img/doshik.jpg"
+        imgSrc: "img/doshik.jpg",
+		category: "Головные уборы"
     },
     {
         _id: "67rdca3eeb7f6fgeed471821",
@@ -60,7 +66,8 @@ const products = [
         rating: "4.1",
         price: "100",
         reviews: "0",
-        imgSrc: "img/velosiped.jpg"
+        imgSrc: "img/velosiped.jpg",
+		category: "Спортивный инвентарь"
     },
     {
         _id: "67rdca3eeb7f6fgeed471822",
@@ -69,7 +76,8 @@ const products = [
         rating: "3.6",
         price: "34",
         reviews: "5",
-        imgSrc: "img/rastishka-klubnika.jpg"
+        imgSrc: "img/rastishka-klubnika.jpg",
+		category: "Детское питание"
     },
     {
         _id: "67rdca3eeb7f6fgeed471823",
@@ -78,7 +86,8 @@ const products = [
         rating: "3.8",
         price: "35",
         reviews: "12",
-        imgSrc: "img/rastishka-banan.jpg"
+        imgSrc: "img/rastishka-banan.jpg",
+		category: "Детское питание"
     },
     {
         _id: "67rdca3eeb7f6fgeed471824",
@@ -87,7 +96,8 @@ const products = [
         rating: "4.8",
         price: "1280",
         reviews: "38",
-        imgSrc: "img/protein.jpg"
+        imgSrc: "img/protein.jpg",
+		category: "Спортивное питание"
     },
     {
         _id: "67rdca3eeb7f6fgeed471825",
@@ -96,7 +106,8 @@ const products = [
         rating: "4.2",
         price: "79",
         reviews: "34",
-        imgSrc: "img/kefir.jpg"
+        imgSrc: "img/kefir.jpg",
+		category: "Молочная продукция"
     }
 ];
 
@@ -104,7 +115,7 @@ const fetchAll = () =>
     new Promise((resolve) => {
         window.setTimeout(function () {
             resolve(products);
-        }, 2000);
+    }, 2000);
     });
 
 /* eslint-disable no-new */
