@@ -22,6 +22,7 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
     } else if (product.rating <= 3.7) {
         colorOfStar = "red";
     }
+
     return (
         <div className="products__product product">
             <div className="product__flex">
