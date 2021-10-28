@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import CategoryItem from "./category__item";
 import api from "../../../api/index";
+import propTypes from "prop-types";
 
-const Category = ({ clearCategory, ...rest }) => {
+const Category = ({
+    clearCategory,
+    changeCategoryItems,
+    selectedCategoryItem
+}) => {
     const [categoryItems, setCategoryItems] = useState();
     useEffect(() => {
         api.categories.fetchAll().then((data) => {
@@ -17,7 +21,17 @@ const Category = ({ clearCategory, ...rest }) => {
                 {categoryItems
                     ? categoryItems.map((item) => {
                           return (
-                              <CategoryItem key={item} item={item} {...rest} />
+                              <button
+                                  className={
+                                      "category__item hover" +
+                                      (item === selectedCategoryItem
+                                          ? " category__item-active"
+                                          : "")
+                                  }
+                                  onClick={() => changeCategoryItems(item)}
+                              >
+                                  {item}
+                              </button>
                           );
                       })
                     : "Загрузка..."}
@@ -27,6 +41,11 @@ const Category = ({ clearCategory, ...rest }) => {
             </div>
         </article>
     );
+};
+Category.propTypes = {
+    clearCategory: propTypes.func.isRequired,
+    changeCategoryItems: propTypes.func.isRequired,
+    selectedCategoryItem: propTypes.string.isRequired
 };
 
 export default Category;
