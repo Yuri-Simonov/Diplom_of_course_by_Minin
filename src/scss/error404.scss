@@ -1,0 +1,28 @@
+.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &-404 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        height: 100%;
+        & > * + * {
+            margin-top: 20px;
+        }
+        h1 {
+            font-size: 40px;
+            line-height: 44px;
+        }
+        h2 {
+            font-size: 20px;
+            line-height: 24px;
+        }
+    }
+    &-return {
+    }
+}

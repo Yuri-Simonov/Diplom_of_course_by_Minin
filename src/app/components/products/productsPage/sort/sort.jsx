@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../../../api/index";
+import api from "../../../../api/index";
 import propTypes from "prop-types";
 
 const Sort = ({ onSort, currentSort }) => {
@@ -47,6 +47,7 @@ const Sort = ({ onSort, currentSort }) => {
                     ? Object.keys(sortItems).map((item) => {
                           return (
                               <p
+                                  key={item}
                                   onClick={(event) => handleSort(event, item)}
                                   className="sort__item hover"
                               >
@@ -60,8 +61,8 @@ const Sort = ({ onSort, currentSort }) => {
     );
 };
 Sort.propTypes = {
-    itemName: propTypes.string.isRequired,
-    itemKey: propTypes.string.isRequired,
+    itemName: propTypes.string,
+    itemKey: propTypes.string,
     onSort: propTypes.func.isRequired,
     currentSort: propTypes.object.isRequired
 };

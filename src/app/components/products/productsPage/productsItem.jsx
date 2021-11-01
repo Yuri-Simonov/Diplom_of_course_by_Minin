@@ -31,7 +31,7 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
                 </div>
                 <div className="product__column-right">
                     <Link
-                        to="/products/product"
+                        to={`/products/${product._id}`}
                         className="product__title title"
                     >
                         {product.name}
