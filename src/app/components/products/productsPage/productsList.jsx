@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Category from "./category/category";
 import Sort from "./sort/sort";
-import Search from "../search/search";
+import Search from "../../search/search";
 import ProductsItem from "./productsItem";
-import api from "../../api";
-import Pagination from "../pagination/pagination";
-import { paginate } from "../../../utils/paginate";
+import Pagination from "../../pagination/pagination";
+import { paginate } from "../../../../utils/paginate";
 import _ from "lodash";
 
-const ProductsPage = ({ ...rest }) => {
-    //появление продуктов через 2 секунды===============================================
-    const [products, setProducts] = useState();
-    useEffect(() => {
-        api.products.fetchAll().then((data) => setProducts(data));
-    });
-
-    //сортировка=========================================================================
-    const [sortBy, setSortBy] = useState({ iter: "", order: "" });
-    const onSort = (item) => {
-        setSortBy(item);
-    };
+const ProductsPage = ({ products, sortBy, onSort, ...rest }) => {
     //Pagination=========================================================================
     const [currentPage, setCurrentPage] = useState(1);
 

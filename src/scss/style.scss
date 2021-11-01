@@ -5,293 +5,300 @@ $color-dark-red: rgb(68, 10, 10);
 $color-gray: #828282;
 //=====================================================================================================
 .wrapper {
-	width: 100%;
-	min-height: 100%;
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
-	background: linear-gradient(180deg, rgb(77, 77, 77) 0%, rgb(34, 34, 34) 100%);
-	color: white;
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(
+        180deg,
+        rgb(77, 77, 77) 0%,
+        rgb(34, 34, 34) 100%
+    );
+    color: white;
 }
 
 .container {
-	max-width: 1470px;
-	margin: 0 auto;
-	padding: 0 15px;
+    max-width: 1470px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 body {
-	font-family: "Roboto", sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 main {
-	flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 #root {
-	height: 100%;
+    height: 100%;
 }
 //=====================================================================================================
 @import "header.scss";
 //=====================================================================================================
 
 .shop {
-	&__search {
-	}
+    &__search {
+    }
 
-	&__content {
-	}
+    &__content {
+    }
 }
 .content {
-	display: flex;
-	justify-content: center;
-	gap: 20px;
-	padding: 30px 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px 10px;
 
-	&__category {
-		flex: 1 1 30%;
-		display: flex;
-		flex-direction: column;
-	}
+    &__category {
+        flex: 1 1 30%;
+        display: flex;
+        flex-direction: column;
+    }
 
-	&__sort {
-	}
+    &__sort {
+    }
 
-	&__products {
-	}
-	&__body {
-		flex: 1 1 70%;
-	}
+    &__products {
+    }
+    &__body {
+        flex: 1 1 70%;
+    }
 }
 
 .products {
-	margin-top: 25px;
-	border-top: 1px solid $color-red;
-	padding-top: 20px;
+    margin-top: 25px;
+    border-top: 1px solid $color-red;
+    padding-top: 20px;
 
-	&__product {
-	}
+    &__product {
+    }
 }
 .product {
-	position: relative;
-	overflow: hidden;
-	margin-bottom: 20px;
-	border: 2px solid $color-red;
-	border-radius: 10px;
-	overflow: hidden;
-	transition: all 0.3s ease;
-	&:hover {
-		box-shadow: 0 0 15px 2px rgb(255, 255, 255);
-	}
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 2px solid $color-red;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    &:hover {
+        box-shadow: 0 0 15px 2px rgb(255, 255, 255);
+    }
 
-	&__flex {
-		display: flex;
-		justify-content: center;
-		gap: 20px;
-	}
+    &__flex {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
 
-	&__column-left {
-		flex: 1 1 30%;
-		align-self: center;
-		img {
-			width: 266px;
-			height: 266px;
-		}
-	}
+    &__column-left {
+        flex: 1 1 30%;
+        align-self: center;
+        img {
+            width: 266px;
+            height: 266px;
+        }
+    }
 
-	&__column-right {
-		flex: 1 1 70%;
-		padding: 20px;
-		display: flex;
-		flex-direction: column;
-	}
+    &__column-right {
+        flex: 1 1 70%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
 
-	&__title {
-		span {
-			font-weight: 400;
-			font-style: italic;
-		}
-	}
+    &__title {
+        span {
+            font-weight: 400;
+            font-style: italic;
+        }
+    }
 
-	&__people {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		gap: 20px;
-		padding: 10px 0;
-	}
+    &__people {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 10px 0;
+    }
 
-	&__rating {
-		display: flex;
-		align-items: baseline;
-		gap: 5px;
-	}
+    &__rating {
+        display: flex;
+        align-items: baseline;
+        gap: 5px;
+    }
 
-	&__reviews {
-		background-color: $color-red;
-		padding: 5px 15px;
-		border-radius: 10px;
-	}
-	&__id {
-		padding: 10px 0;
-	}
-	&__price {
-		font-size: 26px;
-		font-weight: bold;
-		padding: 16px 0 10px 0;
-	}
-	&__add-basket {
-	}
-	&__favorites {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		cursor: pointer;
-		svg {
-			width: 25px;
-			height: 25px;
-		}
-		&.product__favorites-active {
-			svg {
-				path {
-					fill: $color-red;
-				}
-			}
-		}
-	}
+    &__reviews {
+        background-color: $color-red;
+        padding: 5px 15px;
+        border-radius: 10px;
+    }
+    &__id {
+        padding: 10px 0;
+    }
+    &__price {
+        font-size: 26px;
+        font-weight: bold;
+        padding: 16px 0 10px 0;
+    }
+    &__add-basket {
+    }
+    &__favorites {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        svg {
+            width: 25px;
+            height: 25px;
+        }
+        &.product__favorites-active {
+            svg {
+                path {
+                    fill: $color-red;
+                }
+            }
+        }
+    }
 }
 .title {
-	font-weight: bold;
-	font-size: 16px;
-	margin-bottom: 5px;
-	color: white;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: white;
 }
 
 .hover {
-	transition: all 0.3s ease;
-	&:hover {
-		cursor: pointer;
-		color: $color-gray;
-	}
+    transition: all 0.3s ease;
+    &:hover {
+        cursor: pointer;
+        color: $color-gray;
+    }
 }
 //=====================================================================================================
 
 .shop {
-	&__item {
-		padding: 10px;
-	}
+    &__item {
+        padding: 10px;
+    }
 
-	&__item-body {
-		border: 2px solid $color-red;
-		border-radius: 10px;
-		overflow: hidden;
-		transition: all 0.3s ease;
-		&:hover {
-			box-shadow: 0 0 15px 2px rgb(255, 255, 255);
-		}
-	}
-	&__basket {
-		padding: 10px;
-	}
+    &__item-body {
+        border: 2px solid $color-red;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        &:hover {
+            box-shadow: 0 0 15px 2px rgb(255, 255, 255);
+        }
+    }
+    &__basket {
+        padding: 10px;
+    }
 
-	&__basket-title {
-	}
+    &__basket-title {
+    }
 
-	&__basket-flex {
-		display: flex;
-		gap: 20px;
-	}
+    &__basket-flex {
+        display: flex;
+        gap: 20px;
+    }
 
-	&__basket-column-left {
-		flex: 1 1 80%;
-	}
+    &__basket-column-left {
+        flex: 1 1 80%;
+    }
 
-	&__basket-column-right {
-		flex: 1 1 20%;
-		text-align: center;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-wrap: wrap;
-		flex-direction: column;
-	}
+    &__basket-column-right {
+        flex: 1 1 20%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
 
-	&__basket-column-left,
-	&__basket-column-right {
-		border: 2px solid $color-red;
-		border-radius: 10px;
-		overflow: hidden;
-	}
+    &__basket-column-left,
+    &__basket-column-right {
+        border: 2px solid $color-red;
+        border-radius: 10px;
+        overflow: hidden;
+    }
 
-	&__basket-final-btn {
-		align-self: inherit;
-	}
-	&.title {
-	}
+    &__basket-final-btn {
+        align-self: inherit;
+    }
+    &.title {
+    }
 }
 .item-body {
-	&__flex {
-		display: flex;
-		gap: 40px;
-	}
+    &__flex {
+        display: flex;
+        gap: 40px;
+    }
 
-	&__column-left {
-		flex: 1 1 20%;
-	}
+    &__column-left {
+        flex: 1 1 20%;
+        img {
+            width: 300px;
+        }
+    }
 
-	&__column-right {
-		flex: 1 1 80%;
-		padding: 20px 10px;
-		display: flex;
-		flex-direction: column;
-	}
+    &__column-right {
+        flex: 1 1 80%;
+        padding: 20px 10px;
+        display: flex;
+        flex-direction: column;
+    }
 
-	&__title {
-	}
+    &__title {
+    }
 
-	&__amount {
-		display: flex;
-		gap: 20px;
-		padding: 20px;
-		margin-bottom: 20px;
-		border: 2px solid $color-red;
-		align-self: flex-start;
-		border-radius: 10px;
-	}
+    &__amount {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 2px solid $color-red;
+        align-self: flex-start;
+        border-radius: 10px;
+    }
 
-	&__amount-minus {
-	}
+    &__amount-minus {
+    }
 
-	&__amount-number {
-	}
+    &__amount-number {
+    }
 
-	&__amount-plus {
-	}
+    &__amount-plus {
+    }
 
-	&__id {
-		padding: 10px 0;
-	}
+    &__id {
+        padding: 10px 0;
+    }
 
-	&__sum {
-		padding: 10px 0;
-	}
+    &__sum {
+        padding: 10px 0;
+    }
 
-	&__buy {
-		align-self: flex-start;
-		color: white;
-		margin-top: 20px;
-		padding: 20px 40px;
-		background-color: $color-red;
-		border-radius: 10px;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		font-weight: 700;
-		&:hover {
-			background-color: $color-dark-red;
-		}
-	}
+    &__buy {
+        align-self: flex-start;
+        color: white;
+        margin-top: 20px;
+        padding: 20px 40px;
+        background-color: $color-red;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 700;
+        &:hover {
+            background-color: $color-dark-red;
+        }
+    }
 
-	&.title {
-	}
+    &.title {
+    }
 }
 //=====================================================================================================
 @import "basket-item.scss";
@@ -305,6 +312,8 @@ main {
 @import "authorization.scss";
 //=====================================================================================================
 @import "pagination.scss";
+//=====================================================================================================
+@import "error404.scss";
 //=====================================================================================================
 @import "footer.scss";
 //=====================================================================================================

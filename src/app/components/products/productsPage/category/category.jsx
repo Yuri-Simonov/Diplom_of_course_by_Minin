@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../../../api/index";
+import api from "../../../../api/index";
 import propTypes from "prop-types";
 
 const Category = ({
@@ -22,6 +22,7 @@ const Category = ({
                     ? categoryItems.map((item) => {
                           return (
                               <button
+                                  key={item}
                                   className={
                                       "category__item hover" +
                                       (item === selectedCategoryItem
@@ -45,7 +46,7 @@ const Category = ({
 Category.propTypes = {
     clearCategory: propTypes.func.isRequired,
     changeCategoryItems: propTypes.func.isRequired,
-    selectedCategoryItem: propTypes.string.isRequired
+    selectedCategoryItem: propTypes.string
 };
 
 export default Category;
