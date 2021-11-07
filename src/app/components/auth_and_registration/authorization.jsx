@@ -11,7 +11,7 @@ const Authorization = () => {
                         <form action="#" className="authorization__form">
                             <input
                                 type="text"
-                                className="authorization__login"
+                                className="authorization__email"
                                 placeholder="Логин"
                             />
                             <input

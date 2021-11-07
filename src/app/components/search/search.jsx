@@ -1,6 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Search = () => {
+const Search = ({ searchValue, changeValueSearch }) => {
     return (
         <section className="shop__search search">
             <form action="#" className="search__form">
@@ -8,15 +9,21 @@ const Search = () => {
                     type="text"
                     className="search__input"
                     placeholder="Поиск товаров"
+                    value={searchValue}
+                    onChange={(event) => changeValueSearch(event)}
                 />
-                <input
+                {/*  <input
                     type="submit"
                     className="search__submit"
                     value="Искать"
-                />
+                /> */}
             </form>
         </section>
     );
+};
+Search.propTypes = {
+    searchValue: PropTypes.string,
+    changeValueSearch: PropTypes.func
 };
 
 export default Search;

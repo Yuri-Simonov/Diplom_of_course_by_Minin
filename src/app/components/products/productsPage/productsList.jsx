@@ -11,7 +11,7 @@ const ProductsPage = ({ products, sortBy, onSort, ...rest }) => {
     //Pagination=========================================================================
     const [currentPage, setCurrentPage] = useState(1);
 
-    const sizeOnePage = 8;
+    const sizeOnePage = 3;
     const pageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
@@ -26,10 +26,37 @@ const ProductsPage = ({ products, sortBy, onSort, ...rest }) => {
         setCurrentPage(1);
     }, [selectedCategoryItem]);
 
-    //фильтрация продуктов по категориям
-    const filteredProductsCategory = selectedCategoryItem
-        ? products.filter((item) => item.category === selectedCategoryItem)
-        : products;
+    //поиск продуктов
+    const [searchValue, setSearchValue] = useState("");
+    const [searchValueFoundProducts, setSearchValueFoundProducts] = useState();
+
+    const changeValueSearch = (event) => {
+        setSearchValue(() => event.target.value);
+        setSelectedCategoryItem();
+        setCurrentPage(1);
+    };
+    useEffect(() => {
+        setSearchValueFoundProducts(
+            products.filter((product) =>
+                product.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "")
+                    .includes(searchValue.toLowerCase().trim())
+            )
+        );
+    }, [searchValue]);
+
+    //фильтрация продуктов по категориям или поиску
+    let filteredProductsCategory;
+    if (selectedCategoryItem) {
+        filteredProductsCategory = products.filter(
+            (item) => item.category === selectedCategoryItem
+        );
+    } else if (searchValue.length > 0) {
+        filteredProductsCategory = searchValueFoundProducts;
+    } else {
+        filteredProductsCategory = products;
+    }
 
     const sortedProducts = _.orderBy(
         filteredProductsCategory,
@@ -64,7 +91,10 @@ const ProductsPage = ({ products, sortBy, onSort, ...rest }) => {
     return (
         <main className="shop">
             <div className="container">
-                <Search />
+                <Search
+                    searchValue={searchValue}
+                    changeValueSearch={changeValueSearch}
+                />
                 <section className="shop__content content">
                     <Category
                         selectedCategoryItem={selectedCategoryItem}

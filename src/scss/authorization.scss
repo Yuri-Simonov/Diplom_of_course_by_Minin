@@ -1,61 +1,91 @@
 .authorization {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 
-	&__body {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-wrap: wrap;
-		flex-direction: column;
-	}
+    &__body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
 
-	&__title.title {
-		margin-bottom: 20px;
-	}
+    &__title.title {
+        margin-bottom: 20px;
+        font-size: 26px;
+    }
 
-	&__form {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-wrap: wrap;
-		flex-direction: column;
-		gap: 30px;
-	}
+    &__form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 30px;
+        article {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 5px;
+            p {
+                font-size: 12px;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+    }
 
-	&__login {
-	}
+    &__email {
+    }
 
-	&__password {
-	}
-	&__login,
-	&__password,
-	&__submit {
-		min-width: 300px;
-		height: 50px;
-		padding: 10px 20px;
-		border-radius: 10px;
-	}
+    &__password {
+        padding-right: 40px !important;
+        &-eye {
+            position: absolute;
+            top: 25px;
+            right: 15px;
+            transform: translateY(-50%);
+            &-open {
+                opacity: 0.5;
+            }
+        }
+    }
+    &__email,
+    &__password,
+    &__submit {
+        min-width: 300px;
+        height: 50px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        &-not-active {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    }
 
-	&__submit {
-		min-width: 200px;
-		color: white;
-		background-color: $color-red;
-		font-weight: bold;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		&:hover {
-			background-color: rgb(73, 9, 9);
-		}
-	}
+    &__submit {
+        font-size: 16px;
+        min-width: 200px;
+        color: white;
+        background-color: $color-red;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        &:hover {
+            background-color: rgb(73, 9, 9);
+        }
+    }
 
-	&__registration {
-		color: white;
-		margin-top: 20px;
-	}
+    &__registration {
+        color: white;
+        margin-top: 20px;
+    }
 
-	&.title {
-	}
+    &.title {
+    }
 }
