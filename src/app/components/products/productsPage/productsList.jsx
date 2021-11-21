@@ -8,8 +8,13 @@ import { paginate } from "../../../../utils/paginate";
 import _ from "lodash";
 
 const ProductsPage = ({ products, sortBy, onSort, ...rest }) => {
-    //Pagination=========================================================================
+    //Пагинация
     const [currentPage, setCurrentPage] = useState(1);
+    //выбор категории в левом меню
+    const [selectedCategoryItem, setSelectedCategoryItem] = useState();
+    //поиск продуктов
+    const [searchValue, setSearchValue] = useState("");
+    const [searchValueFoundProducts, setSearchValueFoundProducts] = useState();
 
     const sizeOnePage = 3;
     const pageChange = (pageNumber) => {
@@ -17,9 +22,10 @@ const ProductsPage = ({ products, sortBy, onSort, ...rest }) => {
     };
 
     //выбор категории в левом меню
-    const [selectedCategoryItem, setSelectedCategoryItem] = useState();
     const changeCategoryItems = (item) => {
         setSelectedCategoryItem(item);
+        setCurrentPage(1);
+        setSearchValue("");
     };
 
     useEffect(() => {
@@ -27,23 +33,22 @@ const ProductsPage = ({ products, sortBy, onSort, ...rest }) => {
     }, [selectedCategoryItem]);
 
     //поиск продуктов
-    const [searchValue, setSearchValue] = useState("");
-    const [searchValueFoundProducts, setSearchValueFoundProducts] = useState();
-
     const changeValueSearch = (event) => {
         setSearchValue(() => event.target.value);
         setSelectedCategoryItem();
         setCurrentPage(1);
     };
     useEffect(() => {
-        setSearchValueFoundProducts(
-            products.filter((product) =>
-                product.name
-                    .toLowerCase()
-                    .replace(/\s+/g, "")
-                    .includes(searchValue.toLowerCase().trim())
-            )
-        );
+        if (searchValue.length > 0) {
+            setSearchValueFoundProducts(
+                products.filter((product) =>
+                    product.name
+                        .toLowerCase()
+                        .replace(/\s+/g, "")
+                        .includes(searchValue.toLowerCase().trim())
+                )
+            );
+        }
     }, [searchValue]);
 
     //фильтрация продуктов по категориям или поиску

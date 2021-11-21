@@ -111,23 +111,38 @@ const products = [
     }
 ];
 
+if (!localStorage.getItem("products")) {
+    localStorage.setItem("products", JSON.stringify(products));
+}
+
 const fetchAll = () =>
     new Promise((resolve) => {
         window.setTimeout(function () {
-            resolve(products);
+            resolve(JSON.parse(localStorage.getItem("products")));
         }, 1000);
     });
+const update = (id, data) =>
+    new Promise((resolve) => {
+        const products = JSON.parse(localStorage.getItem("products"));
+        const productIndex = products.findIndex((u) => u._id === id);
+        products[productIndex] = { ...products[productIndex], ...data };
+        localStorage.setItem("products", JSON.stringify(products));
+        resolve(products[productIndex]);
+    });
 
-/* eslint-disable no-new */
-/* const getById = (id) => {
-	new Promise((resolve) => {
-		window.setTimeout(function () {
-			resolve(products.find((product) => product._id === id));
-		});
-	});
-}; */
-
+const getById = (id) =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(
+                JSON.parse(localStorage.getItem("products")).find(
+                    (product) => product._id === id
+                )
+            );
+        }, 1000);
+    });
 export default {
-    fetchAll
-    /* getById */
+    fetchAll,
+    getById,
+    update
 };
+/* eslint-disable no-new */
