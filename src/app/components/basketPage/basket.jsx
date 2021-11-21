@@ -1,23 +1,11 @@
 import React from "react";
+import BackLink from "../backLinkComponent/backLink";
 
 const Basket = () => {
     return (
         <main className="shop">
             <div className="container">
-                <section className="shop__search search">
-                    <form action="#" className="search__form">
-                        <input
-                            type="text"
-                            className="search__input"
-                            placeholder="Поиск товаров"
-                        />
-                        <input
-                            type="submit"
-                            className="search__submit"
-                            value="Искать"
-                        />
-                    </form>
-                </section>
+                <BackLink name="Вернуться к покупкам" />
                 <section className="shop__basket">
                     <h2 className="shop__basket-title title">Корзина</h2>
                     <div className="shop__basket-flex">

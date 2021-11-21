@@ -67,13 +67,13 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
                         className="product__add-basket item-body__buy"
                         onClick={() => addItemToBasket()}
                     >
-                        Добавить в корзину
+                        Добавить товар в корзину
                     </button>
                 </div>
             </div>
             <div
                 className="product__favorites"
-                onClick={(event) => addItemToFavorites(event)}
+                onClick={(event) => addItemToFavorites(event, product)}
             >
                 <svg
                     width="14"
@@ -93,8 +93,8 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
 };
 ProductsItem.propTypes = {
     product: propTypes.object.isRequired,
-    addItemToBasket: propTypes.func.isRequired,
-    addItemToFavorites: propTypes.func.isRequired
+    addItemToBasket: propTypes.func,
+    addItemToFavorites: propTypes.func
 };
 
 export default ProductsItem;

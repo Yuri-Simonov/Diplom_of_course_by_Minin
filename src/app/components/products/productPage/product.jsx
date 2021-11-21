@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Search from "../../search/search";
-import { Link } from "react-router-dom";
+import BackLink from "../../backLinkComponent/backLink";
 
 const ProductPage = ({ productId, products }) => {
     const [foundProduct, setFoundProduct] = useState();
@@ -17,7 +16,7 @@ const ProductPage = ({ productId, products }) => {
     return (
         <main className="shop">
             <div className="container">
-                <Search />
+                <BackLink name="Вернуться к списку продуктов" />
                 <h3 className="shop__item__breadcrumbs">Хлебные крошки</h3>
                 {foundProduct ? (
                     <section className="shop__item">
@@ -60,9 +59,6 @@ const ProductPage = ({ productId, products }) => {
                 ) : (
                     "Идет загрузка информации о товаре..."
                 )}
-                <p>
-                    <Link to="/products">Вернуться к списку продуктов</Link>
-                </p>
             </div>
         </main>
     );

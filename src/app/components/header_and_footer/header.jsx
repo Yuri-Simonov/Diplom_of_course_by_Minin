@@ -19,7 +19,7 @@ const Header = ({ basketCount, favoritesCount }) => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="#" className="header__link">
+                                <Link to="/favorites" className="header__link">
                                     Избранное
                                 </Link>
                                 <span className="header__count-favorites">
