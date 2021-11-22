@@ -65,7 +65,7 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
                     <div className="product__price">{product.price} руб.</div>
                     <button
                         className="product__add-basket item-body__buy"
-                        onClick={() => addItemToBasket()}
+                        onClick={() => addItemToBasket(product)}
                     >
                         Добавить товар в корзину
                     </button>

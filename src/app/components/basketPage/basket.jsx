@@ -1,7 +1,32 @@
 import React from "react";
 import BackLink from "../backLinkComponent/backLink";
+import BasketItem from "./basketItem";
 
 const Basket = () => {
+    let baksetProducts = JSON.parse(localStorage.getItem("productsForBasket"));
+
+    if (baksetProducts && baksetProducts.length > 0) {
+        baksetProducts = baksetProducts.map((product) => {
+            return (
+                <article
+                    key={product._id}
+                    className="shop__basket-column-left-item"
+                >
+                    <BasketItem
+                        key={product._id + "basket"}
+                        product={product}
+                    />
+                </article>
+            );
+        });
+    } else {
+        baksetProducts = (
+            <h2 className="shop__basket-title">
+                Вы ничего не добавили в корзину
+            </h2>
+        );
+    }
+
     return (
         <main className="shop">
             <div className="container">
@@ -10,42 +35,11 @@ const Basket = () => {
                     <h2 className="shop__basket-title title">Корзина</h2>
                     <div className="shop__basket-flex">
                         <article className="shop__basket-column-left">
-                            <div className="basket-item">
-                                <div className="basket-item__column-left">
-                                    <img src={"../"} alt="doshik" />
-                                </div>
-                                <div className="basket-item__column-right">
-                                    <h2 className="basket-item__title title">
-                                        Название товара
-                                    </h2>
-                                    <div className="basket-item__id">
-                                        id товара
-                                    </div>
-                                    <div className="basket-item__amount">
-                                        <div className="item-body__amount">
-                                            <div className="item-body__amount-minus">
-                                                -
-                                            </div>
-                                            <div className="item-body__amount-number">
-                                                1
-                                            </div>
-                                            <div className="item-body__amount-plus">
-                                                +
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="basket-item__price">
-                                        100 руб.
-                                    </div>
-                                    <div className="basket-item__close-btn">
-                                        x
-                                    </div>
-                                </div>
-                            </div>
+                            {baksetProducts}
                         </article>
                         <article className="shop__basket-column-right">
                             <div className="shop__basket__total-sum">
-                                Итого: 1000 руб.
+                                Итого: <span>1000 руб.</span>
                             </div>
                             <button className="shop__basket-final-btn item-body__buy">
                                 Оформить заказ

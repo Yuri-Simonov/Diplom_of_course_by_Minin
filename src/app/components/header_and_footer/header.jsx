@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 
-const Header = ({ basketCount, favoritesCount }) => {
+const Header = ({ foundFavoriteProducts, totalBasketCountArray }) => {
     return (
         <div className="header">
             <div className="container">
@@ -23,16 +23,19 @@ const Header = ({ basketCount, favoritesCount }) => {
                                     Избранное
                                 </Link>
                                 <span className="header__count-favorites">
-                                    {favoritesCount}
+                                    {foundFavoriteProducts.length}
                                 </span>
                             </li>
                             <li>
                                 <Link to="/basket" className="header__link">
                                     Корзина
                                 </Link>
-                                <span className="header__count-basket">
-                                    {basketCount}
-                                </span>
+                                {totalBasketCountArray &&
+                                    totalBasketCountArray.length > 0 && (
+                                        <span className="header__count-basket">
+                                            {totalBasketCountArray.length}
+                                        </span>
+                                    )}
                             </li>
                         </ul>
                     </nav>
@@ -45,8 +48,8 @@ const Header = ({ basketCount, favoritesCount }) => {
     );
 };
 Header.propTypes = {
-    basketCount: propTypes.number.isRequired,
-    favoritesCount: propTypes.number.isRequired
+    foundFavoriteProducts: propTypes.array,
+    totalBasketCountArray: propTypes.array
 };
 
 export default Header;

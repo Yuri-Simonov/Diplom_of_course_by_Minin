@@ -23,7 +23,6 @@
 
     &__id {
         padding: 10px 0;
-        margin-top: -10px;
     }
 
     &__amount {
@@ -31,6 +30,8 @@
     }
 
     &__price {
+        font-size: 20px;
+        font-weight: 700;
     }
 
     &__close-btn {
