@@ -24,24 +24,56 @@ const App = () => {
     };
 
     //добавление товара в корзину (хедер)===============================================
-    const [basketCount, setBasketCount] = useState(0);
-    const addItemToBasket = () => {
-        setBasketCount(basketCount + 1);
+    const [totalBasketCountArray, setTotalBasketCountArray] = useState([]);
+
+    //функция, фильтрующая товары для массива корзины
+    const changeAmountOfBasketProducts = (productItem) => {
+        localStorage.setItem(
+            `productBasket-${productItem._id}`,
+            JSON.stringify(productItem)
+        );
+
+        let timeArrOfBusketProducts = [];
+        products.filter((product) => {
+            if (localStorage.getItem(`productBasket-${product._id}`)) {
+                return timeArrOfBusketProducts.push(
+                    JSON.parse(
+                        localStorage.getItem(`productBasket-${product._id}`)
+                    )
+                );
+            }
+        });
+        localStorage.setItem(
+            "productsForBasket",
+            JSON.stringify(timeArrOfBusketProducts)
+        );
+        setTotalBasketCountArray(
+            JSON.parse(localStorage.getItem("productsForBasket"))
+        );
+    };
+    useEffect(() => {
+        setTotalBasketCountArray(
+            JSON.parse(localStorage.getItem("productsForBasket"))
+        );
+    });
+
+    //добавление товаров в корзину
+    const addItemToBasket = (product) => {
+        let localFoundProductInBasket;
+        if (localStorage.getItem(`productBasket-${product._id}`)) {
+            localFoundProductInBasket = JSON.parse(
+                localStorage.getItem(`productBasket-${product._id}`)
+            );
+            localFoundProductInBasket.value++;
+            changeAmountOfBasketProducts(localFoundProductInBasket);
+        } else {
+            changeAmountOfBasketProducts(product);
+        }
     };
 
-    useEffect(() => {
-        const basketNumber = document.querySelector(".header__count-basket");
-        basketNumber.textContent = basketCount;
-        if (basketNumber.textContent === "0") {
-            basketNumber.style.display = "none";
-        } else {
-            basketNumber.style.display = "inline-block";
-        }
-    });
     //===================================================================================
 
     //добавление товара в избранное (хедер)===============================================
-    const [favoritesCount, setFavoritesCount] = useState(0);
     const [foundFavoriteProducts, setFoundFavoriteProducts] = useState([]);
 
     const addItemToFavorites = (event, product) => {
@@ -66,26 +98,32 @@ const App = () => {
             changeAmountOfFavoriteProducts();
         }
     };
-    useEffect(() => {
-        setFavoritesCount(foundFavoriteProducts.length);
-    }, [foundFavoriteProducts]);
 
     const changeAmountOfFavoriteProducts = () => {
-        setFoundFavoriteProducts(
-            products.filter((product) => {
-                return (
-                    JSON.stringify(product) ===
-                    localStorage.getItem(`product-${product._id}`)
+        let timeArrOfFavoriteProducts = [];
+        products.filter((product) => {
+            if (localStorage.getItem(`product-${product._id}`)) {
+                return timeArrOfFavoriteProducts.push(
+                    JSON.parse(localStorage.getItem(`product-${product._id}`))
                 );
-            })
+            }
+        });
+        localStorage.setItem(
+            "productsFavorite",
+            JSON.stringify(timeArrOfFavoriteProducts)
+        );
+        setFoundFavoriteProducts(
+            JSON.parse(localStorage.getItem("productsFavorite"))
         );
     };
 
     useEffect(() => {
+        setFoundFavoriteProducts(
+            JSON.parse(localStorage.getItem("productsFavorite"))
+        );
         const favoritesNumber = document.querySelector(
             ".header__count-favorites"
         );
-        favoritesNumber.textContent = favoritesCount;
         if (favoritesNumber.textContent === "0") {
             favoritesNumber.style.display = "none";
         } else {
@@ -96,7 +134,10 @@ const App = () => {
 
     return (
         <div className="wrapper">
-            <Header basketCount={basketCount} favoritesCount={favoritesCount} />
+            <Header
+                foundFavoriteProducts={foundFavoriteProducts}
+                totalBasketCountArray={totalBasketCountArray}
+            />
             <Switch>
                 <Route path="/registration" component={Registration} />
                 <Route path="/basket" component={Basket} />

@@ -1,6 +1,7 @@
 const products = [
     {
         _id: "67rdca3eeb7f6fgeed471815",
+        value: 1,
         name: "Доширак",
         taste: "со вкусом курицы",
         rating: 4.8,
@@ -11,6 +12,7 @@ const products = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471816",
+        value: 1,
         name: "Роллтон",
         taste: "со вкусом грибов",
         rating: 4.5,
@@ -21,6 +23,7 @@ const products = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471817",
+        value: 1,
         name: "Молоко",
         taste: "топлёное",
         rating: 4.4,
@@ -31,6 +34,7 @@ const products = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471818",
+        value: 1,
         name: "Шлёпки",
         taste: "неубиваемые",
         rating: 4.9,
@@ -41,6 +45,7 @@ const products = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471819",
+        value: 1,
         name: "Куртка",
         taste: "кожаная",
         rating: 4.0,
@@ -51,6 +56,7 @@ const products = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471820",
+        value: 1,
         name: "Кепка",
         taste: "",
         rating: 3.8,
@@ -61,6 +67,7 @@ const products = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471821",
+        value: 1,
         name: "Беговая дорожка",
         taste: "",
         rating: 4.1,
@@ -71,6 +78,7 @@ const products = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471822",
+        value: 1,
         name: "Ростишка",
         taste: "со вкусом клубники",
         rating: 3.6,
@@ -81,6 +89,7 @@ const products = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471823",
+        value: 1,
         name: "Ростишка",
         taste: "со вкусом банана",
         rating: 3.8,
@@ -91,6 +100,7 @@ const products = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471824",
+        value: 1,
         name: "Протеин",
         taste: "со вкусом карамели",
         rating: 4.8,
@@ -101,6 +111,7 @@ const products = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471825",
+        value: 1,
         name: "Кефир",
         taste: "",
         rating: 4.2,

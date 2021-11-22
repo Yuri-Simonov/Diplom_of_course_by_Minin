@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import BackLink from "../backLinkComponent/backLink";
-
 import ProductsItem from "../products/productsPage/productsItem";
 
 const FavoritesPage = ({ products, foundFavoriteProducts, ...rest }) => {
