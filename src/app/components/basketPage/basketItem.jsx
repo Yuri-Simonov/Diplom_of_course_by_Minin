@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const BasketItem = ({ product, deleteBasketItem }) => {
+const BasketItem = ({
+    product,
+    deleteBasketItem,
+    minusBasketItem,
+    plusBasketItem
+}) => {
     return (
         <div className="basket-item">
             <div className="basket-item__column-left">
@@ -20,9 +25,21 @@ const BasketItem = ({ product, deleteBasketItem }) => {
                 </div>
                 <div className="basket-item__amount">
                     <div className="item-body__amount">
-                        <div className="item-body__amount-minus">-</div>
-                        <div className="item-body__amount-number">1</div>
-                        <div className="item-body__amount-plus">+</div>
+                        <div
+                            className="item-body__amount-minus"
+                            onClick={() => minusBasketItem(product)}
+                        >
+                            -
+                        </div>
+                        <div className="item-body__amount-number">
+                            {product.value}
+                        </div>
+                        <div
+                            className="item-body__amount-plus"
+                            onClick={() => plusBasketItem(product)}
+                        >
+                            +
+                        </div>
                     </div>
                 </div>
                 <div className="basket-item__price">{product.price} руб.</div>
