@@ -3,6 +3,15 @@ import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 
 const Header = ({ foundFavoriteProducts, totalBasketCountArray }) => {
+    //вывод итогового количества товаров в корзине
+    const totalBaksetProducts = JSON.parse(
+        localStorage.getItem("productsForBasket")
+    );
+    let totalSumBaksetProducts = 0;
+    totalBaksetProducts.forEach((element) => {
+        totalSumBaksetProducts += element.value;
+    });
+
     return (
         <div className="header">
             <div className="container">
@@ -36,7 +45,7 @@ const Header = ({ foundFavoriteProducts, totalBasketCountArray }) => {
                                 {totalBasketCountArray &&
                                     totalBasketCountArray.length > 0 && (
                                         <span className="header__count-basket">
-                                            {totalBasketCountArray.length}
+                                            {totalSumBaksetProducts}
                                         </span>
                                     )}
                             </li>

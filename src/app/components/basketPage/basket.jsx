@@ -2,8 +2,13 @@ import React from "react";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
-const Basket = ({ deleteBasketItem }) => {
+const Basket = ({ deleteBasketItem, minusBasketItem, plusBasketItem }) => {
     let baksetProducts = JSON.parse(localStorage.getItem("productsForBasket"));
+
+    let totalSum = 0;
+    baksetProducts.forEach((element) => {
+        totalSum += element.price * element.value;
+    });
 
     if (baksetProducts && baksetProducts.length > 0) {
         baksetProducts = baksetProducts.map((product) => {
@@ -16,6 +21,8 @@ const Basket = ({ deleteBasketItem }) => {
                         key={product._id + "basket"}
                         product={product}
                         deleteBasketItem={deleteBasketItem}
+                        plusBasketItem={plusBasketItem}
+                        minusBasketItem={minusBasketItem}
                     />
                 </article>
             );
@@ -40,7 +47,7 @@ const Basket = ({ deleteBasketItem }) => {
                         </article>
                         <article className="shop__basket-column-right">
                             <div className="shop__basket__total-sum">
-                                Итого: <span>1000 руб.</span>
+                                Итого: <span>{totalSum} руб.</span>
                             </div>
                             <button className="shop__basket-final-btn item-body__buy">
                                 Оформить заказ

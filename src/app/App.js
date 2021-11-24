@@ -65,6 +65,20 @@ const App = () => {
         }
     };
 
+    //Уменьшение количества товара в корзине
+    const minusBasketItem = (product) => {
+        let localFoundProductInBasket = JSON.parse(
+            localStorage.getItem(`productBasket-${product._id}`)
+        );
+        localFoundProductInBasket.value--;
+        if (localFoundProductInBasket.value === 0) {
+            deleteBasketItem(product);
+        }
+        if (localFoundProductInBasket.value > 0) {
+            changeAmountOfBasketProducts(localFoundProductInBasket);
+        }
+    };
+
     useEffect(() => {
         setTotalBasketCountArray(
             JSON.parse(localStorage.getItem("productsForBasket"))
@@ -76,7 +90,7 @@ const App = () => {
         if (localStorage.getItem(`productBasket-${basketItem._id}`)) {
             localStorage.removeItem(`productBasket-${basketItem._id}`);
             setTotalNumberBasketProducts((prevState) => prevState - 1);
-            let beforeDeleteBasketItem = JSON.parse(
+            const beforeDeleteBasketItem = JSON.parse(
                 localStorage.getItem("productsForBasket")
             );
             let afterDeleteBasketItem = beforeDeleteBasketItem.filter(
@@ -90,6 +104,7 @@ const App = () => {
             );
         }
     };
+
     //===================================================================================
 
     //добавление товара в избранное (хедер)===============================================
@@ -160,6 +175,8 @@ const App = () => {
                     render={(props) => (
                         <Basket
                             deleteBasketItem={deleteBasketItem}
+                            plusBasketItem={addItemToBasket}
+                            minusBasketItem={minusBasketItem}
                             {...props}
                         />
                     )}
