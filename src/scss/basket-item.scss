@@ -36,18 +36,17 @@
 
     &__close-btn {
         position: absolute;
-        top: 10px;
+        top: 7px;
         right: 10px;
-        background-color: $color-red;
         width: 20px;
         height: 20px;
-        text-align: center;
-        padding-top: 3px;
-        border-radius: 50%;
         cursor: pointer;
         transition: all 0.3s ease;
         &:hover {
-            background-color: rgb(73, 9, 9);
+            transform: scale(1.2);
+        }
+        svg {
+            max-width: 100%;
         }
     }
 }

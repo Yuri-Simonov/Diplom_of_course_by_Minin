@@ -22,9 +22,12 @@ const Header = ({ foundFavoriteProducts, totalBasketCountArray }) => {
                                 <Link to="/favorites" className="header__link">
                                     Избранное
                                 </Link>
-                                <span className="header__count-favorites">
-                                    {foundFavoriteProducts.length}
-                                </span>
+                                {foundFavoriteProducts &&
+                                    foundFavoriteProducts.length > 0 && (
+                                        <span className="header__count-favorites">
+                                            {foundFavoriteProducts.length}
+                                        </span>
+                                    )}
                             </li>
                             <li>
                                 <Link to="/basket" className="header__link">

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const BasketItem = ({ product }) => {
+const BasketItem = ({ product, deleteBasketItem }) => {
     return (
         <div className="basket-item">
             <div className="basket-item__column-left">
@@ -26,7 +26,34 @@ const BasketItem = ({ product }) => {
                     </div>
                 </div>
                 <div className="basket-item__price">{product.price} руб.</div>
-                <div className="basket-item__close-btn">x</div>
+                <div
+                    className="basket-item__close-btn"
+                    onClick={() => deleteBasketItem(product)}
+                >
+                    <svg
+                        width="27"
+                        height="24"
+                        viewBox="0 0 27 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <rect
+                            y="22.6484"
+                            width="34.4826"
+                            height="1"
+                            rx="0.5"
+                            transform="rotate(-41.057 0 22.6484)"
+                            fill="white"
+                        />
+                        <rect
+                            width="34.4826"
+                            height="1"
+                            rx="0.5"
+                            transform="matrix(-0.754056 -0.65681 -0.65681 0.754056 26.6582 22.6484)"
+                            fill="white"
+                        />
+                    </svg>
+                </div>
             </div>
         </div>
     );

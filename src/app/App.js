@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "./components/header_and_footer/header";
 import Authorization from "./components/auth_and_registration/authorization";
 import Registration from "./components/auth_and_registration/registration";
@@ -25,14 +25,16 @@ const App = () => {
 
     //добавление товара в корзину (хедер)===============================================
     const [totalBasketCountArray, setTotalBasketCountArray] = useState([]);
+    const [totalNumberBasketProducts, setTotalNumberBasketProducts] =
+        useState(0);
 
     //функция, фильтрующая товары для массива корзины
     const changeAmountOfBasketProducts = (productItem) => {
+        setTotalNumberBasketProducts((prevState) => prevState + 1);
         localStorage.setItem(
             `productBasket-${productItem._id}`,
             JSON.stringify(productItem)
         );
-
         let timeArrOfBusketProducts = [];
         products.filter((product) => {
             if (localStorage.getItem(`productBasket-${product._id}`)) {
@@ -47,15 +49,7 @@ const App = () => {
             "productsForBasket",
             JSON.stringify(timeArrOfBusketProducts)
         );
-        setTotalBasketCountArray(
-            JSON.parse(localStorage.getItem("productsForBasket"))
-        );
     };
-    useEffect(() => {
-        setTotalBasketCountArray(
-            JSON.parse(localStorage.getItem("productsForBasket"))
-        );
-    });
 
     //добавление товаров в корзину
     const addItemToBasket = (product) => {
@@ -71,10 +65,37 @@ const App = () => {
         }
     };
 
+    useEffect(() => {
+        setTotalBasketCountArray(
+            JSON.parse(localStorage.getItem("productsForBasket"))
+        );
+    }, [totalNumberBasketProducts]);
+
+    //удаление товаров из корзины
+    const deleteBasketItem = (basketItem) => {
+        if (localStorage.getItem(`productBasket-${basketItem._id}`)) {
+            localStorage.removeItem(`productBasket-${basketItem._id}`);
+            setTotalNumberBasketProducts((prevState) => prevState - 1);
+            let beforeDeleteBasketItem = JSON.parse(
+                localStorage.getItem("productsForBasket")
+            );
+            let afterDeleteBasketItem = beforeDeleteBasketItem.filter(
+                (item) => {
+                    return item._id !== basketItem._id;
+                }
+            );
+            localStorage.setItem(
+                "productsForBasket",
+                JSON.stringify(afterDeleteBasketItem)
+            );
+        }
+    };
     //===================================================================================
 
     //добавление товара в избранное (хедер)===============================================
     const [foundFavoriteProducts, setFoundFavoriteProducts] = useState([]);
+    const [totalNumberFavoriteProducts, setTotalNumberFavoriteProducts] =
+        useState(0);
 
     const addItemToFavorites = (event, product) => {
         const nearFavoriteParent = event.target.closest(".product__favorites");
@@ -87,9 +108,11 @@ const App = () => {
         }
 
         if (localStorage.getItem(`product-${product._id}`)) {
+            setTotalNumberFavoriteProducts((prevState) => prevState - 1);
             localStorage.removeItem(`product-${product._id}`);
             changeAmountOfFavoriteProducts();
         } else {
+            setTotalNumberFavoriteProducts((prevState) => prevState + 1);
             localStorage.setItem(
                 `product-${product._id}`,
                 JSON.stringify(product)
@@ -121,15 +144,7 @@ const App = () => {
         setFoundFavoriteProducts(
             JSON.parse(localStorage.getItem("productsFavorite"))
         );
-        const favoritesNumber = document.querySelector(
-            ".header__count-favorites"
-        );
-        if (favoritesNumber.textContent === "0") {
-            favoritesNumber.style.display = "none";
-        } else {
-            favoritesNumber.style.display = "inline-block";
-        }
-    });
+    }, [totalNumberFavoriteProducts]);
     //===================================================================================
 
     return (
@@ -140,7 +155,15 @@ const App = () => {
             />
             <Switch>
                 <Route path="/registration" component={Registration} />
-                <Route path="/basket" component={Basket} />
+                <Route
+                    path="/basket"
+                    render={(props) => (
+                        <Basket
+                            deleteBasketItem={deleteBasketItem}
+                            {...props}
+                        />
+                    )}
+                />
                 <Route
                     path="/favorites"
                     render={(props) => (
