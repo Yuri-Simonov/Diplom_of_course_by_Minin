@@ -2,7 +2,7 @@ import React from "react";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
-const Basket = () => {
+const Basket = ({ deleteBasketItem }) => {
     let baksetProducts = JSON.parse(localStorage.getItem("productsForBasket"));
 
     if (baksetProducts && baksetProducts.length > 0) {
@@ -15,6 +15,7 @@ const Basket = () => {
                     <BasketItem
                         key={product._id + "basket"}
                         product={product}
+                        deleteBasketItem={deleteBasketItem}
                     />
                 </article>
             );
