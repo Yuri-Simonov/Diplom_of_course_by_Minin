@@ -1,0 +1,60 @@
+.modal-final {
+    display: none;
+    position: absolute;
+    z-index: 5;
+    background-color: rgba(19, 3, 3, 0.815);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    &-active {
+        display: block;
+    }
+
+    &__content {
+        position: absolute;
+        width: 400px;
+        height: 200px;
+        background-color: $color-dark-red;
+        border-radius: 20px;
+        border: 2px solid white;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        @media (max-width: 425px) {
+            width: 100vw;
+        }
+    }
+    &__svg {
+        svg {
+            width: 45px;
+            height: 39px;
+        }
+        path {
+            stroke: white;
+        }
+    }
+    &__text {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+    }
+    &__close-button {
+        cursor: pointer;
+        position: absolute;
+        z-index: 6;
+        top: 10px;
+        right: 10px;
+        svg {
+            transform: scale(0.5);
+        }
+    }
+}
