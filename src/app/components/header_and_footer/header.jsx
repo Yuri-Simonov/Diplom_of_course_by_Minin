@@ -8,7 +8,7 @@ const Header = ({ foundFavoriteProducts, totalBasketCountArray }) => {
         localStorage.getItem("productsForBasket")
     );
     let totalSumBaksetProducts = 0;
-    totalBaksetProducts.forEach((element) => {
+    totalBaksetProducts&&totalBaksetProducts.forEach((element) => {
         totalSumBaksetProducts += element.value;
     });
 

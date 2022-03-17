@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 
@@ -22,6 +22,15 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
     } else if (product.rating <= 3.7) {
         colorOfStar = "red";
     }
+
+	const [isFavorite,setFavorite]=useState(false);
+	useEffect(() => {
+		if (localStorage.getItem(`product-${product._id}`)) {
+			setFavorite(true);
+		} else {
+			setFavorite(false);
+		}
+	}, [localStorage.getItem(`product-${product._id}`)])
 
     return (
         <div className="products__product product">
@@ -71,8 +80,9 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
                     </button>
                 </div>
             </div>
+			
             <div
-                className="product__favorites"
+                className={"product__favorites" + (isFavorite ? ' product__favorites-active' : '')}
                 onClick={(event) => addItemToFavorites(event, product)}
             >
                 <svg

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const BackLink = ({ name }) => {
     return (
         <div className="back">
-            <Link to="/products" className="hover" className="back-link">
+            <Link to="/products" className="hover back-link">
                 <svg
                     width="19"
                     height="12"
