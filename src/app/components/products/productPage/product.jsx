@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useProducts } from "../../../hooks/useProducts";
 import BackLink from "../../backLinkComponent/backLink";
 
-const ProductPage = ({ productId, products }) => {
+const ProductPage = ({ productId }) => {
+    const { products } = useProducts();
     const [foundProduct, setFoundProduct] = useState();
     useEffect(() => {
         if (products) {

@@ -89,6 +89,9 @@ main {
     &:hover {
         box-shadow: 0 0 15px 2px rgb(255, 255, 255);
     }
+    & > * {
+        color: white;
+    }
 
     &__flex {
         display: flex;

@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useBasket } from "../../hooks/useBasket";
 
-const BasketItem = ({
-    product,
-    deleteBasketItem,
-    minusBasketItem,
-    plusBasketItem
-}) => {
+const BasketItem = ({ product }) => {
+    const { deleteBasketItem, minusBasketItem, addItemToBasket } = useBasket();
+
     return (
         <div className="basket-item">
             <div className="basket-item__column-left">
@@ -36,7 +34,7 @@ const BasketItem = ({
                         </div>
                         <div
                             className="item-body__amount-plus"
-                            onClick={() => plusBasketItem(product)}
+                            onClick={() => addItemToBasket(product)}
                         >
                             +
                         </div>

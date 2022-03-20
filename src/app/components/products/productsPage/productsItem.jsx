@@ -1,8 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
+import { useBasket } from "../../../hooks/useBasket";
+import { useFavorite } from "../../../hooks/useFavorite";
 
-const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
+const ProductsItem = ({ product }) => {
+    const { addItemToBasket } = useBasket();
+    const { addItemToFavorites } = useFavorite();
     let reviewWord;
     if (Number(product.reviews) === 0 || Number(product.reviews) % 10 === 0) {
         reviewWord = "отзывов";
@@ -23,14 +27,14 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
         colorOfStar = "red";
     }
 
-	const [isFavorite,setFavorite]=useState(false);
-	useEffect(() => {
-		if (localStorage.getItem(`product-${product._id}`)) {
-			setFavorite(true);
-		} else {
-			setFavorite(false);
-		}
-	}, [localStorage.getItem(`product-${product._id}`)])
+    const [isFavorite, setFavorite] = useState(false);
+    useEffect(() => {
+        if (localStorage.getItem(`product-${product._id}`)) {
+            setFavorite(true);
+        } else {
+            setFavorite(false);
+        }
+    }, [localStorage.getItem(`product-${product._id}`)]);
 
     return (
         <div className="products__product product">
@@ -40,8 +44,8 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
                 </div>
                 <div className="product__column-right">
                     <Link
-                        to={`/products/${product._id}`}
                         className="product__title title"
+                        to={`/products/${product._id}`}
                     >
                         {product.name}
                         {product.taste !== "" && (
@@ -80,9 +84,11 @@ const ProductsItem = ({ product, addItemToBasket, addItemToFavorites }) => {
                     </button>
                 </div>
             </div>
-			
             <div
-                className={"product__favorites" + (isFavorite ? ' product__favorites-active' : '')}
+                className={
+                    "product__favorites" +
+                    (isFavorite ? " product__favorites-active" : "")
+                }
                 onClick={(event) => addItemToFavorites(event, product)}
             >
                 <svg

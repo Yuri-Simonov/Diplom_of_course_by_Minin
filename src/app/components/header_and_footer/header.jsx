@@ -1,16 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
+import { useFavorite } from "../../hooks/useFavorite";
+import { useBasket } from "../../hooks/useBasket";
 
-const Header = ({ foundFavoriteProducts, totalBasketCountArray }) => {
+const Header = () => {
+    const { foundFavoriteProducts } = useFavorite();
+    const { totalBasketCountArray } = useBasket();
+
     //вывод итогового количества товаров в корзине
     const totalBaksetProducts = JSON.parse(
         localStorage.getItem("productsForBasket")
     );
     let totalSumBaksetProducts = 0;
-    totalBaksetProducts&&totalBaksetProducts.forEach((element) => {
-        totalSumBaksetProducts += element.value;
-    });
+    totalBaksetProducts &&
+        totalBaksetProducts.forEach((element) => {
+            totalSumBaksetProducts += element.value;
+        });
 
     return (
         <div className="header">

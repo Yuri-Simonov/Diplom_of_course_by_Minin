@@ -6,8 +6,10 @@ import ProductsItem from "./productsItem";
 import Pagination from "../../pagination/pagination";
 import { paginate } from "../../../../utils/paginate";
 import _ from "lodash";
+import { useProducts } from "../../../hooks/useProducts";
 
-const ProductsPage = ({ products, sortBy, onSort, ...rest }) => {
+const ProductsPage = () => {
+    const { products, sortBy, onSort } = useProducts();
     //Пагинация
     const [currentPage, setCurrentPage] = useState(1);
     //выбор категории в левом меню
@@ -84,9 +86,7 @@ const ProductsPage = ({ products, sortBy, onSort, ...rest }) => {
     let downloadProducts;
     if (products) {
         downloadProducts = cropProducts.map((product) => {
-            return (
-                <ProductsItem key={product._id} product={product} {...rest} />
-            );
+            return <ProductsItem key={product._id} product={product} />;
         });
     } else {
         downloadProducts = "Пожалуйста, подождтите...";
