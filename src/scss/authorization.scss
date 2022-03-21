@@ -10,6 +10,9 @@
         align-items: center;
         flex-wrap: wrap;
         flex-direction: column;
+        @media (max-height: 425px) {
+            padding-top: 40px;
+        }
     }
 
     &__title.title {
@@ -36,7 +39,7 @@
             p {
                 font-size: 12px;
                 max-width: 300px;
-                text-align: center;
+                opacity: 0.6;
             }
         }
         label {

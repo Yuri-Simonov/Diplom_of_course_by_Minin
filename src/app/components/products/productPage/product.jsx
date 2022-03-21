@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useBasket } from "../../../hooks/useBasket";
 import { useProducts } from "../../../hooks/useProducts";
 import BackLink from "../../backLinkComponent/backLink";
 
 const ProductPage = ({ productId }) => {
     const { products } = useProducts();
+    const { addItemToBasket } = useBasket();
     const [foundProduct, setFoundProduct] = useState();
     useEffect(() => {
         if (products) {
@@ -45,17 +47,25 @@ const ProductPage = ({ productId }) => {
                                             +
                                         </div>
                                     </div>
-                                    <div className="item-body__id">
+                                    {/* <div className="item-body__id">
                                         Id товара: {foundProduct._id}
-                                    </div>
+                                    </div> */}
                                     <div className="item-body__sum">
                                         {foundProduct.price} руб.
                                     </div>
-                                    <button className="item-body__buy">
-                                        Купить
+                                    <button
+                                        className="item-body__buy"
+                                        onClick={() =>
+                                            addItemToBasket(foundProduct)
+                                        }
+                                    >
+                                        Добавить в корзину
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                        <div className="shop__item-comments item-comments">
+                            Отзывы о товаре...
                         </div>
                     </section>
                 ) : (

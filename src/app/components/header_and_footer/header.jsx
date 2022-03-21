@@ -18,12 +18,24 @@ const Header = () => {
             totalSumBaksetProducts += element.value;
         });
 
+    // Menu burger
+    // Menu burger =======================================================================
+    const openBurger = () => {
+        let headerBurger = document.querySelector(".header__burger");
+        let headerMenu = document.querySelector(".header__menu");
+        let body = document.querySelector("body");
+        headerBurger.classList.toggle("active");
+        headerMenu.classList.toggle("active");
+        body.classList.toggle("lock");
+    };
+    //=======================================================================
+
     return (
         <div className="header">
             <div className="container">
                 <div className="header__body">
                     <div className="header__logo">LOGO</div>
-                    <div className="header__burger">
+                    <div className="header__burger" onClick={openBurger}>
                         <span></span>
                     </div>
                     <nav className="header__menu">
@@ -55,11 +67,16 @@ const Header = () => {
                                         </span>
                                     )}
                             </li>
+                            <li>
+                                <Link
+                                    to="/authorization"
+                                    className="header__button"
+                                >
+                                    Вход / Регистрация
+                                </Link>
+                            </li>
                         </ul>
                     </nav>
-                    <Link to="/authorization" className="header__button">
-                        Вход / Регистрация
-                    </Link>
                 </div>
             </div>
         </div>

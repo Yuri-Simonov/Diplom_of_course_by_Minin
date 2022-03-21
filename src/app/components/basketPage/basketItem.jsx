@@ -18,9 +18,9 @@ const BasketItem = ({ product }) => {
                     {product.name}
                     {product.taste !== "" && <span> ({product.taste})</span>}
                 </Link>
-                <div className="basket-item__id">
+                {/* <div className="basket-item__id">
                     Id товара: <i>{product._id}</i>
-                </div>
+                </div> */}
                 <div className="basket-item__amount">
                     <div className="item-body__amount">
                         <div

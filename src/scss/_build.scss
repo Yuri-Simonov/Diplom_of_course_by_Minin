@@ -1,0 +1,33 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(
+        180deg,
+        rgb(77, 77, 77) 0%,
+        rgb(34, 34, 34) 100%
+    );
+    color: white;
+}
+
+.container {
+    max-width: 1470px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    line-height: 110%;
+}
+main {
+    flex: 1 1 auto;
+}
+
+#root {
+    height: 100%;
+}

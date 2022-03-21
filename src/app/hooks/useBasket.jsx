@@ -98,11 +98,9 @@ const BasketProvider = ({ children }) => {
         setTotalNumberBasketProducts(0);
         for (let i = 0; i < localStorage.length; i++) {
             let localKey = localStorage.key(i);
-            console.log(`${localKey}: ${localStorage.getItem(localKey)}`);
             if (localKey.startsWith("productBasket-")) {
                 const needKey = localKey.split(":")[0];
                 localStorage.removeItem(needKey);
-                console.log(`needKey ${needKey}`);
             }
         }
     };
