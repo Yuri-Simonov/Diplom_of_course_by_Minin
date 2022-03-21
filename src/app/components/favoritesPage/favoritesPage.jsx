@@ -1,8 +1,13 @@
 import React from "react";
+import { useFavorite } from "../../hooks/useFavorite";
+import { useProducts } from "../../hooks/useProducts";
 import BackLink from "../backLinkComponent/backLink";
 import ProductsItem from "../products/productsPage/productsItem";
 
-const FavoritesPage = ({ products, foundFavoriteProducts, ...rest }) => {
+const FavoritesPage = () => {
+    const { products } = useProducts();
+    const { foundFavoriteProducts } = useFavorite();
+
     let favoriteProducts;
     if (foundFavoriteProducts && foundFavoriteProducts.length === 0) {
         favoriteProducts = (
@@ -12,9 +17,7 @@ const FavoritesPage = ({ products, foundFavoriteProducts, ...rest }) => {
         );
     } else if (products && foundFavoriteProducts) {
         favoriteProducts = foundFavoriteProducts.map((product) => {
-            return (
-                <ProductsItem key={product._id} product={product} {...rest} />
-            );
+            return <ProductsItem key={product._id} product={product} />;
         });
     } else {
         favoriteProducts = "Идёт загрузка информации. Пожалуйста, подождите...";

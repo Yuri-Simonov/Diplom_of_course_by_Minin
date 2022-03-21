@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useBasket } from "../../hooks/useBasket";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
-const Basket = ({ deleteBasketItem, minusBasketItem, plusBasketItem }) => {
+const Basket = () => {
+    const { deleteBasketItem, minusBasketItem, plusBasketItem, clearBasket } =
+        useBasket();
     let baksetProducts = JSON.parse(localStorage.getItem("productsForBasket"));
 
     let totalSum = 0;
@@ -40,6 +43,7 @@ const Basket = ({ deleteBasketItem, minusBasketItem, plusBasketItem }) => {
     const [isModal, setModal] = useState(false);
     const openFinalModalWindow = () => {
         setModal(true);
+        clearBasket();
     };
     const closeFinalModalWindow = (event) => {
         setModal(false);
