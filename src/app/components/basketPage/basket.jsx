@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useBasket } from "../../hooks/useBasket";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";

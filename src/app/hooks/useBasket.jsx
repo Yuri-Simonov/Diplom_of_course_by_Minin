@@ -71,7 +71,7 @@ const BasketProvider = ({ children }) => {
             deleteBasketItem(product);
         }
         if (localFoundProductInBasket.value > 0) {
-            changeAmountOfBasketProducts(localFoundProductInBasket);
+            changeAmountOfBasketProducts(localFoundProductInBasket, 1);
         }
     };
 

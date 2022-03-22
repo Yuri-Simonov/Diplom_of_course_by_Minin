@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 import { useFavorite } from "../../hooks/useFavorite";
 import { useBasket } from "../../hooks/useBasket";
+import { useWindowSize } from "../../hooks/useSize";
 
 const Header = () => {
     const { foundFavoriteProducts } = useFavorite();
     const { totalBasketCountArray } = useBasket();
+    const [width, height] = useWindowSize();
 
     //вывод итогового количества товаров в корзине
     const totalBaksetProducts = JSON.parse(
@@ -28,6 +30,13 @@ const Header = () => {
         headerMenu.classList.toggle("active");
         body.classList.toggle("lock");
     };
+    useEffect(() => {
+        if (width >= 768) {
+            headerBurger.classList.remove("active");
+            headerMenu.classList.remove("active");
+            body.classList.remove("lock");
+        }
+    }, [width]);
     //=======================================================================
 
     return (

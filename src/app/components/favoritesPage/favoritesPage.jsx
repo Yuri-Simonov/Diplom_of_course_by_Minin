@@ -20,7 +20,7 @@ const FavoritesPage = () => {
             return <ProductsItem key={product._id} product={product} />;
         });
     } else {
-        favoriteProducts = "Идёт загрузка информации. Пожалуйста, подождите...";
+        favoriteProducts = "Похоже, что вы ничего не добавили в избранное...";
     }
 
     return (

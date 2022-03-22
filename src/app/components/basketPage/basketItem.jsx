@@ -4,7 +4,6 @@ import { useBasket } from "../../hooks/useBasket";
 
 const BasketItem = ({ product }) => {
     const { deleteBasketItem, minusBasketItem, addItemToBasket } = useBasket();
-    console.log("product.value", product.value);
 
     return (
         <div className="basket-item">
