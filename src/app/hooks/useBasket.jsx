@@ -16,12 +16,19 @@ const BasketProvider = ({ children }) => {
         useState(0);
 
     //функция, фильтрующая товары для массива корзины
-    const changeAmountOfBasketProducts = (productItem) => {
-        setTotalNumberBasketProducts((prevState) => prevState + 1);
-        localStorage.setItem(
-            `productBasket-${productItem._id}`,
-            JSON.stringify(productItem)
-        );
+    const changeAmountOfBasketProducts = (productItem, currentCounter) => {
+        setTotalNumberBasketProducts((prevState) => prevState + currentCounter);
+        if (localStorage.getItem(`productBasket-${productItem._id}`)) {
+            localStorage.setItem(
+                `productBasket-${productItem._id}`,
+                JSON.stringify(productItem)
+            );
+        } else {
+            localStorage.setItem(
+                `productBasket-${productItem._id}`,
+                JSON.stringify({ ...productItem, value: currentCounter })
+            );
+        }
         let timeArrOfBusketProducts = [];
         products.filter((product) => {
             if (localStorage.getItem(`productBasket-${product._id}`)) {
@@ -39,16 +46,18 @@ const BasketProvider = ({ children }) => {
     };
 
     //добавление товаров в корзину
-    const addItemToBasket = (product) => {
+    const addItemToBasket = (product, amount = 1) => {
         let localFoundProductInBasket;
         if (localStorage.getItem(`productBasket-${product._id}`)) {
             localFoundProductInBasket = JSON.parse(
                 localStorage.getItem(`productBasket-${product._id}`)
             );
-            localFoundProductInBasket.value++;
-            changeAmountOfBasketProducts(localFoundProductInBasket);
+            localFoundProductInBasket.value += amount;
+
+            changeAmountOfBasketProducts(localFoundProductInBasket, amount);
         } else {
-            changeAmountOfBasketProducts(product);
+            let currentCounter = amount;
+            return changeAmountOfBasketProducts(product, currentCounter);
         }
     };
 
@@ -62,7 +71,7 @@ const BasketProvider = ({ children }) => {
             deleteBasketItem(product);
         }
         if (localFoundProductInBasket.value > 0) {
-            changeAmountOfBasketProducts(localFoundProductInBasket);
+            changeAmountOfBasketProducts(localFoundProductInBasket, 1);
         }
     };
 
