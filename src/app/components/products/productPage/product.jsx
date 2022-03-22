@@ -17,16 +17,16 @@ const ProductPage = ({ productId }) => {
         }
     }, [products]);
 
-	const [productCount,setProductCount]=useState(1);
+    const [productCount, setProductCount] = useState(1);
 
-	const upProductCount = () => {
-		setProductCount(prevState=>prevState+1);
-	}
-	const downProductCount = () => {
-		if(productCount>=1){
-			setProductCount(prevState=>prevState-1);
-		}
-	}
+    const upProductCount = () => {
+        setProductCount((prevState) => prevState + 1);
+    };
+    const downProductCount = () => {
+        if (productCount >= 1) {
+            setProductCount((prevState) => prevState - 1);
+        }
+    };
 
     return (
         <main className="shop">
@@ -46,18 +46,24 @@ const ProductPage = ({ productId }) => {
                                 <div className="item-body__column-right">
                                     <h2 className="item-body__title title">
                                         {foundProduct.name}
-										{foundProduct.taste !== "" && (
-                                <span> ({foundProduct.taste})</span>
-                            )}
+                                        {foundProduct.taste !== "" && (
+                                            <span> ({foundProduct.taste})</span>
+                                        )}
                                     </h2>
                                     <div className="item-body__amount">
-                                        <div className="item-body__amount-minus" onClick={downProductCount}>
+                                        <div
+                                            className="item-body__amount-minus"
+                                            onClick={downProductCount}
+                                        >
                                             -
                                         </div>
                                         <div className="item-body__amount-number">
                                             {productCount}
                                         </div>
-                                        <div className="item-body__amount-plus" onClick={upProductCount}>
+                                        <div
+                                            className="item-body__amount-plus"
+                                            onClick={upProductCount}
+                                        >
                                             +
                                         </div>
                                     </div>
@@ -67,7 +73,10 @@ const ProductPage = ({ productId }) => {
                                     <button
                                         className="item-body__buy"
                                         onClick={() =>
-                                            addItemToBasket(foundProduct)
+                                            addItemToBasket(
+                                                foundProduct,
+                                                productCount
+                                            )
                                         }
                                     >
                                         Добавить в корзину

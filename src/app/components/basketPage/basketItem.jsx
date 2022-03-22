@@ -4,6 +4,7 @@ import { useBasket } from "../../hooks/useBasket";
 
 const BasketItem = ({ product }) => {
     const { deleteBasketItem, minusBasketItem, addItemToBasket } = useBasket();
+    console.log("product.value", product.value);
 
     return (
         <div className="basket-item">
@@ -18,9 +19,6 @@ const BasketItem = ({ product }) => {
                     {product.name}
                     {product.taste !== "" && <span> ({product.taste})</span>}
                 </Link>
-                {/* <div className="basket-item__id">
-                    Id товара: <i>{product._id}</i>
-                </div> */}
                 <div className="basket-item__amount">
                     <div className="item-body__amount">
                         <div

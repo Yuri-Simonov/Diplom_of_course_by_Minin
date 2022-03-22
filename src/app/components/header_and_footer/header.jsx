@@ -20,10 +20,10 @@ const Header = () => {
 
     // Menu burger
     // Menu burger =======================================================================
-    const openBurger = () => {
-        let headerBurger = document.querySelector(".header__burger");
-        let headerMenu = document.querySelector(".header__menu");
-        let body = document.querySelector("body");
+    let headerBurger = document.querySelector(".header__burger");
+    let headerMenu = document.querySelector(".header__menu");
+    let body = document.querySelector("body");
+    const toggleBurger = () => {
         headerBurger.classList.toggle("active");
         headerMenu.classList.toggle("active");
         body.classList.toggle("lock");
@@ -35,17 +35,17 @@ const Header = () => {
             <div className="container">
                 <div className="header__body">
                     <div className="header__logo">LOGO</div>
-                    <div className="header__burger" onClick={openBurger}>
+                    <div className="header__burger" onClick={toggleBurger}>
                         <span></span>
                     </div>
                     <nav className="header__menu">
                         <ul className="header__list">
-                            <li>
+                            <li onClick={toggleBurger}>
                                 <Link to="/products" className="header__link">
                                     Главная
                                 </Link>
                             </li>
-                            <li>
+                            <li onClick={toggleBurger}>
                                 <Link to="/favorites" className="header__link">
                                     Избранное
                                 </Link>
@@ -56,7 +56,7 @@ const Header = () => {
                                         </span>
                                     )}
                             </li>
-                            <li>
+                            <li onClick={toggleBurger}>
                                 <Link to="/basket" className="header__link">
                                     Корзина
                                 </Link>
@@ -67,7 +67,7 @@ const Header = () => {
                                         </span>
                                     )}
                             </li>
-                            <li>
+                            <li onClick={toggleBurger}>
                                 <Link
                                     to="/authorization"
                                     className="header__button"

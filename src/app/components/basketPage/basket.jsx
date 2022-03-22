@@ -4,8 +4,7 @@ import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
 const Basket = () => {
-    const { deleteBasketItem, minusBasketItem, plusBasketItem, clearBasket } =
-        useBasket();
+    const { clearBasket } = useBasket();
     let baksetProducts = JSON.parse(localStorage.getItem("productsForBasket"));
 
     let totalSum = 0;
@@ -24,9 +23,6 @@ const Basket = () => {
                     <BasketItem
                         key={product._id + "basket"}
                         product={product}
-                        deleteBasketItem={deleteBasketItem}
-                        plusBasketItem={plusBasketItem}
-                        minusBasketItem={minusBasketItem}
                     />
                 </article>
             );
