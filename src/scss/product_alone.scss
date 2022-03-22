@@ -1,178 +1,120 @@
-.shop {
-    &__item {
-        padding: 10px;
-    }
-
-    &__item-body {
-        border: 2px solid $color-red;
-        border-radius: 10px;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        &:hover {
-            box-shadow: 0 0 15px 2px rgb(255, 255, 255);
-        }
-    }
-    &__basket {
-        padding: 10px;
-    }
-
-    &__basket-title {
-        font-size: 30px;
-        line-height: 1;
-        margin-bottom: 30px;
-    }
-
-    &__basket-flex {
-        display: flex;
-        gap: 20px;
-    }
-
-    &__basket-column-left {
-        flex: 1 1 80%;
-        & > * + * {
-            margin-top: 20px;
-        }
-        &-item {
-            border: 2px solid $color-red;
-            border-radius: 10px;
-        }
-    }
-
-    &__basket-column-right {
-        flex: 1 1 20%;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        flex-direction: column;
-        border: 2px solid $color-red;
-        border-radius: 10px;
-        align-self: baseline;
-        padding: 20px 0;
-    }
-
-    &__basket-column-left,
-    &__basket-column-right {
-        overflow: hidden;
-    }
-
-    &__basket-final-btn {
-        align-self: center !important;
-        font-size: 16px;
-        font-weight: 700;
-    }
-    &__basket__total-sum {
-        font-size: 16px;
-        span {
-            font-size: 18px;
-            font-weight: 700;
-        }
-    }
-    &.title {
-    }
-}
-
 // Тело самого товара на отдельной странице
 .item-body {
-    &__flex {
-        display: flex;
-        gap: 40px;
-        @media (max-width: 576px) {
-            flex-direction: column;
-        }
-    }
+	&__flex {
+		display: flex;
+		gap: 40px;
+		@media (max-width: 576px) {
+			flex-direction: column;
+		}
+	}
 
-    &__column-left {
-        flex: 1 1 20%;
-        img {
-            width: 300px;
-            @media (max-width: 768px) {
-                width: 200px;
-                height: 200px;
-            }
-            @media (max-width: 576px) {
-                width: 100%;
-                height: 100%;
-            }
-        }
-    }
+	&__column-left {
+		flex: 1 1 20%;
+		img {
+			width: 300px;
+			@media (max-width: 768px) {
+				width: 200px;
+				height: 200px;
+			}
+			@media (max-width: 576px) {
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
 
-    &__column-right {
-        flex: 1 1 80%;
-        padding: 20px 10px;
-        display: flex;
-        flex-direction: column;
-        @media (max-width: 576px) {
-            padding: 0 10px 20px;
-        }
-    }
+	&__column-right {
+		flex: 1 1 80%;
+		padding: 20px 10px;
+		display: flex;
+		flex-direction: column;
+		@media (max-width: 576px) {
+			padding: 0 10px 20px;
+		}
+	}
 
-    &__title {
-        font-size: 26px;
-        font-weight: bold;
-        line-height: 1;
-        margin-bottom: 10px;
-    }
+	&__title {
+		font-size: 26px;
+		font-weight: bold;
+		line-height: 1;
+		margin-bottom: 10px;
+		@media (max-width: 576px) {
+			font-size: 20px;
+		}
+		span {
+			font-style: italic;
+			font-weight: 400;
+		}
+	}
 
-    &__amount {
-        display: flex;
-        gap: 20px;
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 2px solid $color-red;
-        align-self: flex-start;
-        border-radius: 10px;
-    }
+	&__amount {
+		display: flex;
+		gap: 20px;
+		padding: 20px;
+		margin-bottom: 20px;
+		border: 2px solid $color-red;
+		align-self: flex-start;
+		border-radius: 10px;
+		@media (max-width: 768px) {
+			margin-bottom: 0;
+			padding: 10px;
+		}
+	}
 
-    &__amount-minus {
-    }
+	&__amount-minus {
+	}
 
-    &__amount-number {
-    }
+	&__amount-number {
+	}
 
-    &__amount-plus {
-    }
+	&__amount-plus {
+	}
 
-    &__id {
-        padding: 10px 0;
-    }
+	&__id {
+		padding: 10px 0;
+	}
 
-    &__sum {
-        padding: 10px 0;
-        font-weight: bold;
-        font-size: 26px;
-        line-height: 1;
-    }
+	&__sum {
+		padding: 10px 0;
+		font-weight: bold;
+		font-size: 26px;
+		line-height: 1;
+		@media (max-width: 576px) {
+			font-size: 20px;
+		}
+	}
 
-    &__buy {
-        align-self: flex-start;
-        color: white;
-        margin-top: auto;
-        padding: 20px 40px;
-        background-color: $color-red;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 700;
-        @media (max-width: 576px) {
-            margin: 0 auto;
-        }
-        &:hover {
-            background-color: $color-dark-red;
-            @media (max-width: 768px) {
-                background-color: $color-red;
-            }
-        }
-    }
+	&__buy {
+		align-self: flex-start;
+		color: white;
+		margin-top: auto;
+		padding: 20px 40px;
+		background-color: $color-red;
+		border-radius: 10px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		font-weight: 700;
+		@media (max-width: 768px) {
+			padding: 10px 20px;
+		}
+		@media (max-width: 576px) {
+			margin: 0 auto;
+		}
+		&:hover {
+			background-color: $color-dark-red;
+			@media (max-width: 768px) {
+				background-color: $color-red;
+			}
+		}
+	}
 
-    &.title {
-    }
+	&.title {
+	}
 }
 
 // Тело комментариев
 .item-comments {
-    font-size: 40px;
-    line-height: 1;
-    margin-top: 20px;
+	font-size: 40px;
+	line-height: 1;
+	margin-top: 20px;
 }
