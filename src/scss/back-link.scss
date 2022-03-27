@@ -1,14 +1,14 @@
 .back {
-	margin: 30px 10px;
-	&-link {
-		color: white;
-		text-decoration: none;
-		font-size: 20px;
-		& > * + * {
-			margin-left: 20px;
-		}
-		@media (max-width: 425px) {
-			font-size: 16px;
-		}
-	}
+    margin: 30px 10px;
+    &-link {
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        & > * + * {
+            margin-left: 20px;
+        }
+        @media (max-width: 425px) {
+            font-size: 16px;
+        }
+    }
 }
