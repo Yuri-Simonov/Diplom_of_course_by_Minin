@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../../api/index";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 
 const Sort = ({ onSort, currentSort }) => {
     const [sortItems, setSortItems] = useState();
@@ -10,9 +10,9 @@ const Sort = ({ onSort, currentSort }) => {
         });
     }, []);
 
-    //сортировка=========================================================================
-    let handleSort = (event, item) => {
-        let allTar = document.querySelectorAll(".sort__item");
+    // сортировка=========================================================================
+    const handleSort = (event, item) => {
+        const allTar = document.querySelectorAll(".sort__item");
         const tar = event.target;
         const classesOfTargetItem =
             "sort__item-active" || "sort__item-active-rotate";
@@ -61,10 +61,10 @@ const Sort = ({ onSort, currentSort }) => {
     );
 };
 Sort.propTypes = {
-    itemName: propTypes.string,
-    itemKey: propTypes.string,
-    onSort: propTypes.func.isRequired,
-    currentSort: propTypes.object.isRequired
+    itemName: PropTypes.string,
+    itemKey: PropTypes.string,
+    onSort: PropTypes.func.isRequired,
+    currentSort: PropTypes.object.isRequired
 };
 
 export default Sort;

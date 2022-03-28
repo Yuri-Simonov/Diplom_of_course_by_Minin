@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const BackLink = ({ name }) => {
     return (
@@ -21,6 +22,9 @@ const BackLink = ({ name }) => {
             </Link>
         </div>
     );
+};
+BackLink.propTypes = {
+    name: PropTypes.string
 };
 
 export default BackLink;

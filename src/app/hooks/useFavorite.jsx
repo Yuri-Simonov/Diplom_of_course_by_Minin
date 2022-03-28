@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useProducts } from "./useProducts";
+import PropTypes from "prop-types";
 
 const FavoriteContext = React.createContext();
 
@@ -10,7 +11,7 @@ export const useFavorite = () => {
 const FavoriteProvider = ({ children }) => {
     const { products } = useProducts();
 
-    //добавление товара в избранное (хедер)===============================================
+    // добавление товара в избранное (хедер)===============================================
     const [foundFavoriteProducts, setFoundFavoriteProducts] = useState([]);
     const [totalNumberFavoriteProducts, setTotalNumberFavoriteProducts] =
         useState(0);
@@ -32,13 +33,14 @@ const FavoriteProvider = ({ children }) => {
     };
 
     const changeAmountOfFavoriteProducts = () => {
-        let timeArrOfFavoriteProducts = [];
+        const timeArrOfFavoriteProducts = [];
         products.filter((product) => {
             if (localStorage.getItem(`product-${product._id}`)) {
-                return timeArrOfFavoriteProducts.push(
+                timeArrOfFavoriteProducts.push(
                     JSON.parse(localStorage.getItem(`product-${product._id}`))
                 );
             }
+            return timeArrOfFavoriteProducts;
         });
         localStorage.setItem(
             "productsFavorite",
@@ -54,7 +56,7 @@ const FavoriteProvider = ({ children }) => {
             JSON.parse(localStorage.getItem("productsFavorite"))
         );
     }, [totalNumberFavoriteProducts]);
-    //===================================================================================
+    // ===================================================================================
 
     return (
         <FavoriteContext.Provider
@@ -63,6 +65,12 @@ const FavoriteProvider = ({ children }) => {
             {children}
         </FavoriteContext.Provider>
     );
+};
+FavoriteProvider.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ])
 };
 
 export default FavoriteProvider;

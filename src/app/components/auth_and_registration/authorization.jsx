@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { Link } from "react-router-dom";
 import { validator } from "../../../utils/validator";
 import Inputs from "./inputs";
@@ -21,7 +20,7 @@ const Registration = () => {
     const handleChangeBoolean = () => {
         setData((prevState) => ({
             ...prevState,
-            rememberMe: !Boolean(data.rememberMe)
+            rememberMe: !data.rememberMe
         }));
     };
 

@@ -12,11 +12,6 @@ const Search = ({ searchValue, changeValueSearch }) => {
                     value={searchValue}
                     onChange={(event) => changeValueSearch(event)}
                 />
-                {/*  <input
-                    type="submit"
-                    className="search__submit"
-                    value="Искать"
-                /> */}
             </form>
         </section>
     );

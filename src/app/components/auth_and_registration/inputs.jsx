@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 
 const Inputs = ({
     type,
@@ -64,13 +64,13 @@ Inputs.defaultProps = {
     type: "text"
 };
 Inputs.propTypes = {
-    type: propTypes.string,
-    name: propTypes.string,
-    messagePlaceholder: propTypes.string,
-    classNameInput: propTypes.string,
-    onChange: propTypes.func,
-    value: propTypes.string,
-    error: propTypes.object
+    type: PropTypes.string,
+    name: PropTypes.string,
+    messagePlaceholder: PropTypes.string,
+    classNameInput: PropTypes.string,
+    onChange: PropTypes.func,
+    value: PropTypes.string,
+    error: PropTypes.object
 };
 
 export default Inputs;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useBasket } from "../../../hooks/useBasket";
 import { useProducts } from "../../../hooks/useProducts";
 import BackLink from "../../backLinkComponent/backLink";
+import PropTypes from "prop-types";
 
 const ProductPage = ({ productId }) => {
     const { products } = useProducts();
@@ -94,6 +95,9 @@ const ProductPage = ({ productId }) => {
             </div>
         </main>
     );
+};
+ProductPage.propTypes = {
+    productId: PropTypes.string.isRequired
 };
 
 export default ProductPage;

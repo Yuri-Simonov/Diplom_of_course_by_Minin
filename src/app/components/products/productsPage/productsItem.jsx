@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import { useBasket } from "../../../hooks/useBasket";
 import { useFavorite } from "../../../hooks/useFavorite";
 
@@ -104,9 +104,9 @@ const ProductsItem = ({ product }) => {
     );
 };
 ProductsItem.propTypes = {
-    product: propTypes.object.isRequired,
-    addItemToBasket: propTypes.func,
-    addItemToFavorites: propTypes.func
+    product: PropTypes.object.isRequired,
+    addItemToBasket: PropTypes.func,
+    addItemToFavorites: PropTypes.func
 };
 
 export default ProductsItem;

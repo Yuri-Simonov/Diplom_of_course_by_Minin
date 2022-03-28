@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 
 const Pagination = ({
     allAmountProducts,
@@ -40,10 +40,10 @@ const Pagination = ({
     );
 };
 Pagination.propTypes = {
-    allAmountProducts: propTypes.number.isRequired,
-    sizeOnePage: propTypes.number.isRequired,
-    pageChange: propTypes.func.isRequired,
-    currentPage: propTypes.number.isRequired
+    allAmountProducts: PropTypes.number.isRequired,
+    sizeOnePage: PropTypes.number.isRequired,
+    pageChange: PropTypes.func.isRequired,
+    currentPage: PropTypes.number.isRequired
 };
 
 export default Pagination;

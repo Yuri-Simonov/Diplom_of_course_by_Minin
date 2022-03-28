@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useBasket } from "../../hooks/useBasket";
+import PropTypes from "prop-types";
 
 const BasketItem = ({ product }) => {
     const { deleteBasketItem, minusBasketItem, addItemToBasket } = useBasket();
@@ -69,6 +70,9 @@ const BasketItem = ({ product }) => {
             </div>
         </div>
     );
+};
+BasketItem.propTypes = {
+    product: PropTypes.object.isRequired
 };
 
 export default BasketItem;

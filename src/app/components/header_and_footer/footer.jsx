@@ -1,8 +1,8 @@
 import React from "react";
 
 const Footer = () => {
-    let newDate = new Date();
-    let currentYear = newDate.getFullYear();
+    const newDate = new Date();
+    const currentYear = newDate.getFullYear();
 
     return (
         <footer className="footer">
