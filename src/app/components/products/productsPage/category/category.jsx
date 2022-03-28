@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../../api/index";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 
 const Category = ({
     clearCategory,
@@ -66,9 +66,9 @@ const Category = ({
     );
 };
 Category.propTypes = {
-    clearCategory: propTypes.func.isRequired,
-    changeCategoryItems: propTypes.func.isRequired,
-    selectedCategoryItem: propTypes.string
+    clearCategory: PropTypes.func.isRequired,
+    changeCategoryItems: PropTypes.func.isRequired,
+    selectedCategoryItem: PropTypes.string
 };
 
 export default Category;

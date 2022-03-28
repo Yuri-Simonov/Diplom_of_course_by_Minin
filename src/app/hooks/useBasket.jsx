@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useProducts } from "./useProducts";
+import PropTypes from "prop-types";
 
 const BasketContext = React.createContext();
 
@@ -10,12 +11,12 @@ export const useBasket = () => {
 const BasketProvider = ({ children }) => {
     const { products } = useProducts();
 
-    //добавление товара в корзину (хедер)===============================================
+    // добавление товара в корзину (хедер)===============================================
     const [totalBasketCountArray, setTotalBasketCountArray] = useState([]);
     const [totalNumberBasketProducts, setTotalNumberBasketProducts] =
         useState(0);
 
-    //функция, фильтрующая товары для массива корзины
+    // функция, фильтрующая товары для массива корзины
     const changeAmountOfBasketProducts = (productItem, currentCounter) => {
         setTotalNumberBasketProducts((prevState) => prevState + currentCounter);
         if (localStorage.getItem(`productBasket-${productItem._id}`)) {
@@ -29,15 +30,16 @@ const BasketProvider = ({ children }) => {
                 JSON.stringify({ ...productItem, value: currentCounter })
             );
         }
-        let timeArrOfBusketProducts = [];
+        const timeArrOfBusketProducts = [];
         products.filter((product) => {
             if (localStorage.getItem(`productBasket-${product._id}`)) {
-                return timeArrOfBusketProducts.push(
+                timeArrOfBusketProducts.push(
                     JSON.parse(
                         localStorage.getItem(`productBasket-${product._id}`)
                     )
                 );
             }
+            return timeArrOfBusketProducts;
         });
         localStorage.setItem(
             "productsForBasket",
@@ -45,7 +47,7 @@ const BasketProvider = ({ children }) => {
         );
     };
 
-    //добавление товаров в корзину
+    // добавление товаров в корзину
     const addItemToBasket = (product, amount = 1) => {
         let localFoundProductInBasket;
         if (localStorage.getItem(`productBasket-${product._id}`)) {
@@ -56,14 +58,14 @@ const BasketProvider = ({ children }) => {
 
             changeAmountOfBasketProducts(localFoundProductInBasket, amount);
         } else {
-            let currentCounter = amount;
+            const currentCounter = amount;
             return changeAmountOfBasketProducts(product, currentCounter);
         }
     };
 
-    //Уменьшение количества товара в корзине
+    // Уменьшение количества товара в корзине
     const minusBasketItem = (product) => {
-        let localFoundProductInBasket = JSON.parse(
+        const localFoundProductInBasket = JSON.parse(
             localStorage.getItem(`productBasket-${product._id}`)
         );
         localFoundProductInBasket.value--;
@@ -81,7 +83,7 @@ const BasketProvider = ({ children }) => {
         );
     }, [totalNumberBasketProducts]);
 
-    //удаление товаров из корзины
+    // удаление товаров из корзины
     const deleteBasketItem = (basketItem) => {
         if (localStorage.getItem(`productBasket-${basketItem._id}`)) {
             localStorage.removeItem(`productBasket-${basketItem._id}`);
@@ -89,7 +91,7 @@ const BasketProvider = ({ children }) => {
             const beforeDeleteBasketItem = JSON.parse(
                 localStorage.getItem("productsForBasket")
             );
-            let afterDeleteBasketItem = beforeDeleteBasketItem.filter(
+            const afterDeleteBasketItem = beforeDeleteBasketItem.filter(
                 (item) => {
                     return item._id !== basketItem._id;
                 }
@@ -101,12 +103,12 @@ const BasketProvider = ({ children }) => {
         }
     };
 
-    // Очистка корзины при успешном оформлении заказа
+    //  Очистка корзины при успешном оформлении заказа
     const clearBasket = () => {
         localStorage.removeItem("productsForBasket");
         setTotalNumberBasketProducts(0);
         for (let i = 0; i < localStorage.length; i++) {
-            let localKey = localStorage.key(i);
+            const localKey = localStorage.key(i);
             if (localKey.startsWith("productBasket-")) {
                 const needKey = localKey.split(":")[0];
                 localStorage.removeItem(needKey);
@@ -114,7 +116,7 @@ const BasketProvider = ({ children }) => {
         }
     };
 
-    //===================================================================================
+    // ===================================================================================
 
     return (
         <BasketContext.Provider
@@ -129,6 +131,12 @@ const BasketProvider = ({ children }) => {
             {children}
         </BasketContext.Provider>
     );
+};
+BasketProvider.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ])
 };
 
 export default BasketProvider;

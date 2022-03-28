@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import { useFavorite } from "../../hooks/useFavorite";
 import { useBasket } from "../../hooks/useBasket";
 import { useWindowSize } from "../../hooks/useSize";
@@ -8,9 +8,9 @@ import { useWindowSize } from "../../hooks/useSize";
 const Header = () => {
     const { foundFavoriteProducts } = useFavorite();
     const { totalBasketCountArray } = useBasket();
-    const [width, height] = useWindowSize();
+    const [width] = useWindowSize();
 
-    //вывод итогового количества товаров в корзине
+    // вывод итогового количества товаров в корзине
     const totalBaksetProducts = JSON.parse(
         localStorage.getItem("productsForBasket")
     );
@@ -20,24 +20,24 @@ const Header = () => {
             totalSumBaksetProducts += element.value;
         });
 
-    // Menu burger
     // Menu burger =======================================================================
-    let headerBurger = document.querySelector(".header__burger");
-    let headerMenu = document.querySelector(".header__menu");
-    let body = document.querySelector("body");
+    const headerBurger = document.querySelector(".header__burger");
+    const headerMenu = document.querySelector(".header__menu");
+    const body = document.querySelector("body");
     const toggleBurger = () => {
         headerBurger.classList.toggle("active");
         headerMenu.classList.toggle("active");
         body.classList.toggle("lock");
     };
     useEffect(() => {
-        if (width >= 768) {
+        if (width >= 768 && headerBurger && headerMenu) {
+            console.log(1);
             headerBurger.classList.remove("active");
             headerMenu.classList.remove("active");
             body.classList.remove("lock");
         }
     }, [width]);
-    //=======================================================================
+    // =======================================================================
 
     return (
         <div className="header">
@@ -92,8 +92,8 @@ const Header = () => {
     );
 };
 Header.propTypes = {
-    foundFavoriteProducts: propTypes.array,
-    totalBasketCountArray: propTypes.array
+    foundFavoriteProducts: PropTypes.array,
+    totalBasketCountArray: PropTypes.array
 };
 
 export default Header;

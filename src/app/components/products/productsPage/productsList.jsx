@@ -10,11 +10,11 @@ import { useProducts } from "../../../hooks/useProducts";
 
 const ProductsPage = () => {
     const { products, sortBy, onSort } = useProducts();
-    //Пагинация
+    // Пагинация
     const [currentPage, setCurrentPage] = useState(1);
-    //выбор категории в левом меню
+    // выбор категории в левом меню
     const [selectedCategoryItem, setSelectedCategoryItem] = useState();
-    //поиск продуктов
+    // поиск продуктов
     const [searchValue, setSearchValue] = useState("");
     const [searchValueFoundProducts, setSearchValueFoundProducts] = useState();
 
@@ -23,7 +23,7 @@ const ProductsPage = () => {
         setCurrentPage(pageNumber);
     };
 
-    //выбор категории в левом меню
+    // выбор категории в левом меню
     const changeCategoryItems = (item) => {
         setSelectedCategoryItem(item);
         setCurrentPage(1);
@@ -34,7 +34,7 @@ const ProductsPage = () => {
         setCurrentPage(1);
     }, [selectedCategoryItem]);
 
-    //поиск продуктов
+    // поиск продуктов
     const changeValueSearch = (event) => {
         setSearchValue(() => event.target.value);
         setSelectedCategoryItem();
@@ -53,7 +53,7 @@ const ProductsPage = () => {
         }
     }, [searchValue]);
 
-    //фильтрация продуктов по категориям или поиску
+    // фильтрация продуктов по категориям или поиску
     let filteredProductsCategory;
     if (selectedCategoryItem) {
         filteredProductsCategory = products.filter(
@@ -70,15 +70,15 @@ const ProductsPage = () => {
         [sortBy.iter],
         [sortBy.order]
     );
-    //пагинация
+    // пагинация
     const allAmountProducts = filteredProductsCategory
         ? filteredProductsCategory.length
         : 0;
 
     const cropProducts = paginate(sortedProducts, currentPage, sizeOnePage);
-    //===================================================================================
+    // ===================================================================================
 
-    //очистка выбора категорий
+    // очистка выбора категорий
     const clearCategory = () => {
         setSelectedCategoryItem();
     };
@@ -91,7 +91,7 @@ const ProductsPage = () => {
     } else {
         downloadProducts = "Пожалуйста, подождтите...";
     }
-    //===================================================================================
+    // ===================================================================================
 
     return (
         <main className="shop">
