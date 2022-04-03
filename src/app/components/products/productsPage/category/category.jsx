@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from "react";
-import api from "../../../../api/index";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { constants } from "../../../../constants/constants";
 
 const Category = ({
     clearCategory,
     changeCategoryItems,
     selectedCategoryItem
 }) => {
-    useEffect(() => {
-        api.categories.fetchAll().then((data) => {
-            setCategoryItems(data);
-        });
-    }, []);
-
-    const [categoryItems, setCategoryItems] = useState();
     const [categoryText, setCategoryText] = useState(false);
 
     const categoryParent = document.querySelector(".category");
@@ -39,8 +32,8 @@ const Category = ({
             <article className="content__category category">
                 <h2 className="category__title title">Категории:</h2>
                 <div className="category__items">
-                    {categoryItems
-                        ? categoryItems.map((item) => {
+                    {constants.categories
+                        ? constants.categories.map((item) => {
                               return (
                                   <button
                                       key={item}
