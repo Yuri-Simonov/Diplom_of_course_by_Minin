@@ -1,16 +1,8 @@
-import React, { useState, useEffect } from "react";
-import api from "../../../../api/index";
+import React from "react";
 import PropTypes from "prop-types";
+import { constants } from "../../../../constants/constants";
 
 const Sort = ({ onSort, currentSort }) => {
-    const [sortItems, setSortItems] = useState();
-    useEffect(() => {
-        api.sorts.fetchAll().then((data) => {
-            setSortItems(data);
-        });
-    }, []);
-
-    // сортировка=========================================================================
     const handleSort = (event, item) => {
         const allTar = document.querySelectorAll(".sort__item");
         const tar = event.target;
@@ -43,15 +35,15 @@ const Sort = ({ onSort, currentSort }) => {
         <div className="content__sort sort">
             <h2 className="sort__title title">Сортировать по:</h2>
             <div className="sort__items">
-                {sortItems
-                    ? Object.keys(sortItems).map((item) => {
+                {constants.sort
+                    ? Object.keys(constants.sort).map((item) => {
                           return (
                               <p
                                   key={item}
                                   onClick={(event) => handleSort(event, item)}
                                   className="sort__item hover"
                               >
-                                  {sortItems[item]}
+                                  {constants.sort[item]}
                               </p>
                           );
                       })
