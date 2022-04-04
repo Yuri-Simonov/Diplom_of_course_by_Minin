@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import api from "../api";
+// import api from "../api";
 import PropTypes from "prop-types";
+import productsService from "../services/products.service";
 
 const ProductsContext = React.createContext();
 
@@ -9,13 +10,20 @@ export const useProducts = () => {
 };
 
 const ProductsProvider = ({ children }) => {
-    // появление продуктов через 2 секунды===============================================
+    // Запрос продуктов у сервера ==========================================
     const [products, setProducts] = useState();
     useEffect(() => {
-        api.products.fetchAll().then((data) => setProducts(data));
+        getProducts();
     }, []);
-
-    // сортировка=========================================================================
+    async function getProducts() {
+        try {
+            const { content } = await productsService.get();
+            setProducts(content);
+        } catch (error) {
+            alert(`Произошла ошибка: ${error.message}`);
+        }
+    }
+    // сортировка =========================================================
     const [sortBy, setSortBy] = useState({ iter: "", order: "" });
     const onSort = (item) => {
         setSortBy(item);

@@ -11,6 +11,7 @@ import FavoritesPage from "./components/favoritesPage/favoritesPage";
 import BasketProvider from "./hooks/useBasket";
 import FavoriteProvider from "./hooks/useFavorite";
 import ProductsProvider from "./hooks/useProducts";
+import Initialize from "./components/initialize/initialize";
 
 const App = () => {
     return (
@@ -35,6 +36,7 @@ const App = () => {
                             />
                             <Route path="/404" component={PageNotFound} />
                             <Route path="/" exact component={Authorization} />
+                            <Route path="/initialize" component={Initialize} />
                             <Redirect from="/authorization" to="/" />
                             <Redirect to="/404" />
                         </Switch>
