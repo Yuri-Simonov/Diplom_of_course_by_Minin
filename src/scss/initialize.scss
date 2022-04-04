@@ -1,0 +1,61 @@
+.initialize {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    color: white;
+    line-height: 1.1;
+    font-size: 20px;
+    text-align: center;
+    &__body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        & > * + * {
+            margin-top: 20px;
+        }
+    }
+    &__title {
+        font-size: 26px;
+    }
+    &__subtitle {
+    }
+    &__error {
+        color: red;
+    }
+    &__btn {
+        font-size: 20px;
+        color: white;
+        background-color: $color-red;
+        transition: all 0.3s ease;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        &:hover {
+            background-color: $color-dark-red;
+        }
+    }
+    ul {
+        & > * + * {
+            margin-top: 10px;
+        }
+        li {
+        }
+    }
+}
+
+.white {
+    color: white;
+}
+.yellow {
+    color: yellow;
+}
+.lightgreen {
+    color: lightgreen;
+}
+.red {
+    color: red;
+}
