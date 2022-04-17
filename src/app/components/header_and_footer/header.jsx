@@ -4,10 +4,13 @@ import PropTypes from "prop-types";
 import { useFavorite } from "../../hooks/useFavorite";
 import { useBasket } from "../../hooks/useBasket";
 import { useWindowSize } from "../../hooks/useSize";
+import { useAuth } from "../../hooks/useAuth";
+import ProfileDropdown from "./profile_dropdown";
 
 const Header = () => {
     const { foundFavoriteProducts } = useFavorite();
     const { totalBasketCountArray } = useBasket();
+    const { currentUser } = useAuth();
     const [width] = useWindowSize();
 
     // вывод итогового количества товаров в корзине
@@ -31,7 +34,6 @@ const Header = () => {
     };
     useEffect(() => {
         if (width >= 768 && headerBurger && headerMenu) {
-            console.log(1);
             headerBurger.classList.remove("active");
             headerMenu.classList.remove("active");
             body.classList.remove("lock");
@@ -54,36 +56,51 @@ const Header = () => {
                                     Главная
                                 </Link>
                             </li>
-                            <li onClick={toggleBurger}>
-                                <Link to="/favorites" className="header__link">
-                                    Избранное
-                                </Link>
-                                {foundFavoriteProducts &&
-                                    foundFavoriteProducts.length > 0 && (
-                                        <span className="header__count-favorites">
-                                            {foundFavoriteProducts.length}
-                                        </span>
-                                    )}
-                            </li>
-                            <li onClick={toggleBurger}>
-                                <Link to="/basket" className="header__link">
-                                    Корзина
-                                </Link>
-                                {totalBasketCountArray &&
-                                    totalBasketCountArray.length > 0 && (
-                                        <span className="header__count-basket">
-                                            {totalSumBaksetProducts}
-                                        </span>
-                                    )}
-                            </li>
-                            <li onClick={toggleBurger}>
-                                <Link
-                                    to="/authorization"
-                                    className="header__button"
-                                >
-                                    Вход / Регистрация
-                                </Link>
-                            </li>
+                            {currentUser && (
+                                <li onClick={toggleBurger}>
+                                    <Link
+                                        to="/favorites"
+                                        className="header__link"
+                                    >
+                                        Избранное
+                                    </Link>
+                                    {foundFavoriteProducts &&
+                                        foundFavoriteProducts.length > 0 && (
+                                            <span className="header__count-favorites">
+                                                {foundFavoriteProducts.length}
+                                            </span>
+                                        )}
+                                </li>
+                            )}
+                            {currentUser && (
+                                <li onClick={toggleBurger}>
+                                    <Link to="/basket" className="header__link">
+                                        Корзина
+                                    </Link>
+                                    {totalBasketCountArray &&
+                                        totalBasketCountArray.length > 0 && (
+                                            <span className="header__count-basket">
+                                                {totalSumBaksetProducts}
+                                            </span>
+                                        )}
+                                </li>
+                            )}
+                            {currentUser ? (
+                                <li onClick={toggleBurger}>
+                                    <div>
+                                        <ProfileDropdown />
+                                    </div>
+                                </li>
+                            ) : (
+                                <li onClick={toggleBurger}>
+                                    <Link
+                                        to="/authorization"
+                                        className="header__button"
+                                    >
+                                        Вход / Регистрация
+                                    </Link>
+                                </li>
+                            )}
                         </ul>
                     </nav>
                 </div>
