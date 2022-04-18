@@ -1,0 +1,42 @@
+.profile {
+    &__flex {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: -10px;
+    }
+    &__flex-right {
+        flex: 0 0 300px;
+        margin: 10px;
+    }
+    &__flex-left {
+        flex: 0 0 600px;
+        margin: 10px;
+        img {
+            max-width: 100%;
+        }
+        @media (max-width: 600px) {
+            flex: 1 1 auto;
+        }
+    }
+    &__form {
+    }
+    &__item {
+        margin-bottom: 20px;
+        @media (max-width: 768px) {
+            text-align: center;
+        }
+    }
+    &__item-name {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        padding-left: 20px;
+        @media (max-width: 768px) {
+            font-size: 16px;
+            text-align: left;
+        }
+    }
+    &__item-input {
+    }
+}

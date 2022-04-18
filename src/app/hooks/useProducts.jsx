@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-// import api from "../api";
 import PropTypes from "prop-types";
 import productsService from "../services/products.service";
 
@@ -20,7 +19,7 @@ const ProductsProvider = ({ children }) => {
             const { content } = await productsService.get();
             setProducts(content);
         } catch (error) {
-            alert(`Произошла ошибка: ${error.message}`);
+            console.log(`Произошла ошибка: ${error.message}`);
         }
     }
     // сортировка =========================================================

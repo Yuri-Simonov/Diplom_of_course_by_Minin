@@ -12,38 +12,54 @@ import BasketProvider from "./hooks/useBasket";
 import FavoriteProvider from "./hooks/useFavorite";
 import ProductsProvider from "./hooks/useProducts";
 import Initialize from "./components/initialize/initialize";
+import AuthProvider from "./hooks/useAuth";
+import ProtectedRoute from "./components/protectedRoutes/protectedRoute";
+import Profile from "./components/header_and_footer/profile";
 
 const App = () => {
     return (
         <div className="wrapper">
-            <ProductsProvider>
-                <BasketProvider>
-                    <FavoriteProvider>
-                        <Header />
-                        <Switch>
-                            <Route
-                                path="/registration"
-                                component={Registration}
-                            />
-                            <Route path="/basket" component={Basket} />
-                            <Route
-                                path="/favorites"
-                                component={FavoritesPage}
-                            />
-                            <Route
-                                path="/products/:productId?"
-                                component={Products}
-                            />
-                            <Route path="/404" component={PageNotFound} />
-                            <Route path="/" exact component={Authorization} />
-                            <Route path="/initialize" component={Initialize} />
-                            <Redirect from="/authorization" to="/" />
-                            <Redirect to="/404" />
-                        </Switch>
-                    </FavoriteProvider>
-                </BasketProvider>
-            </ProductsProvider>
-            <Footer />
+            <AuthProvider>
+                <ProductsProvider>
+                    <BasketProvider>
+                        <FavoriteProvider>
+                            <Header />
+                            <Switch>
+                                <Route
+                                    path="/registration"
+                                    component={Registration}
+                                />
+                                <Route path="/basket" component={Basket} />
+                                <Route
+                                    path="/favorites"
+                                    component={FavoritesPage}
+                                />
+                                <Route
+                                    path="/products/:productId?"
+                                    component={Products}
+                                />
+                                <ProtectedRoute
+                                    path="/profile/:profileId?"
+                                    component={Profile}
+                                />
+                                <Route path="/404" component={PageNotFound} />
+                                <Route
+                                    path="/"
+                                    exact
+                                    component={Authorization}
+                                />
+                                <Route
+                                    path="/initialize"
+                                    component={Initialize}
+                                />
+                                <Redirect from="/authorization" to="/" />
+                                <Redirect to="/404" />
+                            </Switch>
+                            <Footer />
+                        </FavoriteProvider>
+                    </BasketProvider>
+                </ProductsProvider>
+            </AuthProvider>
         </div>
     );
 };

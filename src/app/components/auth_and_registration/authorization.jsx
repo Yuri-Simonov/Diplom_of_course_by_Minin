@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { validator } from "../../../utils/validator";
+import { useAuth } from "../../hooks/useAuth";
 import Inputs from "./inputs";
 
 const Registration = () => {
@@ -10,12 +11,16 @@ const Registration = () => {
         rememberMe: true
     });
 
+    const history = useHistory();
+    const { signIn } = useAuth();
     const [errors, setErrors] = useState();
+    const [enterError, setEnterError] = useState(null);
     const handleChange = ({ target }) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
+        setEnterError(null);
     };
     const handleChangeBoolean = () => {
         setData((prevState) => ({
@@ -28,25 +33,11 @@ const Registration = () => {
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
-            },
-            isEmail: {
-                message: "Электронная почта введена некорректно"
             }
         },
         password: {
             isRequired: {
                 message: "Пароль обязателен для заполнения"
-            },
-            isCapitalSymbol: {
-                message:
-                    "Пароль должен содержать как минимум одну заглавную букву"
-            },
-            isContainDigit: {
-                message: "Пароль должен содержать как минимум одно число"
-            },
-            minValue: {
-                message: "Пароль должен содержать как минимум 8 знаков",
-                value: 8
             }
         }
     };
@@ -65,17 +56,24 @@ const Registration = () => {
         return Object.keys(errors).length === 0;
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        console.log(data);
+        try {
+            await signIn(data);
+            history.push("/products");
+        } catch (error) {
+            setEnterError(error.message);
+        }
     };
 
     const getSubmittClasses = () => {
         return (
             "authorization__submit" +
-            (!isValidValue ? " authorization__submit" + "-not-active" : "")
+            (!isValidValue || enterError
+                ? " authorization__submit" + "-not-active"
+                : "")
         );
     };
 
@@ -106,6 +104,7 @@ const Registration = () => {
                             messagePlaceholder="Password"
                             classNameInput="authorization__password"
                         />
+
                         <label htmlFor="rememberMe">
                             <input
                                 name="rememberMe"
@@ -137,7 +136,12 @@ const Registration = () => {
                                 Запомнить меня
                             </span>
                         </label>
-                        <button className={getSubmittClasses()}>Войти</button>
+                        {enterError && (
+                            <p className="authorization__error">{enterError}</p>
+                        )}
+                        <button type="submit" className={getSubmittClasses()}>
+                            Войти
+                        </button>
                     </form>
                     <Link
                         to="/registration"

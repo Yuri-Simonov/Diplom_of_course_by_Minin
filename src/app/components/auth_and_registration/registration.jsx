@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { validator } from "../../../utils/validator";
+import { useAuth } from "../../hooks/useAuth";
 import Inputs from "./inputs";
 
 const Registration = () => {
-    const [data, setData] = useState({ email: "", password: "" });
+    const history = useHistory();
+    const [data, setData] = useState({
+        name: "",
+        lastName: "",
+        email: "",
+        password: ""
+    });
     const [errors, setErrors] = useState();
     const handleChange = ({ target }) => {
         setData((prevState) => ({
@@ -12,8 +19,18 @@ const Registration = () => {
             [target.name]: target.value
         }));
     };
+    const { signUp } = useAuth();
 
     const validatorConfig = {
+        name: {
+            isRequired: {
+                message: "Имя обязательно для заполнения"
+            },
+            minValue: {
+                message: "Имя должно содержать не меньше 3 букв",
+                value: 3
+            }
+        },
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -54,11 +71,17 @@ const Registration = () => {
         return Object.keys(errors).length === 0;
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        console.log(data);
+        const newData = { ...data, email: data.email, password: data.password };
+        try {
+            await signUp(newData);
+            history.push("/products");
+        } catch (error) {
+            setErrors(error);
+        }
     };
 
     const getSubmittClasses = () => {
@@ -78,6 +101,22 @@ const Registration = () => {
                         className="authorization__form"
                         onSubmit={handleSubmit}
                     >
+                        <Inputs
+                            name="name"
+                            value={data.name}
+                            onChange={handleChange}
+                            error={errors}
+                            messagePlaceholder="Имя"
+                            classNameInput="authorization__email"
+                        />
+                        <Inputs
+                            name="lastName"
+                            value={data.lastName}
+                            onChange={handleChange}
+                            error={errors}
+                            messagePlaceholder="Фамилия"
+                            classNameInput="authorization__email"
+                        />
                         <Inputs
                             name="email"
                             value={data.email}

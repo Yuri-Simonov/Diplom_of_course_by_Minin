@@ -45,6 +45,14 @@ const Basket = () => {
         setModal(false);
     };
 
+    // Валидация класса на отправку заказа
+    const getSubmitOrder = () => {
+        return (
+            "shop__basket-final-btn item-body__buy" +
+            (totalSum > 0 ? " shop__basket-final-btn-active" : "")
+        );
+    };
+
     return (
         <main className="shop">
             <div className="container">
@@ -60,7 +68,7 @@ const Basket = () => {
                                 Итого: <span>{totalSum} руб.</span>
                             </div>
                             <button
-                                className="shop__basket-final-btn item-body__buy"
+                                className={getSubmitOrder()}
                                 onClick={() => openFinalModalWindow()}
                             >
                                 Оформить заказ
