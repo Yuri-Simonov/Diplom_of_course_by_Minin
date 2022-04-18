@@ -15,6 +15,7 @@ import Initialize from "./components/initialize/initialize";
 import AuthProvider from "./hooks/useAuth";
 import ProtectedRoute from "./components/protectedRoutes/protectedRoute";
 import Profile from "./components/header_and_footer/profile";
+import SignOut from "./components/auth_and_registration/sign_out";
 
 const App = () => {
     return (
@@ -25,10 +26,6 @@ const App = () => {
                         <FavoriteProvider>
                             <Header />
                             <Switch>
-                                <Route
-                                    path="/registration"
-                                    component={Registration}
-                                />
                                 <Route path="/basket" component={Basket} />
                                 <Route
                                     path="/favorites"
@@ -43,6 +40,11 @@ const App = () => {
                                     component={Profile}
                                 />
                                 <Route path="/404" component={PageNotFound} />
+                                <Route
+                                    path="/registration"
+                                    component={Registration}
+                                />
+                                <Route path="/signout" component={SignOut} />
                                 <Route
                                     path="/"
                                     exact

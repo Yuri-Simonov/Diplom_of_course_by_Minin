@@ -8,7 +8,6 @@ const ProfileDropdown = () => {
 
     const toggleDropdown = () => {
         const dropdownList = document.querySelector(".dropdown__list");
-        console.log("dropdownList", dropdownList);
         dropdownList.classList.toggle("dropdown__list-active");
     };
 
@@ -25,7 +24,7 @@ const ProfileDropdown = () => {
                 >
                     Профиль
                 </Link>
-                <Link to={"/"} className="dropdown__list-link">
+                <Link to={"/signout"} className="dropdown__list-link">
                     Выйти
                 </Link>
             </div>
