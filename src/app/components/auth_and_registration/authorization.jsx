@@ -58,11 +58,19 @@ const Registration = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(
+            "history.location.state.from.pathname",
+            history.location.state
+        );
         const isValid = validate();
         if (!isValid) return;
         try {
             await signIn(data);
-            history.push("/products");
+            history.push(
+                history.location.state
+                    ? history.location.state.from.pathname
+                    : "/products"
+            );
         } catch (error) {
             setEnterError(error.message);
         }

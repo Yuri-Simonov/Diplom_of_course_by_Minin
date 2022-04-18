@@ -6,6 +6,7 @@ import localStorageService, {
     setTokens
 } from "../services/localStorage.service";
 import GlobalLoading from "../components/global_loading/global_loading";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export const httpAuth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1/",
@@ -21,6 +22,8 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
+    const history = useHistory();
+
     // console.log("process.env", process.env);
     const [currentUser, setCurrentUser] = useState();
 
@@ -62,7 +65,7 @@ const AuthProvider = ({ children }) => {
                 }
             );
             setTokens(data);
-            getUserData();
+            await getUserData();
         } catch (error) {
             const { code, message } = error.response.data.error;
             if (code === 400) {
@@ -77,6 +80,13 @@ const AuthProvider = ({ children }) => {
                 }
             }
         }
+    }
+
+    // Выход из системы
+    function signOut() {
+        localStorageService.removeAuthData();
+        setCurrentUser(null);
+        history.push("/products");
     }
 
     // Создание юзера
@@ -122,7 +132,7 @@ const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ signUp, signIn, updateUser, currentUser }}
+            value={{ signUp, signIn, signOut, updateUser, currentUser }}
         >
             {!isLoading ? children : <GlobalLoading />}
         </AuthContext.Provider>
