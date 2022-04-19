@@ -36,7 +36,7 @@ const App = () => {
                                     component={Products}
                                 />
                                 <ProtectedRoute
-                                    path="/profile/:profileId?"
+                                    path="/profile/:profileId?/:edit?"
                                     component={Profile}
                                 />
                                 <Route path="/404" component={PageNotFound} />
