@@ -26,6 +26,7 @@ const AuthProvider = ({ children }) => {
 
     // console.log("process.env", process.env);
     const [currentUser, setCurrentUser] = useState();
+    const [paramsUser, setParamsUser] = useState();
 
     // Глобальная блокировка
     const [isLoading, setLoading] = useState(true);
@@ -103,7 +104,6 @@ const AuthProvider = ({ children }) => {
     async function updateUser(data) {
         try {
             const { content } = await userService.update(data);
-            console.log("content", content);
             setCurrentUser(content);
         } catch (error) {
             console.log("error", error.message);
@@ -114,7 +114,6 @@ const AuthProvider = ({ children }) => {
     async function getUserData() {
         try {
             const { content } = await userService.getCurrentUser();
-
             setCurrentUser(content);
         } catch (error) {
             console.log(error);
@@ -122,6 +121,19 @@ const AuthProvider = ({ children }) => {
             setLoading(false);
         }
     }
+
+    // Запрос данных другого пользователя по его id
+    async function getParamsData(id) {
+        try {
+            const { content } = await userService.getParamsUser(id);
+            setParamsUser(content);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     useEffect(() => {
         if (localStorageService.getAccessToken()) {
             getUserData();
@@ -132,7 +144,15 @@ const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ signUp, signIn, signOut, updateUser, currentUser }}
+            value={{
+                signUp,
+                signIn,
+                signOut,
+                updateUser,
+                getParamsData,
+                paramsUser,
+                currentUser
+            }}
         >
             {!isLoading ? children : <GlobalLoading />}
         </AuthContext.Provider>

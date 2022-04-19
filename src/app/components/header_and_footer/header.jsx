@@ -53,7 +53,7 @@ const Header = () => {
                         <ul className="header__list">
                             <li onClick={toggleBurger}>
                                 <Link to="/products" className="header__link">
-                                    Главная
+                                    Продукты
                                 </Link>
                             </li>
                             {currentUser && (
