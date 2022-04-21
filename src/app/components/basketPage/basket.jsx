@@ -58,7 +58,11 @@ const Basket = () => {
             <div className="container">
                 <BackLink name="Вернуться к покупкам" />
                 <section className="shop__basket">
-                    <h2 className="shop__basket-title title">Корзина</h2>
+                    {totalSum > 0 && (
+                        <h2 className="shop__basket-title title">
+                            Ваши товары в корзине:
+                        </h2>
+                    )}
                     <div className="shop__basket-flex">
                         <article className="shop__basket-column-left">
                             {baksetProducts}

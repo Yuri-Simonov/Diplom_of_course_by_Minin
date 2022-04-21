@@ -35,8 +35,9 @@
 }
 .product {
     position: relative;
+    max-width: 1200px;
+    margin: 40px auto;
     overflow: hidden;
-    margin-bottom: 20px;
     border: 2px solid $color-red;
     border-radius: 10px;
     overflow: hidden;

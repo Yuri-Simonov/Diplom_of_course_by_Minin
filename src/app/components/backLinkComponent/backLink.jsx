@@ -1,11 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const BackLink = ({ name }) => {
+    const params = useParams();
+    const { profileId } = params;
+
+    const routeLinkBack =
+        name === "Вернуться к покупкам" ? "/products" : `/profile/${profileId}`;
+
     return (
         <div className="back">
-            <Link to="/products" className="hover back-link">
+            <Link to={routeLinkBack} className="hover back-link">
                 <svg
                     width="19"
                     height="12"

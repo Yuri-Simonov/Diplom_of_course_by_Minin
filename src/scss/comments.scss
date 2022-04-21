@@ -1,0 +1,154 @@
+// Комментарии
+
+.comments {
+    padding: 80px 0;
+    @media (max-width: 576px) {
+        padding-top: 60px;
+    }
+    &__title {
+        font-size: 36px;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        @media (max-width: 576px) {
+            font-size: 26px;
+        }
+    }
+    &__subtitle {
+        font-size: 18px;
+        font-style: italic;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        @media (max-width: 576px) {
+            font-size: 14px;
+        }
+    }
+
+    &__item {
+        position: relative;
+        border: 2px solid $color-red;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 40px;
+        transition: all 0.3s ease;
+        &:hover {
+            box-shadow: 0 0 15px 2px rgb(255, 255, 255);
+        }
+    }
+
+    &__item-flex {
+        display: flex;
+        width: 100%;
+        padding: 15px;
+    }
+
+    &__item-avatar {
+        border-radius: 100%;
+        overflow: hidden;
+
+        margin-right: 10px;
+        img {
+            max-width: 60px;
+        }
+    }
+
+    &__item-content {
+        display: flex;
+        flex-direction: column;
+        padding-top: 40px;
+        width: 100%;
+    }
+
+    &__item-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+
+    &__item-name {
+        font-size: 20px;
+        line-height: 1.1;
+        color: $color-gray-gold;
+        min-width: 100px;
+        max-width: 500px;
+        margin: -10px -4px 0;
+        padding-right: 20px;
+        & > * {
+            margin: 10px 4px 0;
+        }
+    }
+
+    &__item-date {
+        color: $color-gray;
+        white-space: nowrap;
+    }
+
+    &__item-comment {
+    }
+
+    &__item-text {
+    }
+    &__item-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        svg {
+            width: 14px;
+            height: 12px;
+        }
+    }
+    &__add {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    &__add-form {
+        text-align: right;
+    }
+    &__add-textarea {
+        width: 100%;
+        min-height: 80px;
+        resize: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        line-height: 1.2;
+        border: 2px solid $color-red;
+        background-color: transparent;
+        color: white;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        &:hover {
+            box-shadow: 0 0 15px 2px rgb(255, 255, 255);
+        }
+    }
+    &__add-submit {
+        align-self: flex-start;
+        color: white;
+        padding: 20px 40px;
+        background-color: $color-red;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        font-weight: 700;
+        opacity: 0.5;
+        pointer-events: none;
+        @media (max-width: 768px) {
+            padding: 10px 20px;
+        }
+        @media (max-width: 576px) {
+            margin: 0 auto;
+        }
+        &-active {
+            opacity: 1;
+            pointer-events: all;
+            cursor: pointer;
+        }
+        &:hover {
+            background-color: $color-dark-red;
+            @media (max-width: 768px) {
+                background-color: $color-red;
+            }
+        }
+    }
+}

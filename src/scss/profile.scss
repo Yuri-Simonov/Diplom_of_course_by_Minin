@@ -10,7 +10,7 @@
         margin: 10px;
     }
     &__flex-left {
-        flex: 0 0 600px;
+        flex: 0 0 400px;
         margin: 10px;
         img {
             max-width: 100%;
@@ -27,7 +27,8 @@
             text-align: center;
         }
     }
-    &__item-name {
+    &__item-name,
+    &__item-label {
         font-size: 20px;
         font-weight: bold;
         margin-bottom: 10px;
@@ -37,6 +38,34 @@
             text-align: left;
         }
     }
+    &__item-label {
+        font-weight: 400;
+        color: $color-gray-gold;
+    }
+    &__item-name {
+        display: inline-block;
+        margin-top: 10px;
+    }
     &__item-input {
+    }
+    &__item-edit {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 16px;
+        width: 200px;
+        height: 50px;
+        padding: 10px 20px;
+        margin-left: 20px;
+        border-radius: 10px;
+        color: white;
+        background-color: $color-red;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        &:hover {
+            background-color: rgb(73, 9, 9);
+        }
     }
 }

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useBasket } from "../../../hooks/useBasket";
 import { useFavorite } from "../../../hooks/useFavorite";
+import { useAuth } from "../../../hooks/useAuth";
 
 const ProductsItem = ({ product }) => {
+    const history = useHistory();
+    const { currentUser } = useAuth();
     const { addItemToBasket } = useBasket();
     const { addItemToFavorites } = useFavorite();
     let reviewWord;
@@ -72,12 +75,22 @@ const ProductsItem = ({ product }) => {
                         </div>
                     </div>
                     <div className="product__price">{product.price} руб.</div>
-                    <button
-                        className="product__add-basket item-body__buy"
-                        onClick={() => addItemToBasket(product)}
-                    >
-                        Добавить товар в корзину
-                    </button>
+                    {currentUser && (
+                        <button
+                            className="product__add-basket item-body__buy"
+                            onClick={() => addItemToBasket(product)}
+                        >
+                            Добавить в корзину
+                        </button>
+                    )}
+                    {!currentUser && (
+                        <button
+                            className="product__add-basket item-body__buy"
+                            onClick={() => history.push("/authorization")}
+                        >
+                            Добавить в корзину
+                        </button>
+                    )}
                 </div>
             </div>
             <div

@@ -4,7 +4,7 @@ import { validator } from "../../../utils/validator";
 import { useAuth } from "../../hooks/useAuth";
 import Inputs from "./inputs";
 
-const Registration = () => {
+const Authorization = () => {
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -58,17 +58,13 @@ const Registration = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(
-            "history.location.state.from.pathname",
-            history.location.state
-        );
         const isValid = validate();
         if (!isValid) return;
         try {
             await signIn(data);
             history.push(
                 history.location.state
-                    ? history.location.state.from.pathname
+                    ? history.location.state.from
                     : "/products"
             );
         } catch (error) {
@@ -169,4 +165,4 @@ const Registration = () => {
     );
 };
 
-export default Registration;
+export default Authorization;
