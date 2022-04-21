@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { validator } from "../../../utils/validator";
 import { useAuth } from "../../hooks/useAuth";
-import localStorageService from "../../services/localStorage.service";
 import Inputs from "./inputs";
 
 const Authorization = () => {
@@ -62,14 +61,12 @@ const Authorization = () => {
         const isValid = validate();
         if (!isValid) return;
         try {
-            const toPath = localStorageService.getCurrentURL();
-            console.log("toPath", toPath);
-            console.log(
-                "history.location.state.from",
-                history.location.state.from
-            );
             await signIn(data);
-            history.push(history.location.state.from || toPath || "/products");
+            history.push(
+                history.location.state
+                    ? history.location.state.from
+                    : "/products"
+            );
         } catch (error) {
             setEnterError(error.message);
         }

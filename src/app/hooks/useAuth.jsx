@@ -85,6 +85,8 @@ const AuthProvider = ({ children }) => {
     function signOut() {
         localStorageService.removeAuthData();
         setCurrentUser(null);
+        // const currentURL = history.location.pathname;
+        // history.push(currentURL);
         history.push("/products");
     }
 
@@ -132,12 +134,6 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    // Запоминание прошлого URL перед входом / регистрацией
-    function setLastURL() {
-        console.log("history", history.location.pathname);
-        localStorageService.setCurrentURL(history.location.pathname);
-    }
-
     useEffect(() => {
         if (localStorageService.getAccessToken()) {
             getUserData();
@@ -154,7 +150,6 @@ const AuthProvider = ({ children }) => {
                 signOut,
                 updateUser,
                 getParamsData,
-                setLastURL,
                 paramsUser,
                 currentUser
             }}

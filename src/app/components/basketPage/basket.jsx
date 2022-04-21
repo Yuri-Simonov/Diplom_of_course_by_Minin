@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import React, { useState } from "react";
 import { useBasket } from "../../hooks/useBasket";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
 const Basket = () => {
-    const { setLastURL } = useAuth();
     const { clearBasket } = useBasket();
     let baksetProducts = JSON.parse(localStorage.getItem("productsForBasket"));
 
@@ -54,11 +52,6 @@ const Basket = () => {
             (totalSum > 0 ? " shop__basket-final-btn-active" : "")
         );
     };
-
-    useEffect(() => {
-        console.log(1);
-        setLastURL();
-    }, []);
 
     return (
         <main className="shop">

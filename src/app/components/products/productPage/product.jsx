@@ -12,7 +12,7 @@ const ProductPage = ({ productId }) => {
     const history = useHistory();
     const { products } = useProducts();
     const { addItemToBasket } = useBasket();
-    const { currentUser, setLastURL } = useAuth();
+    const { currentUser } = useAuth();
     const [foundProduct, setFoundProduct] = useState();
     useEffect(() => {
         if (products) {
@@ -34,11 +34,6 @@ const ProductPage = ({ productId }) => {
             setProductCount((prevState) => prevState - 1);
         }
     };
-
-    useEffect(() => {
-        console.log(1);
-        setLastURL();
-    }, []);
 
     return (
         <main className="shop">
