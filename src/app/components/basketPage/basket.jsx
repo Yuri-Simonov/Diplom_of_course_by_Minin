@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { useBasket } from "../../hooks/useBasket";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
 const Basket = () => {
+    const { setLastURL } = useAuth();
     const { clearBasket } = useBasket();
     let baksetProducts = JSON.parse(localStorage.getItem("productsForBasket"));
 
@@ -53,12 +55,21 @@ const Basket = () => {
         );
     };
 
+    useEffect(() => {
+        console.log(1);
+        setLastURL();
+    }, []);
+
     return (
         <main className="shop">
             <div className="container">
                 <BackLink name="Вернуться к покупкам" />
                 <section className="shop__basket">
-                    <h2 className="shop__basket-title title">Корзина</h2>
+                    {totalSum > 0 && (
+                        <h2 className="shop__basket-title title">
+                            Ваши товары в корзине:
+                        </h2>
+                    )}
                     <div className="shop__basket-flex">
                         <article className="shop__basket-column-left">
                             {baksetProducts}

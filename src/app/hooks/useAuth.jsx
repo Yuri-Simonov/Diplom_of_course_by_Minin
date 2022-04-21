@@ -23,11 +23,9 @@ export const useAuth = () => {
 
 const AuthProvider = ({ children }) => {
     const history = useHistory();
-
     // console.log("process.env", process.env);
     const [currentUser, setCurrentUser] = useState();
     const [paramsUser, setParamsUser] = useState();
-
     // Глобальная блокировка
     const [isLoading, setLoading] = useState(true);
 
@@ -134,6 +132,12 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    // Запоминание прошлого URL перед входом / регистрацией
+    function setLastURL() {
+        console.log("history", history.location.pathname);
+        localStorageService.setCurrentURL(history.location.pathname);
+    }
+
     useEffect(() => {
         if (localStorageService.getAccessToken()) {
             getUserData();
@@ -150,6 +154,7 @@ const AuthProvider = ({ children }) => {
                 signOut,
                 updateUser,
                 getParamsData,
+                setLastURL,
                 paramsUser,
                 currentUser
             }}

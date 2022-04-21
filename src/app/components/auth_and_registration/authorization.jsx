@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { validator } from "../../../utils/validator";
 import { useAuth } from "../../hooks/useAuth";
+import localStorageService from "../../services/localStorage.service";
 import Inputs from "./inputs";
 
-const Registration = () => {
+const Authorization = () => {
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -58,19 +59,17 @@ const Registration = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(
-            "history.location.state.from.pathname",
-            history.location.state
-        );
         const isValid = validate();
         if (!isValid) return;
         try {
-            await signIn(data);
-            history.push(
-                history.location.state
-                    ? history.location.state.from.pathname
-                    : "/products"
+            const toPath = localStorageService.getCurrentURL();
+            console.log("toPath", toPath);
+            console.log(
+                "history.location.state.from",
+                history.location.state.from
             );
+            await signIn(data);
+            history.push(history.location.state.from || toPath || "/products");
         } catch (error) {
             setEnterError(error.message);
         }
@@ -169,4 +168,4 @@ const Registration = () => {
     );
 };
 
-export default Registration;
+export default Authorization;

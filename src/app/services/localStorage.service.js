@@ -3,6 +3,8 @@ const REFRESH_KEY = "jwt-refresh-token";
 const EXPIRES_KEY = "jwt-expires";
 const USERID_KEY = "user-local-id";
 
+const CURRENT_URL = "user-previous-url";
+
 export function setTokens({
     refreshToken,
     idToken,
@@ -34,12 +36,22 @@ export function getTokenExpiresDate() {
 export function getUserId() {
     return localStorage.getItem(USERID_KEY);
 }
+
+export function setCurrentURL(url) {
+    return localStorage.setItem(CURRENT_URL, url);
+}
+export function getCurrentURL() {
+    return localStorage.getItem(CURRENT_URL);
+}
+
 const localStorageService = {
     setTokens,
     getAccessToken,
     getRefreshToken,
     getTokenExpiresDate,
     getUserId,
-    removeAuthData
+    removeAuthData,
+    setCurrentURL,
+    getCurrentURL
 };
 export default localStorageService;

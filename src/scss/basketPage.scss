@@ -1,6 +1,8 @@
 .shop {
     &__item {
         padding: 10px;
+        max-width: 1200px;
+        margin: 40px auto;
     }
 
     &__item-body {
@@ -16,8 +18,9 @@
         padding: 10px;
     }
 
+    &__basket-title.title,
     &__basket-title {
-        font-size: 30px;
+        font-size: 36px;
         line-height: 1;
         margin-bottom: 30px;
     }

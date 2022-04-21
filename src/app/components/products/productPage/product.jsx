@@ -3,10 +3,16 @@ import { useBasket } from "../../../hooks/useBasket";
 import { useProducts } from "../../../hooks/useProducts";
 import BackLink from "../../backLinkComponent/backLink";
 import PropTypes from "prop-types";
+import Comments from "../../comments/comments";
+import UserProvider from "../../../hooks/useUsers";
+import { useAuth } from "../../../hooks/useAuth";
+import { useHistory } from "react-router-dom";
 
 const ProductPage = ({ productId }) => {
+    const history = useHistory();
     const { products } = useProducts();
     const { addItemToBasket } = useBasket();
+    const { currentUser, setLastURL } = useAuth();
     const [foundProduct, setFoundProduct] = useState();
     useEffect(() => {
         if (products) {
@@ -29,10 +35,15 @@ const ProductPage = ({ productId }) => {
         }
     };
 
+    useEffect(() => {
+        console.log(1);
+        setLastURL();
+    }, []);
+
     return (
         <main className="shop">
             <div className="container">
-                <BackLink name="Вернуться к списку продуктов" />
+                <BackLink name="Вернуться к покупкам" />
                 <h3 className="shop__item__breadcrumbs">Хлебные крошки</h3>
                 {foundProduct ? (
                     <section className="shop__item">
@@ -71,22 +82,36 @@ const ProductPage = ({ productId }) => {
                                     <div className="item-body__sum">
                                         {foundProduct.price} руб.
                                     </div>
-                                    <button
-                                        className="item-body__buy"
-                                        onClick={() =>
-                                            addItemToBasket(
-                                                foundProduct,
-                                                productCount
-                                            )
-                                        }
-                                    >
-                                        Добавить в корзину
-                                    </button>
+                                    {currentUser && (
+                                        <button
+                                            className="item-body__buy"
+                                            onClick={() =>
+                                                addItemToBasket(
+                                                    foundProduct,
+                                                    productCount
+                                                )
+                                            }
+                                        >
+                                            Добавить в корзину
+                                        </button>
+                                    )}
+                                    {!currentUser && (
+                                        <button
+                                            className="item-body__buy"
+                                            onClick={() =>
+                                                history.push("/authorization")
+                                            }
+                                        >
+                                            Добавить в корзину
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>
-                        <div className="shop__item-comments item-comments">
-                            Отзывы о товаре...
+                        <div className="shop__item-comments">
+                            <UserProvider>
+                                <Comments productId={productId} />
+                            </UserProvider>
                         </div>
                     </section>
                 ) : (

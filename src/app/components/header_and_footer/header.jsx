@@ -97,7 +97,7 @@ const Header = () => {
                                         to="/authorization"
                                         className="header__button"
                                     >
-                                        Вход / Регистрация
+                                        Вход
                                     </Link>
                                 </li>
                             )}

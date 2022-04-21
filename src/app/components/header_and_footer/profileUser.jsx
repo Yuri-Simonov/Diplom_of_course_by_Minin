@@ -12,6 +12,15 @@ const ProfileUser = ({ profileId }) => {
         getParamsData(profileId);
     }, [profileId]);
 
+    function currentPerson(id) {
+        if (id === currentUser._id) {
+            return currentUser;
+        } else {
+            return paramsUser;
+        }
+    }
+    console.log(paramsUser);
+
     return (
         <>
             {paramsUser ? (
@@ -22,7 +31,10 @@ const ProfileUser = ({ profileId }) => {
                             <div className="profile__flex">
                                 <article className="profile__flex-left">
                                     <img
-                                        src={paramsUser.img || userDefaultImage}
+                                        src={
+                                            currentPerson(profileId).img ||
+                                            userDefaultImage
+                                        }
                                         alt="user"
                                     />
                                 </article>
@@ -32,23 +44,30 @@ const ProfileUser = ({ profileId }) => {
                                             Имя пользователя:
                                         </p>
                                         <p className="profile__item-name">
-                                            {paramsUser.name}
+                                            {currentPerson(profileId).name}
                                         </p>
                                     </div>
-                                    <div className="profile__item">
-                                        <p className="profile__item-label">
-                                            Фамилия пользователя:
-                                        </p>
-                                        <p className="profile__item-name">
-                                            {paramsUser.lastName}
-                                        </p>
-                                    </div>
+                                    {currentPerson(profileId).lastName.length >
+                                        0 && (
+                                        <div className="profile__item">
+                                            <p className="profile__item-label">
+                                                Фамилия пользователя:
+                                            </p>
+                                            <p className="profile__item-name">
+                                                {
+                                                    currentPerson(profileId)
+                                                        .lastName
+                                                }
+                                            </p>
+                                        </div>
+                                    )}
+
                                     <div className="profile__item">
                                         <p className="profile__item-label">
                                             На сайте с:
                                         </p>
                                         <p className="profile__item-name">
-                                            {paramsUser.date}
+                                            {currentPerson(profileId).date}
                                         </p>
                                     </div>
                                     <div className="profile__item">
@@ -56,13 +75,16 @@ const ProfileUser = ({ profileId }) => {
                                             Оставил отзывов:
                                         </p>
                                         <p className="profile__item-name">
-                                            {paramsUser.amountReviews}
+                                            {
+                                                currentPerson(profileId)
+                                                    .amountReviews
+                                            }
                                         </p>
                                     </div>
                                     {paramsUser._id === currentUser._id && (
                                         <div className="profile__item">
                                             <Link
-                                                to={`/profile/${paramsUser._id}/edit`}
+                                                to={`/profile/${currentUser._id}/edit`}
                                                 className="profile__item-edit"
                                             >
                                                 Редактировать

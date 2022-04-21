@@ -7,8 +7,10 @@ import Pagination from "../../pagination/pagination";
 import { paginate } from "../../../../utils/paginate";
 import _ from "lodash";
 import { useProducts } from "../../../hooks/useProducts";
+import { useAuth } from "../../../hooks/useAuth";
 
 const ProductsPage = () => {
+    const { setLastURL } = useAuth();
     const { products, sortBy, onSort } = useProducts();
     // Пагинация
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,6 +24,10 @@ const ProductsPage = () => {
     const pageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
+    useEffect(() => {
+        setLastURL();
+    }, []);
 
     // выбор категории в левом меню
     const changeCategoryItems = (item) => {
