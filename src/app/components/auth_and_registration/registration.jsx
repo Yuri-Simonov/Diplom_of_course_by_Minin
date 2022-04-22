@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { registerDate } from "../../../utils/displayDate";
 import { validator } from "../../../utils/validator";
 import { useAuth } from "../../hooks/useAuth";
 import Inputs from "./inputs";
@@ -10,7 +11,10 @@ const Registration = () => {
         name: "",
         lastName: "",
         email: "",
-        password: ""
+        password: "",
+        registerDate: "",
+        img: "",
+        amountReviews: 0
     });
     const [errors, setErrors] = useState();
     const handleChange = ({ target }) => {
@@ -75,7 +79,14 @@ const Registration = () => {
         event.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        const newData = { ...data, email: data.email, password: data.password };
+        const nowDate = Date.now();
+        const regDate = registerDate(parseInt(nowDate));
+        const newData = {
+            ...data,
+            email: data.email,
+            password: data.password,
+            registerDate: regDate
+        };
         try {
             await signUp(newData);
             history.push("/products");

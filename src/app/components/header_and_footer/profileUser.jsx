@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import BackLink from "../backLinkComponent/backLink";
@@ -8,22 +8,26 @@ import GlobalLoading from "../global_loading/global_loading";
 
 const ProfileUser = ({ profileId }) => {
     const { currentUser, paramsUser, getParamsData } = useAuth(profileId);
+    const [pageUser, serPageUser] = useState();
+
     useEffect(() => {
         getParamsData(profileId);
     }, [profileId]);
 
     function currentPerson(id) {
         if (id === currentUser._id) {
-            return currentUser;
+            return serPageUser(currentUser);
         } else {
-            return paramsUser;
+            return serPageUser(paramsUser);
         }
     }
-    console.log(paramsUser);
+    useEffect(() => {
+        currentPerson();
+    }, [currentUser, paramsUser]);
 
     return (
         <>
-            {paramsUser ? (
+            {pageUser ? (
                 <main className="shop">
                     <div className="container">
                         <BackLink name="Вернуться к покупкам" />
@@ -31,10 +35,7 @@ const ProfileUser = ({ profileId }) => {
                             <div className="profile__flex">
                                 <article className="profile__flex-left">
                                     <img
-                                        src={
-                                            currentPerson(profileId).img ||
-                                            userDefaultImage
-                                        }
+                                        src={pageUser.img || userDefaultImage}
                                         alt="user"
                                     />
                                 </article>
@@ -44,20 +45,16 @@ const ProfileUser = ({ profileId }) => {
                                             Имя пользователя:
                                         </p>
                                         <p className="profile__item-name">
-                                            {currentPerson(profileId).name}
+                                            {pageUser.name}
                                         </p>
                                     </div>
-                                    {currentPerson(profileId).lastName.length >
-                                        0 && (
+                                    {pageUser.lastName.length > 0 && (
                                         <div className="profile__item">
                                             <p className="profile__item-label">
                                                 Фамилия пользователя:
                                             </p>
                                             <p className="profile__item-name">
-                                                {
-                                                    currentPerson(profileId)
-                                                        .lastName
-                                                }
+                                                {pageUser.lastName}
                                             </p>
                                         </div>
                                     )}
@@ -67,7 +64,7 @@ const ProfileUser = ({ profileId }) => {
                                             На сайте с:
                                         </p>
                                         <p className="profile__item-name">
-                                            {currentPerson(profileId).date}
+                                            {pageUser.registerDate}
                                         </p>
                                     </div>
                                     <div className="profile__item">
@@ -75,10 +72,7 @@ const ProfileUser = ({ profileId }) => {
                                             Оставил отзывов:
                                         </p>
                                         <p className="profile__item-name">
-                                            {
-                                                currentPerson(profileId)
-                                                    .amountReviews
-                                            }
+                                            {pageUser.amountReviews}
                                         </p>
                                     </div>
                                     {paramsUser._id === currentUser._id && (
