@@ -4,6 +4,7 @@ import AddCommentForm from "./addCommentForm";
 import Comment from "./comment";
 import PropTypes from "prop-types";
 import { useAuth } from "../../hooks/useAuth";
+import { orderBy } from "lodash";
 
 const Comments = ({ productId }) => {
     const { currentUser } = useAuth();
@@ -13,6 +14,9 @@ const Comments = ({ productId }) => {
         createComment(data, productId);
     };
 
+    // Сортировка комментариев
+    const sortedComments = orderBy(comments, ["created_at"], ["desc"]);
+
     // Запрос данных по комментариям к FireBase при просмотре продукта
     useEffect(() => {
         getComments(productId);
@@ -21,15 +25,15 @@ const Comments = ({ productId }) => {
     return (
         <div className="comments">
             <h2 className="comments__title">Отзывы</h2>
-            {comments &&
-                comments.map((comment) => (
+            {sortedComments &&
+                sortedComments.map((comment) => (
                     <Comment
                         key={comment._id}
                         {...comment}
                         onRemove={removeComment}
                     />
                 ))}
-            {comments && comments.length === 0 && (
+            {sortedComments && sortedComments.length === 0 && (
                 <h2 className="comments__subtitle">
                     {currentUser
                         ? "Еще никто не оставил отзыв о товаре. Будьте первым!"
