@@ -43,6 +43,9 @@ const ProductsItem = ({ product }) => {
     }
     useEffect(() => {
         changeFavorite();
+    }, []);
+    useEffect(() => {
+        changeFavorite();
     }, [
         currentUser &&
             localStorage.getItem(`product-${product._id}-${currentUser._id}`)

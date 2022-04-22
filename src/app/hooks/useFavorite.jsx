@@ -17,7 +17,18 @@ const FavoriteProvider = ({ children }) => {
     const [foundFavoriteProducts, setFoundFavoriteProducts] = useState([]);
     const [totalNumberFavoriteProducts, setTotalNumberFavoriteProducts] =
         useState(0);
-
+    useEffect(() => {
+        if (
+            currentUser &&
+            localStorage.getItem(`productsFavorite-${currentUser._id}`)
+        ) {
+            setTotalNumberFavoriteProducts(
+                JSON.parse(
+                    localStorage.getItem(`productsFavorite-${currentUser._id}`)
+                ).length
+            );
+        }
+    }, [currentUser]);
     const addItemToFavorites = (event, product) => {
         if (localStorage.getItem(`product-${product._id}-${currentUser._id}`)) {
             setTotalNumberFavoriteProducts((prevState) => prevState - 1);
@@ -35,7 +46,6 @@ const FavoriteProvider = ({ children }) => {
             changeAmountOfFavoriteProducts();
         }
     };
-
     const changeAmountOfFavoriteProducts = () => {
         const timeArrOfFavoriteProducts = [];
         products.filter((product) => {
@@ -58,19 +68,21 @@ const FavoriteProvider = ({ children }) => {
             `productsFavorite-${currentUser._id}`,
             JSON.stringify(timeArrOfFavoriteProducts)
         );
+
         setFoundFavoriteProducts(
             JSON.parse(
                 localStorage.getItem(`productsFavorite-${currentUser._id}`)
             )
         );
     };
-
     useEffect(() => {
-        setFoundFavoriteProducts(
-            JSON.parse(
-                localStorage.getItem(`productsFavorite-${currentUser._id}`)
-            )
-        );
+        if (currentUser) {
+            setFoundFavoriteProducts(
+                JSON.parse(
+                    localStorage.getItem(`productsFavorite-${currentUser._id}`)
+                )
+            );
+        }
     }, [totalNumberFavoriteProducts]);
     // ===================================================================================
 
