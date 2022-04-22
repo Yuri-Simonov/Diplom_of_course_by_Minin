@@ -18,10 +18,16 @@ export function displayDate(data) {
             }
             return `${date.getHours()}:${date.getMinutes()}`;
         }
-
-        return `${date.getDay()} ${date.toLocaleString("default", {
-            month: "long"
-        })}`;
+        if (date.getDay() < 10 && date.getMonth() >= 9) {
+            return `0${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
+        } else if (date.getDay() >= 10 && date.getMonth() < 9) {
+            return `${date.getDay()}.0${date.getMonth()}.${date.getFullYear()}`;
+        }
+        if (date.getDay() < 10 && date.getMonth() < 9) {
+            return `0${date.getDay()}.0${date.getMonth()}.${date.getFullYear()}`;
+        } else {
+            return `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
+        }
     }
     return (
         date.getFullYear() + "." + (date.getMonth() + 1) + "_" + date.getDate()
