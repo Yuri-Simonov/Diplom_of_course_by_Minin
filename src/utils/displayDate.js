@@ -33,3 +33,18 @@ export function displayDate(data) {
         date.getFullYear() + "." + (date.getMonth() + 1) + "_" + date.getDate()
     );
 }
+
+export function registerDate(data) {
+    const date = new Date(parseInt(data));
+
+    if (date.getDay() < 10 && date.getMonth() >= 9) {
+        return `0${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
+    } else if (date.getDay() >= 10 && date.getMonth() < 9) {
+        return `${date.getDay()}.0${date.getMonth()}.${date.getFullYear()}`;
+    }
+    if (date.getDay() < 10 && date.getMonth() < 9) {
+        return `0${date.getDay()}.0${date.getMonth()}.${date.getFullYear()}`;
+    } else {
+        return `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
+    }
+}
