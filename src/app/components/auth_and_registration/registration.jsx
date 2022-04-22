@@ -23,7 +23,7 @@ const Registration = () => {
             [target.name]: target.value
         }));
     };
-    const { signUp } = useAuth();
+    const { currentUser, signUp } = useAuth();
 
     const validatorConfig = {
         name: {
@@ -101,6 +101,11 @@ const Registration = () => {
             (!isValidValue ? " authorization__submit" + "-not-active" : "")
         );
     };
+
+    // Переброс на главную страницу, если пользователь авторизован и хочет зайти на регистрацию
+    if (currentUser) {
+        history.push("/");
+    }
 
     return (
         <main className="shop authorization">

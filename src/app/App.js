@@ -33,7 +33,6 @@ const App = () => {
                                         path="/basket"
                                         component={Basket}
                                     />
-                                    {/* <Route path="/basket" component={Basket} /> */}
                                     <Route
                                         path="/favorites"
                                         component={FavoritesPage}

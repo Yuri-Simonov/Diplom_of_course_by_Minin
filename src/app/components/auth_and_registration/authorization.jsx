@@ -12,7 +12,7 @@ const Authorization = () => {
     });
 
     const history = useHistory();
-    const { signIn } = useAuth();
+    const { currentUser, signIn } = useAuth();
     const [errors, setErrors] = useState();
     const [enterError, setEnterError] = useState(null);
     const handleChange = ({ target }) => {
@@ -80,6 +80,11 @@ const Authorization = () => {
                 : "")
         );
     };
+
+    // Переброс на главную страницу, если пользователь авторизован и хочет зайти на авторизацию
+    if (currentUser) {
+        history.push("/");
+    }
 
     return (
         <main className="shop authorization">
