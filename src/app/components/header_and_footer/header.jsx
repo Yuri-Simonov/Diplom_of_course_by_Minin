@@ -14,9 +14,12 @@ const Header = () => {
     const [width] = useWindowSize();
 
     // вывод итогового количества товаров в корзине
-    const totalBaksetProducts = JSON.parse(
-        localStorage.getItem("productsForBasket")
-    );
+    let totalBaksetProducts = "";
+    if (currentUser) {
+        totalBaksetProducts = JSON.parse(
+            localStorage.getItem(`productsForBasket-${currentUser._id}`)
+        );
+    }
     let totalSumBaksetProducts = 0;
     totalBaksetProducts &&
         totalBaksetProducts.forEach((element) => {

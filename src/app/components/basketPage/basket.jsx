@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { useBasket } from "../../hooks/useBasket";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
 const Basket = () => {
+    const { currentUser } = useAuth();
     const { clearBasket } = useBasket();
-    let baksetProducts = JSON.parse(localStorage.getItem("productsForBasket"));
+    let baksetProducts = JSON.parse(
+        localStorage.getItem(`productsForBasket-${currentUser._id}`)
+    );
 
     let totalSum = 0;
     baksetProducts &&
