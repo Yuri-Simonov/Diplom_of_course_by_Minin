@@ -31,13 +31,22 @@ const ProductsItem = ({ product }) => {
     }
 
     const [isFavorite, setFavorite] = useState(false);
-    useEffect(() => {
-        if (localStorage.getItem(`product-${product._id}`)) {
+    function changeFavorite() {
+        if (
+            currentUser &&
+            localStorage.getItem(`product-${product._id}-${currentUser._id}`)
+        ) {
             setFavorite(true);
         } else {
             setFavorite(false);
         }
-    }, [localStorage.getItem(`product-${product._id}`)]);
+    }
+    useEffect(() => {
+        changeFavorite();
+    }, [
+        currentUser &&
+            localStorage.getItem(`product-${product._id}-${currentUser._id}`)
+    ]);
 
     return (
         <div className="products__product product">
@@ -75,22 +84,16 @@ const ProductsItem = ({ product }) => {
                         </div>
                     </div>
                     <div className="product__price">{product.price} руб.</div>
-                    {currentUser && (
-                        <button
-                            className="product__add-basket item-body__buy"
-                            onClick={() => addItemToBasket(product)}
-                        >
-                            Добавить в корзину
-                        </button>
-                    )}
-                    {!currentUser && (
-                        <button
-                            className="product__add-basket item-body__buy"
-                            onClick={() => history.push("/authorization")}
-                        >
-                            Добавить в корзину
-                        </button>
-                    )}
+                    <button
+                        className="product__add-basket item-body__buy"
+                        onClick={
+                            currentUser
+                                ? () => addItemToBasket(product)
+                                : () => history.push("/authorization")
+                        }
+                    >
+                        Добавить в корзину
+                    </button>
                 </div>
             </div>
             <div
@@ -98,7 +101,11 @@ const ProductsItem = ({ product }) => {
                     "product__favorites" +
                     (isFavorite ? " product__favorites-active" : "")
                 }
-                onClick={(event) => addItemToFavorites(event, product)}
+                onClick={
+                    currentUser
+                        ? (event) => addItemToFavorites(event, product)
+                        : () => history.push("/authorization")
+                }
             >
                 <svg
                     width="14"
