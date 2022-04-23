@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useAuth } from "../../hooks/useAuth";
+import { useErrors } from "../../hooks/useErrors";
 import Inputs from "../auth_and_registration/inputs";
 import BackLink from "../backLinkComponent/backLink";
 import userDefaultImage from "./images/default-user.png";
 
 const ProfileEdit = () => {
     const history = useHistory();
-
+    const { catcherError } = useErrors();
     const { currentUser, updateUser } = useAuth();
 
     const [data, setData] = useState({
@@ -29,7 +30,7 @@ const ProfileEdit = () => {
         try {
             await updateUser(newData);
         } catch (error) {
-            console.log(error);
+            catcherError(error);
             setErrors(error);
         }
     };

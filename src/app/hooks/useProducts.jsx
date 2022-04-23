@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import productsService from "../services/products.service";
+import { useErrors } from "./useErrors";
 
 const ProductsContext = React.createContext();
 
@@ -9,6 +10,7 @@ export const useProducts = () => {
 };
 
 const ProductsProvider = ({ children }) => {
+    const { catcherError } = useErrors();
     // Запрос продуктов у сервера ==========================================
     const [products, setProducts] = useState();
     useEffect(() => {
@@ -19,7 +21,7 @@ const ProductsProvider = ({ children }) => {
             const { content } = await productsService.get();
             setProducts(content);
         } catch (error) {
-            console.log(`Произошла ошибка: ${error.message}`);
+            catcherError(error);
         }
     }
     // сортировка =========================================================

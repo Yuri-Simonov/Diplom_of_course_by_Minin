@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 import { useAuth } from "./useAuth";
 import commentService from "../services/comment.service";
+import { useErrors } from "./useErrors";
 
 const CommentsContext = React.createContext();
 
@@ -11,6 +12,7 @@ export const useComments = () => {
 };
 
 const CommentsProvider = ({ children }) => {
+    const { catcherError } = useErrors();
     const { currentUser } = useAuth();
     const [comments, setComments] = useState();
     // Глобальная блокировка
@@ -29,7 +31,7 @@ const CommentsProvider = ({ children }) => {
             const { content } = await commentService.createComment(comment);
             setComments((prevState) => [...prevState, content]);
         } catch (error) {
-            console.log(error);
+            catcherError(error);
         }
     }
 
@@ -39,7 +41,7 @@ const CommentsProvider = ({ children }) => {
             const { content } = await commentService.getComments(productId);
             setComments(content);
         } catch (error) {
-            console.log(error);
+            catcherError(error);
         } finally {
             setLoading(false);
         }
@@ -54,7 +56,7 @@ const CommentsProvider = ({ children }) => {
                 );
             }
         } catch (error) {
-            console.log(error);
+            catcherError(error);
         }
     }
 
