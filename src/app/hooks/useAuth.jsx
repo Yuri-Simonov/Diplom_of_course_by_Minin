@@ -7,6 +7,7 @@ import localStorageService, {
 } from "../services/localStorage.service";
 import GlobalLoading from "../components/global_loading/global_loading";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useErrors } from "./useErrors";
 
 export const httpAuth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1/",
@@ -23,6 +24,7 @@ export const useAuth = () => {
 
 const AuthProvider = ({ children }) => {
     const history = useHistory();
+    const { catcherError } = useErrors();
     // console.log("process.env", process.env);
     const [currentUser, setCurrentUser] = useState();
     const [paramsUser, setParamsUser] = useState();
@@ -71,6 +73,8 @@ const AuthProvider = ({ children }) => {
                 switch (message) {
                     case "INVALID_PASSWORD":
                         throw new Error("Email или пароль введены некорректно");
+                    case "EMAIL_NOT_FOUND":
+                        throw new Error("Email или пароль введены некорректно");
 
                     default:
                         throw new Error(
@@ -96,7 +100,7 @@ const AuthProvider = ({ children }) => {
             const { content } = await userService.create(data);
             setCurrentUser(content);
         } catch (error) {
-            console.log("error", error.message);
+            catcherError(error);
         }
     }
 
@@ -106,7 +110,7 @@ const AuthProvider = ({ children }) => {
             const { content } = await userService.update(data);
             setCurrentUser(content);
         } catch (error) {
-            console.log("error", error.message);
+            catcherError(error);
         }
     }
 
@@ -116,7 +120,7 @@ const AuthProvider = ({ children }) => {
             const { content } = await userService.getCurrentUser();
             setCurrentUser(content);
         } catch (error) {
-            console.log(error);
+            catcherError(error);
         } finally {
             setLoading(false);
         }
@@ -128,7 +132,7 @@ const AuthProvider = ({ children }) => {
             const { content } = await userService.getParamsUser(id);
             setParamsUser(content);
         } catch (error) {
-            console.log(error);
+            catcherError(error);
         } finally {
             setLoading(false);
         }
