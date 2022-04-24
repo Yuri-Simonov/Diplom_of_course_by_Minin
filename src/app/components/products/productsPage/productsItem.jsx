@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useBasket } from "../../../hooks/useBasket";
 import { useFavorite } from "../../../hooks/useFavorite";
 import { useAuth } from "../../../hooks/useAuth";
+import { useErrors } from "../../../hooks/useErrors";
+import { constants } from "../../../constants/constants";
 
 const ProductsItem = ({ product }) => {
-    const history = useHistory();
+    const { catcherError } = useErrors();
     const { currentUser } = useAuth();
     const { addItemToBasket } = useBasket();
     const { addItemToFavorites } = useFavorite();
@@ -92,7 +94,10 @@ const ProductsItem = ({ product }) => {
                         onClick={
                             currentUser
                                 ? () => addItemToBasket(product)
-                                : () => history.push("/authorization")
+                                : () =>
+                                      catcherError(
+                                          constants.messages.addToBasket
+                                      )
                         }
                     >
                         Добавить в корзину
@@ -107,7 +112,7 @@ const ProductsItem = ({ product }) => {
                 onClick={
                     currentUser
                         ? (event) => addItemToFavorites(event, product)
-                        : () => history.push("/authorization")
+                        : () => catcherError(constants.messages.addToFavourite)
                 }
             >
                 <svg
