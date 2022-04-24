@@ -16,7 +16,7 @@ const ErrorsProvider = ({ children }) => {
         errorElement.textContent = error;
         body.append(errorElement);
         setTimeout(() => {
-            body.remove(errorElement);
+            errorElement.remove();
         }, 3000);
     };
 
