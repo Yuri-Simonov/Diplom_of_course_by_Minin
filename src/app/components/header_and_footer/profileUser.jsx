@@ -8,7 +8,7 @@ import GlobalLoading from "../global_loading/global_loading";
 
 const ProfileUser = ({ profileId }) => {
     const { currentUser, paramsUser, getParamsData } = useAuth(profileId);
-    const [pageUser, serPageUser] = useState();
+    const [pageUser, setPageUser] = useState();
 
     useEffect(() => {
         getParamsData(profileId);
@@ -16,9 +16,9 @@ const ProfileUser = ({ profileId }) => {
 
     function currentPerson(id) {
         if (id === currentUser._id) {
-            return serPageUser(currentUser);
+            return setPageUser(currentUser);
         } else {
-            return serPageUser(paramsUser);
+            return setPageUser(paramsUser);
         }
     }
     useEffect(() => {
