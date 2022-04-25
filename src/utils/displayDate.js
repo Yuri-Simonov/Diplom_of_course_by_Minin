@@ -18,33 +18,41 @@ export function displayDate(data) {
             }
             return `${date.getHours()}:${date.getMinutes()}`;
         }
-        if (date.getDay() < 10 && date.getMonth() >= 9) {
-            return `0${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
-        } else if (date.getDay() >= 10 && date.getMonth() < 9) {
-            return `${date.getDay()}.0${date.getMonth()}.${date.getFullYear()}`;
+        if (date.getDate() < 10 && date.getMonth() >= 9) {
+            return `0${date.getDate()}.${
+                date.getMonth() + 1
+            }.${date.getFullYear()}`;
+        } else if (date.getDate() >= 10 && date.getMonth() < 9) {
+            return `${date.getDate()}.0${
+                date.getMonth() + 1
+            }.${date.getFullYear()}`;
         }
-        if (date.getDay() < 10 && date.getMonth() < 9) {
-            return `0${date.getDay()}.0${date.getMonth()}.${date.getFullYear()}`;
+        if (date.getDate() < 10 && date.getMonth() < 9) {
+            return `0${date.getDate()}.0${
+                date.getMonth() + 1
+            }.${date.getFullYear()}`;
         } else {
-            return `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
+            return `${date.getDate()}.${
+                date.getMonth() + 1
+            }.${date.getFullYear()}`;
         }
     }
     return (
-        date.getFullYear() + "." + (date.getMonth() + 1) + "_" + date.getDate()
+        date.getFullYear() + "." + (date.getMonth() + 1) + "." + date.getDate()
     );
 }
 
 export function registerDate(data) {
     const date = new Date(parseInt(data));
 
-    if (date.getDay() < 10 && date.getMonth() >= 9) {
-        return `0${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
-    } else if (date.getDay() >= 10 && date.getMonth() < 9) {
-        return `${date.getDay()}.0${date.getMonth()}.${date.getFullYear()}`;
+    if (date.getDate() < 10 && date.getMonth() >= 9) {
+        return `0${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+    } else if (date.getDate() >= 10 && date.getMonth() < 9) {
+        return `${date.getDate()}.0${date.getMonth()}.${date.getFullYear()}`;
     }
-    if (date.getDay() < 10 && date.getMonth() < 9) {
-        return `0${date.getDay()}.0${date.getMonth()}.${date.getFullYear()}`;
+    if (date.getDate() < 10 && date.getMonth() < 9) {
+        return `0${date.getDate()}.0${date.getMonth()}.${date.getFullYear()}`;
     } else {
-        return `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
+        return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
     }
 }
