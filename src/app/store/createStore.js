@@ -1,5 +1,6 @@
-const { combineReducers, configureStore } = require("@reduxjs/toolkit");
 import productsReducer from "./products";
+
+const { combineReducers, configureStore } = require("@reduxjs/toolkit");
 
 const rootReducer = combineReducers({ products: productsReducer });
 

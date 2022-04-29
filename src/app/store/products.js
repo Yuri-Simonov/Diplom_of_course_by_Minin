@@ -7,6 +7,9 @@ const productsSlice = createSlice({
         isLoading: true
     }
 });
+
+// console.log("productsSlice", productsSlice);
+
 const { reducer: productsReducer } = productsSlice;
 
 export default productsReducer;

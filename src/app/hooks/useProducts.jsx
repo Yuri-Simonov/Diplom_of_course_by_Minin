@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import productsService from "../services/products.service";
 import { useErrors } from "./useErrors";
+import GlobalLoading from "../components/global_loading/global_loading";
 
 const ProductsContext = React.createContext();
 
@@ -13,6 +14,7 @@ const ProductsProvider = ({ children }) => {
     const { catcherError } = useErrors();
     // Запрос продуктов у сервера ==========================================
     const [products, setProducts] = useState();
+    const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         getProducts();
     }, []);
@@ -22,6 +24,8 @@ const ProductsProvider = ({ children }) => {
             setProducts(content);
         } catch (error) {
             catcherError(error);
+        } finally {
+            setLoading(false);
         }
     }
     // сортировка =========================================================
@@ -32,7 +36,7 @@ const ProductsProvider = ({ children }) => {
 
     return (
         <ProductsContext.Provider value={{ products, sortBy, onSort }}>
-            {children}
+            {!isLoading ? children : <GlobalLoading />}
         </ProductsContext.Provider>
     );
 };
