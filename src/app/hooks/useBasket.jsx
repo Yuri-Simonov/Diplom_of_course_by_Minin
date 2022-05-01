@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useProducts } from "./useProducts";
 import PropTypes from "prop-types";
 import { useAuth } from "./useAuth";
+import { useSelector } from "react-redux";
+import { getProducts } from "../store/products";
 
 const BasketContext = React.createContext();
 
@@ -10,8 +11,8 @@ export const useBasket = () => {
 };
 
 const BasketProvider = ({ children }) => {
+    const products = useSelector(getProducts());
     const { currentUser } = useAuth();
-    const { products } = useProducts();
 
     // добавление товара в корзину (хедер)===============================================
     const [totalBasketCountArray, setTotalBasketCountArray] = useState([]);

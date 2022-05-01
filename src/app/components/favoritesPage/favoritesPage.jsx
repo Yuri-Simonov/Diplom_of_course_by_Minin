@@ -1,11 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useFavorite } from "../../hooks/useFavorite";
-import { useProducts } from "../../hooks/useProducts";
+import { getProducts } from "../../store/products";
 import BackLink from "../backLinkComponent/backLink";
 import ProductsItem from "../products/productsPage/productsItem";
 
 const FavoritesPage = () => {
-    const { products } = useProducts();
+    const products = useSelector(getProducts());
+
     const { foundFavoriteProducts } = useFavorite();
 
     let favoriteProducts;

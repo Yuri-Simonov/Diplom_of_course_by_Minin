@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useBasket } from "../../../hooks/useBasket";
-import { useProducts } from "../../../hooks/useProducts";
 import BackLink from "../../backLinkComponent/backLink";
 import PropTypes from "prop-types";
 import Comments from "../../comments/comments";
@@ -9,11 +8,14 @@ import { useAuth } from "../../../hooks/useAuth";
 import { constants } from "../../../constants/constants";
 import { useErrors } from "../../../hooks/useErrors";
 import { useFavorite } from "../../../hooks/useFavorite";
+import { useSelector } from "react-redux";
+import { getProducts } from "../../../store/products";
 
 const ProductPage = ({ productId }) => {
+    const products = useSelector(getProducts());
+
     const { catcherError } = useErrors();
     const { currentUser } = useAuth();
-    const { products } = useProducts();
     const { addItemToBasket } = useBasket();
     const [foundProduct, setFoundProduct] = useState();
     const { addItemToFavorites } = useFavorite();

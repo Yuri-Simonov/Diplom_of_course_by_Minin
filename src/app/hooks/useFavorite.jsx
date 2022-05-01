@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useProducts } from "./useProducts";
 import PropTypes from "prop-types";
 import { useAuth } from "./useAuth";
+import { useSelector } from "react-redux";
+import { getProducts } from "../store/products";
 
 const FavoriteContext = React.createContext();
 
@@ -10,7 +11,7 @@ export const useFavorite = () => {
 };
 
 const FavoriteProvider = ({ children }) => {
-    const { products } = useProducts();
+    const products = useSelector(getProducts());
     const { currentUser } = useAuth();
 
     // добавление товара в избранное (хедер)===============================================

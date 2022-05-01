@@ -31,9 +31,11 @@ const Header = () => {
     const headerMenu = document.querySelector(".header__menu");
     const body = document.querySelector("body");
     const toggleBurger = () => {
-        headerBurger.classList.toggle("active");
-        headerMenu.classList.toggle("active");
-        body.classList.toggle("lock");
+        if (headerBurger) {
+            headerBurger.classList.toggle("active");
+            headerMenu.classList.toggle("active");
+            body.classList.toggle("lock");
+        }
     };
     useEffect(() => {
         if (width >= 768 && headerBurger && headerMenu) {
