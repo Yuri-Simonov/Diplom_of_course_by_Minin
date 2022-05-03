@@ -11,7 +11,6 @@ const ProfileDropdown = ({ userId }) => {
         const dropdownList = document.querySelector(".dropdown__list");
         dropdownList.classList.toggle("dropdown__list-active");
     };
-    console.log("userById", userById);
 
     return (
         <>

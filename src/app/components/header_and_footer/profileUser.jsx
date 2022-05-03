@@ -5,9 +5,12 @@ import BackLink from "../backLinkComponent/backLink";
 import userDefaultImage from "./images/default-user.png";
 import PropTypes from "prop-types";
 import GlobalLoading from "../global_loading/global_loading";
+import { useSelector } from "react-redux";
+import { getCurrentUserData } from "../../store/users";
 
 const ProfileUser = ({ profileId }) => {
-    const { currentUser, paramsUser, getParamsData } = useAuth(profileId);
+    const currentUser = useSelector(getCurrentUserData());
+    const { paramsUser, getParamsData } = useAuth(profileId);
     const [pageUser, setPageUser] = useState();
 
     useEffect(() => {

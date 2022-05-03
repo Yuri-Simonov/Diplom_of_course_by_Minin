@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
-import { useAuth } from "./useAuth";
 import commentService from "../services/comment.service";
 import userService from "../services/user.service";
 import { useErrors } from "./useErrors";
+import { useSelector } from "react-redux";
+import { getCurrentUserData } from "../store/users";
 
 const CommentsContext = React.createContext();
 
@@ -13,8 +14,8 @@ export const useComments = () => {
 };
 
 const CommentsProvider = ({ children }) => {
+    const currentUser = useSelector(getCurrentUserData());
     const { catcherError } = useErrors();
-    const { currentUser } = useAuth();
     const [comments, setComments] = useState();
     const [commentsOfUser, setCommentsOfUser] = useState(0);
     // Глобальная блокировка

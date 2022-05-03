@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import { getCurrentUserId } from "../../store/users";
+import UsersLoader from "../hoc/usersLoader";
 import Products from "../products/products";
 import ProfileEdit from "./profileEdit";
 import ProfileUser from "./profileUser";
@@ -11,7 +12,7 @@ const Profile = () => {
     const { profileId, edit } = params;
     const currentUserId = useSelector(getCurrentUserId());
     return (
-        <>
+        <UsersLoader>
             {profileId ? (
                 edit ? (
                     profileId === currentUserId ? (
@@ -25,7 +26,7 @@ const Profile = () => {
             ) : (
                 <Products />
             )}
-        </>
+        </UsersLoader>
     );
 };
 

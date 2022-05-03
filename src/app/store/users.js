@@ -4,16 +4,27 @@ import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
 import userService from "../services/user.service";
 
+const initialState = localStorageService.getAccessToken()
+    ? {
+          entities: null,
+          isLoading: true,
+          error: null,
+          auth: { userId: localStorageService.getUserId() },
+          isLoggedIn: true,
+          dataLoaded: false
+      }
+    : {
+          entities: null,
+          isLoading: false,
+          error: null,
+          auth: null,
+          isLoggedIn: false,
+          dataLoaded: false
+      };
+
 const usersSlice = createSlice({
     name: "users",
-    initialState: {
-        entities: null,
-        isLoading: true,
-        error: null,
-        auth: null,
-        isLoggedIn: false,
-        dataLoaded: false
-    },
+    initialState,
     reducers: {
         usersRequested: (state) => {
             state.isLoading = true;
@@ -36,6 +47,11 @@ const usersSlice = createSlice({
         },
         userCreated: (state, action) => {
             state.entities.push(action.payload);
+        },
+        userSignOut: (state) => {
+            state.auth = null;
+            state.isLoggedIn = false;
+            state.dataLoaded = false;
         }
     }
 });
@@ -47,7 +63,8 @@ const {
     usersReceivedFailed,
     usersRequestedSuccess,
     usersRequestedFailed,
-    userCreated
+    userCreated,
+    userSignOut
 } = actions;
 
 const authRequested = createAction("users/authRequested");
@@ -113,14 +130,31 @@ export const getUserById = (userId) => (state) => {
         return state.users.entities.find((u) => u._id === userId);
     }
 };
+export const getCurrentUserData = () => (state) => {
+    if (state.users.auth) {
+        return state.users.entities.find(
+            (u) => u._id === state.users.auth.userId
+        );
+    }
+};
 export const getCurrentUserId = () => (state) => {
-    if (state.users.auth) return state.users.auth.userId;
+    if (state.users.auth) {
+        return state.users.auth.userId;
+    }
+};
+export const getUsersIsLoading = () => (state) => {
+    return state.users.isLoading;
 };
 export const getIsLoggedIn = () => (state) => {
     return state.users.isLoggedIn;
 };
 export const getDataLoaded = () => (state) => {
     return state.users.dataLoaded;
+};
+export const signOut = () => (dispatch) => {
+    localStorageService.removeAuthData();
+    dispatch(userSignOut());
+    history.push("/products");
 };
 
 export default usersReducer;

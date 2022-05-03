@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { signOut } from "../../store/users";
 import GlobalLoading from "../global_loading/global_loading";
 
 const SignOut = () => {
-    const { signOut } = useAuth();
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        signOut();
+        dispatch(signOut());
     }, []);
     return <GlobalLoading />;
 };

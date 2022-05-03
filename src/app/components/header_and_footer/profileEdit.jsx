@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useAuth } from "../../hooks/useAuth";
 import { useErrors } from "../../hooks/useErrors";
+import { getCurrentUserData } from "../../store/users";
 import Inputs from "../auth_and_registration/inputs";
 import BackLink from "../backLinkComponent/backLink";
 import userDefaultImage from "./images/default-user.png";
@@ -9,7 +11,8 @@ import userDefaultImage from "./images/default-user.png";
 const ProfileEdit = () => {
     const history = useHistory();
     const { catcherError } = useErrors();
-    const { currentUser, updateUser } = useAuth();
+    const currentUser = useSelector(getCurrentUserData());
+    const { updateUser } = useAuth();
 
     const [data, setData] = useState({
         name: currentUser.name || "",

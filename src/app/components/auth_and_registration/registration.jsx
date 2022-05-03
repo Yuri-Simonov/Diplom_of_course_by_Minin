@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { registerDate } from "../../../utils/displayDate";
 import { validator } from "../../../utils/validator";
 import { getCurrentUserId, signUp } from "../../store/users";
 import Inputs from "./inputs";
 
 const Registration = () => {
+    const history = useHistory();
     const dispatch = useDispatch();
     const [data, setData] = useState({
         name: "",
