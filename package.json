@@ -9,6 +9,7 @@
         "@testing-library/react": "^11.2.7",
         "@testing-library/user-event": "^12.8.3",
         "axios": "^0.26.1",
+        "history": "^4.9.0",
         "lodash": "^4.17.15",
         "nanoid": "^3.3.3",
         "node-sass": "latest",

@@ -6,16 +6,11 @@ import ProductsItem from "./productsItem";
 import Pagination from "../../pagination/pagination";
 import { paginate } from "../../../../utils/paginate";
 import _ from "lodash";
-import { useDispatch, useSelector } from "react-redux";
-import { getProducts, loadProductsList } from "../../../store/products";
+import { useSelector } from "react-redux";
+import { getProducts } from "../../../store/products";
 
 const ProductsPage = () => {
-    const dispatch = useDispatch();
     const products = useSelector(getProducts());
-
-    useEffect(() => {
-        dispatch(loadProductsList());
-    }, []);
     // сортировка =========================================================
     const [sortBy, setSortBy] = useState({ iter: "", order: "" });
     const onSort = (item) => {

@@ -20,12 +20,14 @@ import ProductsList from "./components/products/productsPage/productsList";
 import ErrorsProvider from "./hooks/useErrors";
 import { useDispatch } from "react-redux";
 import { loadProductsList } from "./store/products";
+import { loadUsersList } from "./store/users";
 
 const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(loadProductsList());
+        dispatch(loadUsersList());
     }, []);
 
     return (

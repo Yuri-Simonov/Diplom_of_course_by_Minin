@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { useAuth } from "./useAuth";
 import { useSelector } from "react-redux";
 import { getProducts } from "../store/products";
+import { getCurrentUserId } from "../store/users";
 
 const FavoriteContext = React.createContext();
 
@@ -12,7 +12,7 @@ export const useFavorite = () => {
 
 const FavoriteProvider = ({ children }) => {
     const products = useSelector(getProducts());
-    const { currentUser } = useAuth();
+    const currentUserId = useSelector(getCurrentUserId());
 
     // добавление товара в избранное (хедер)===============================================
     const [foundFavoriteProducts, setFoundFavoriteProducts] = useState([]);
@@ -20,27 +20,25 @@ const FavoriteProvider = ({ children }) => {
         useState(0);
     useEffect(() => {
         if (
-            currentUser &&
-            localStorage.getItem(`productsFavorite-${currentUser._id}`)
+            currentUserId &&
+            localStorage.getItem(`productsFavorite-${currentUserId}`)
         ) {
             setTotalNumberFavoriteProducts(
                 JSON.parse(
-                    localStorage.getItem(`productsFavorite-${currentUser._id}`)
+                    localStorage.getItem(`productsFavorite-${currentUserId}`)
                 ).length
             );
         }
-    }, [currentUser]);
+    }, [currentUserId]);
     const addItemToFavorites = (event, product) => {
-        if (localStorage.getItem(`product-${product._id}-${currentUser._id}`)) {
+        if (localStorage.getItem(`product-${product._id}-${currentUserId}`)) {
             setTotalNumberFavoriteProducts((prevState) => prevState - 1);
-            localStorage.removeItem(
-                `product-${product._id}-${currentUser._id}`
-            );
+            localStorage.removeItem(`product-${product._id}-${currentUserId}`);
             changeAmountOfFavoriteProducts();
         } else {
             setTotalNumberFavoriteProducts((prevState) => prevState + 1);
             localStorage.setItem(
-                `product-${product._id}-${currentUser._id}`,
+                `product-${product._id}-${currentUserId}`,
                 JSON.stringify(product)
             );
 
@@ -51,14 +49,12 @@ const FavoriteProvider = ({ children }) => {
         const timeArrOfFavoriteProducts = [];
         products.filter((product) => {
             if (
-                localStorage.getItem(
-                    `product-${product._id}-${currentUser._id}`
-                )
+                localStorage.getItem(`product-${product._id}-${currentUserId}`)
             ) {
                 timeArrOfFavoriteProducts.push(
                     JSON.parse(
                         localStorage.getItem(
-                            `product-${product._id}-${currentUser._id}`
+                            `product-${product._id}-${currentUserId}`
                         )
                     )
                 );
@@ -66,21 +62,21 @@ const FavoriteProvider = ({ children }) => {
             return timeArrOfFavoriteProducts;
         });
         localStorage.setItem(
-            `productsFavorite-${currentUser._id}`,
+            `productsFavorite-${currentUserId}`,
             JSON.stringify(timeArrOfFavoriteProducts)
         );
 
         setFoundFavoriteProducts(
             JSON.parse(
-                localStorage.getItem(`productsFavorite-${currentUser._id}`)
+                localStorage.getItem(`productsFavorite-${currentUserId}`)
             )
         );
     };
     useEffect(() => {
-        if (currentUser) {
+        if (currentUserId) {
             setFoundFavoriteProducts(
                 JSON.parse(
-                    localStorage.getItem(`productsFavorite-${currentUser._id}`)
+                    localStorage.getItem(`productsFavorite-${currentUserId}`)
                 )
             );
         }

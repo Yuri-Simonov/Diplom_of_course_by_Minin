@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import isOutDated from "../../utils/isOutDated";
 import productsService from "../services/products.service";
 
 const productsSlice = createSlice({
@@ -24,13 +25,6 @@ const productsSlice = createSlice({
         }
     }
 });
-
-function isOutDated(date) {
-    if (Date.now() - date > 10 * 60 * 1000) {
-        return true;
-    }
-    return false;
-}
 
 const { reducer: productsReducer, actions } = productsSlice;
 const { productsRequested, productsReceived, productsReceivedError } = actions;

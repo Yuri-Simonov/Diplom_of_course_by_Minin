@@ -3,19 +3,18 @@ import { useBasket } from "../../../hooks/useBasket";
 import BackLink from "../../backLinkComponent/backLink";
 import PropTypes from "prop-types";
 import Comments from "../../comments/comments";
-import UserProvider from "../../../hooks/useUsers";
-import { useAuth } from "../../../hooks/useAuth";
 import { constants } from "../../../constants/constants";
 import { useErrors } from "../../../hooks/useErrors";
 import { useFavorite } from "../../../hooks/useFavorite";
 import { useSelector } from "react-redux";
 import { getProducts } from "../../../store/products";
+import { getCurrentUserId } from "../../../store/users";
 
 const ProductPage = ({ productId }) => {
     const products = useSelector(getProducts());
 
     const { catcherError } = useErrors();
-    const { currentUser } = useAuth();
+    const currentUserId = useSelector(getCurrentUserId());
     const { addItemToBasket } = useBasket();
     const [foundProduct, setFoundProduct] = useState();
     const { addItemToFavorites } = useFavorite();
@@ -43,11 +42,9 @@ const ProductPage = ({ productId }) => {
     const [isFavorite, setFavorite] = useState(false);
     function changeFavorite() {
         if (
-            currentUser &&
+            currentUserId &&
             foundProduct &&
-            localStorage.getItem(
-                `product-${foundProduct._id}-${currentUser._id}`
-            )
+            localStorage.getItem(`product-${foundProduct._id}-${currentUserId}`)
         ) {
             setFavorite(true);
         } else {
@@ -60,11 +57,9 @@ const ProductPage = ({ productId }) => {
     useEffect(() => {
         changeFavorite();
     }, [
-        currentUser &&
+        currentUserId &&
             foundProduct &&
-            localStorage.getItem(
-                `product-${foundProduct._id}-${currentUser._id}`
-            )
+            localStorage.getItem(`product-${foundProduct._id}-${currentUserId}`)
     ]);
 
     return (
@@ -109,7 +104,7 @@ const ProductPage = ({ productId }) => {
                                     <div className="item-body__sum">
                                         {foundProduct.price} руб.
                                     </div>
-                                    {currentUser && (
+                                    {currentUserId && (
                                         <button
                                             className="item-body__buy"
                                             onClick={() =>
@@ -122,7 +117,7 @@ const ProductPage = ({ productId }) => {
                                             Добавить в корзину
                                         </button>
                                     )}
-                                    {!currentUser && (
+                                    {!currentUserId && (
                                         <button
                                             className="item-body__buy"
                                             onClick={() =>
@@ -145,7 +140,7 @@ const ProductPage = ({ productId }) => {
                                         : "")
                                 }
                                 onClick={
-                                    currentUser
+                                    currentUserId
                                         ? (event) =>
                                               addItemToFavorites(
                                                   event,
@@ -173,9 +168,7 @@ const ProductPage = ({ productId }) => {
                             </div>
                         </div>
                         <div className="shop__item-comments">
-                            <UserProvider>
-                                <Comments productId={productId} />
-                            </UserProvider>
+                            <Comments productId={productId} />
                         </div>
                     </section>
                 ) : (

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { registerDate } from "../../../utils/displayDate";
 import { validator } from "../../../utils/validator";
-import { useAuth } from "../../hooks/useAuth";
+import { getCurrentUserId, signUp } from "../../store/users";
 import Inputs from "./inputs";
 
 const Registration = () => {
-    const history = useHistory();
+    const dispatch = useDispatch();
     const [data, setData] = useState({
         name: "",
         lastName: "",
@@ -23,7 +24,7 @@ const Registration = () => {
             [target.name]: target.value
         }));
     };
-    const { currentUser, signUp } = useAuth();
+    const currentUserId = useSelector(getCurrentUserId());
 
     const validatorConfig = {
         name: {
@@ -75,7 +76,7 @@ const Registration = () => {
         return Object.keys(errors).length === 0;
     };
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         const isValid = validate();
         if (!isValid) return;
@@ -87,12 +88,7 @@ const Registration = () => {
             password: data.password,
             registerDate: regDate
         };
-        try {
-            await signUp(newData);
-            history.push("/products");
-        } catch (error) {
-            setErrors(error);
-        }
+        dispatch(signUp(newData));
     };
 
     const getSubmittClasses = () => {
@@ -103,7 +99,7 @@ const Registration = () => {
     };
 
     // Переброс на главную страницу, если пользователь авторизован и хочет зайти на регистрацию
-    if (currentUser) {
+    if (currentUserId) {
         history.push("/");
     }
 

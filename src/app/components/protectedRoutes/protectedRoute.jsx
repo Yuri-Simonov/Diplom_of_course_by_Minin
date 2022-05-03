@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useAuth } from "../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { getDataLoaded, getIsLoggedIn, loadUsersList } from "../../store/users";
+import GlobalLoading from "../global_loading/global_loading";
 const ProtectedRoute = ({ component: Component, children, ...rest }) => {
-    const { currentUser } = useAuth();
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector(getIsLoggedIn());
+    const dataLoaded = useSelector(getDataLoaded());
+    useEffect(() => {
+        if (!dataLoaded) dispatch(loadUsersList());
+    }, []);
+    if (!dataLoaded) return <GlobalLoading />;
     return (
         <Route
             {...rest}
             render={(props) => {
-                if (!currentUser) {
+                if (isLoggedIn) {
                     return (
                         <Redirect
                             to={{

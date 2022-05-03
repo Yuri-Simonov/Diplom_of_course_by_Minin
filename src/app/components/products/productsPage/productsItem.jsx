@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useBasket } from "../../../hooks/useBasket";
 import { useFavorite } from "../../../hooks/useFavorite";
-import { useAuth } from "../../../hooks/useAuth";
 import { useErrors } from "../../../hooks/useErrors";
 import { constants } from "../../../constants/constants";
+import { useSelector } from "react-redux";
+import { getCurrentUserId } from "../../../store/users";
 
 const ProductsItem = ({ product }) => {
     const { catcherError } = useErrors();
-    const { currentUser } = useAuth();
+    const currentUserId = useSelector(getCurrentUserId());
     const { addItemToBasket } = useBasket();
     const { addItemToFavorites } = useFavorite();
     let reviewWord;
@@ -35,8 +36,8 @@ const ProductsItem = ({ product }) => {
     const [isFavorite, setFavorite] = useState(false);
     function changeFavorite() {
         if (
-            currentUser &&
-            localStorage.getItem(`product-${product._id}-${currentUser._id}`)
+            currentUserId &&
+            localStorage.getItem(`product-${product._id}-${currentUserId}`)
         ) {
             setFavorite(true);
         } else {
@@ -49,8 +50,8 @@ const ProductsItem = ({ product }) => {
     useEffect(() => {
         changeFavorite();
     }, [
-        currentUser &&
-            localStorage.getItem(`product-${product._id}-${currentUser._id}`)
+        currentUserId &&
+            localStorage.getItem(`product-${product._id}-${currentUserId}`)
     ]);
 
     return (
@@ -92,7 +93,7 @@ const ProductsItem = ({ product }) => {
                     <button
                         className="product__add-basket item-body__buy"
                         onClick={
-                            currentUser
+                            currentUserId
                                 ? () => addItemToBasket(product)
                                 : () =>
                                       catcherError(
@@ -110,7 +111,7 @@ const ProductsItem = ({ product }) => {
                     (isFavorite ? " product__favorites-active" : "")
                 }
                 onClick={
-                    currentUser
+                    currentUserId
                         ? (event) => addItemToFavorites(event, product)
                         : () => catcherError(constants.messages.addToFavourite)
                 }

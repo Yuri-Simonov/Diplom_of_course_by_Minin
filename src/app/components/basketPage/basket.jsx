@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
 import { useBasket } from "../../hooks/useBasket";
+import { getCurrentUserId } from "../../store/users";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
 const Basket = () => {
-    const { currentUser } = useAuth();
+    const currentUserId = useSelector(getCurrentUserId());
     const { clearBasket } = useBasket();
     let baksetProducts = JSON.parse(
-        localStorage.getItem(`productsForBasket-${currentUser._id}`)
+        localStorage.getItem(`productsForBasket-${currentUserId}`)
     );
 
     let totalSum = 0;

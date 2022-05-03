@@ -4,20 +4,21 @@ import PropTypes from "prop-types";
 import { useFavorite } from "../../hooks/useFavorite";
 import { useBasket } from "../../hooks/useBasket";
 import { useWindowSize } from "../../hooks/useSize";
-import { useAuth } from "../../hooks/useAuth";
 import ProfileDropdown from "./profile_dropdown";
+import { useSelector } from "react-redux";
+import { getCurrentUserId } from "../../store/users";
 
 const Header = () => {
     const { foundFavoriteProducts } = useFavorite();
     const { totalBasketCountArray } = useBasket();
-    const { currentUser } = useAuth();
+    const currentUserId = useSelector(getCurrentUserId());
     const [width] = useWindowSize();
 
     // вывод итогового количества товаров в корзине
     let totalBaksetProducts = "";
-    if (currentUser) {
+    if (currentUserId) {
         totalBaksetProducts = JSON.parse(
-            localStorage.getItem(`productsForBasket-${currentUser._id}`)
+            localStorage.getItem(`productsForBasket-${currentUserId}`)
         );
     }
     let totalSumBaksetProducts = 0;
@@ -61,7 +62,7 @@ const Header = () => {
                                     Продукты
                                 </Link>
                             </li>
-                            {currentUser && (
+                            {currentUserId && (
                                 <li onClick={toggleBurger}>
                                     <Link
                                         to="/favorites"
@@ -77,7 +78,7 @@ const Header = () => {
                                         )}
                                 </li>
                             )}
-                            {currentUser && (
+                            {currentUserId && (
                                 <li onClick={toggleBurger}>
                                     <Link to="/basket" className="header__link">
                                         Корзина
@@ -90,10 +91,12 @@ const Header = () => {
                                         )}
                                 </li>
                             )}
-                            {currentUser ? (
+                            {currentUserId ? (
                                 <li onClick={toggleBurger}>
                                     <div>
-                                        <ProfileDropdown />
+                                        <ProfileDropdown
+                                            userId={currentUserId}
+                                        />
                                     </div>
                                 </li>
                             ) : (

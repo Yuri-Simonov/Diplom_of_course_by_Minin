@@ -3,11 +3,12 @@ import { useComments } from "../../hooks/useComments";
 import AddCommentForm from "./addCommentForm";
 import Comment from "./comment";
 import PropTypes from "prop-types";
-import { useAuth } from "../../hooks/useAuth";
 import { orderBy } from "lodash";
+import { useSelector } from "react-redux";
+import { getCurrentUserId } from "../../store/users";
 
 const Comments = ({ productId }) => {
-    const { currentUser } = useAuth();
+    const currentUserId = useSelector(getCurrentUserId());
     const { comments, createComment, getComments, removeComment } =
         useComments();
     const handleSubmit = (data, productId) => {
@@ -35,7 +36,7 @@ const Comments = ({ productId }) => {
                 ))}
             {sortedComments && sortedComments.length === 0 && (
                 <h2 className="comments__subtitle">
-                    {currentUser
+                    {currentUserId
                         ? "Еще никто не оставил отзыв о товаре. Будьте первым!"
                         : "Еще никто не оставил отзыв о товаре..."}
                 </h2>
