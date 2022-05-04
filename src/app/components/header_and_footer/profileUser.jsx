@@ -1,31 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 import BackLink from "../backLinkComponent/backLink";
 import userDefaultImage from "./images/default-user.png";
 import PropTypes from "prop-types";
 import GlobalLoading from "../global_loading/global_loading";
 import { useSelector } from "react-redux";
-import { getCurrentUserData } from "../../store/users";
+import { getCurrentUserData, getParamsUser } from "../../store/users";
 
 const ProfileUser = ({ profileId }) => {
     const currentUser = useSelector(getCurrentUserData());
-    const { paramsUser, getParamsData } = useAuth(profileId);
+    const paramsUser = useSelector(getParamsUser(profileId));
     const [pageUser, setPageUser] = useState();
 
     useEffect(() => {
-        getParamsData(profileId);
-    }, [profileId]);
-
-    function currentPerson(id) {
-        if (id === currentUser._id) {
-            return setPageUser(currentUser);
-        } else {
-            return setPageUser(paramsUser);
-        }
-    }
-    useEffect(() => {
-        currentPerson();
+        setPageUser(paramsUser);
     }, [currentUser, paramsUser]);
 
     return (

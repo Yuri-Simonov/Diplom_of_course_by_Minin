@@ -1,18 +1,15 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useAuth } from "../../hooks/useAuth";
-import { useErrors } from "../../hooks/useErrors";
-import { getCurrentUserData } from "../../store/users";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { getCurrentUserData, updateCurrentUserData } from "../../store/users";
 import Inputs from "../auth_and_registration/inputs";
 import BackLink from "../backLinkComponent/backLink";
 import userDefaultImage from "./images/default-user.png";
 
 const ProfileEdit = () => {
     const history = useHistory();
-    const { catcherError } = useErrors();
     const currentUser = useSelector(getCurrentUserData());
-    const { updateUser } = useAuth();
+    const dispatch = useDispatch();
 
     const [data, setData] = useState({
         name: currentUser.name || "",
@@ -27,18 +24,17 @@ const ProfileEdit = () => {
         }));
     };
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         const newData = { ...data, name: data.name, lastName: data.lastName };
         try {
-            await updateUser(newData);
+            dispatch(updateCurrentUserData(newData));
         } catch (error) {
-            catcherError(error);
             setErrors(error);
         }
     };
 
-    const getSubmittClasses = (event) => {
+    const getSubmittClasses = () => {
         return (
             "authorization__submit" +
             (data.name.length < 3 ? " authorization__submit-not-active" : "")

@@ -10,6 +10,7 @@ const initialState = localStorageService.getAccessToken()
           isLoading: true,
           error: null,
           auth: { userId: localStorageService.getUserId() },
+          paramsUserData: null,
           isLoggedIn: true,
           dataLoaded: false
       }
@@ -18,6 +19,7 @@ const initialState = localStorageService.getAccessToken()
           isLoading: false,
           error: null,
           auth: null,
+          paramsUserData: null,
           isLoggedIn: false,
           dataLoaded: false
       };
@@ -48,6 +50,12 @@ const usersSlice = createSlice({
         userCreated: (state, action) => {
             state.entities.push(action.payload);
         },
+        usersUpdated: (state, action) => {
+            const res = state.entities.findIndex((u) => {
+                return u._id === action.payload._id;
+            });
+            state.entities[res] = action.payload;
+        },
         userSignOut: (state) => {
             state.auth = null;
             state.isLoggedIn = false;
@@ -64,12 +72,14 @@ const {
     usersRequestedSuccess,
     usersRequestedFailed,
     userCreated,
+    usersUpdated,
     userSignOut
 } = actions;
 
 const authRequested = createAction("users/authRequested");
 const userCreateRequested = createAction("users/userCreateRequested");
 const userCreateFailed = createAction("users/userCreateFailed");
+const userUpdateRequested = createAction("users/userUpdateRequested");
 
 export const signIn =
     ({ payload, redirect }) =>
@@ -137,6 +147,16 @@ export const getCurrentUserData = () => (state) => {
         );
     }
 };
+export const updateCurrentUserData = (payload) => async (dispatch) => {
+    dispatch(userUpdateRequested());
+    try {
+        await userService.update(payload);
+        const { content } = await userService.getCurrentUser();
+        dispatch(usersUpdated(content));
+    } catch (error) {
+        dispatch(usersRequestedFailed());
+    }
+};
 export const getCurrentUserId = () => (state) => {
     if (state.users.auth) {
         return state.users.auth.userId;
@@ -155,6 +175,10 @@ export const signOut = () => (dispatch) => {
     localStorageService.removeAuthData();
     dispatch(userSignOut());
     history.push("/products");
+};
+
+export const getParamsUser = (paramsId) => (state) => {
+    return state.users.entities.find((u) => u._id === paramsId);
 };
 
 export default usersReducer;
