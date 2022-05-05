@@ -1,4 +1,5 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
+import { generateAuthErrors } from "../../utils/generateAuthErrors";
 import history from "../../utils/history";
 import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
@@ -60,6 +61,9 @@ const usersSlice = createSlice({
             state.auth = null;
             state.isLoggedIn = false;
             state.dataLoaded = false;
+        },
+        authRequested: (state) => {
+            state.error = null;
         }
     }
 });
@@ -92,7 +96,13 @@ export const signIn =
             localStorageService.setTokens(data);
             history.push(redirect);
         } catch (error) {
-            dispatch(usersRequestedFailed(error));
+            const { code, message } = error.response.data.error;
+            if (code === 400) {
+                const errorMessage = generateAuthErrors(message);
+                dispatch(usersRequestedFailed(errorMessage));
+            } else {
+                dispatch(usersRequestedFailed(error));
+            }
         }
     };
 
@@ -106,7 +116,14 @@ export const signUp =
             dispatch(usersRequestedSuccess({ userId: data.localId }));
             dispatch(createUser({ _id: data.localId, email, ...rest }));
         } catch (error) {
-            dispatch(usersRequestedFailed(error));
+            const { code, message } = error.response.data.error;
+            console.log("code, message", code, message);
+            if (code === 400) {
+                const errorMessage = generateAuthErrors(message);
+                dispatch(usersRequestedFailed(errorMessage));
+            } else {
+                dispatch(usersRequestedFailed(error));
+            }
         }
     };
 
@@ -118,7 +135,7 @@ function createUser(payload) {
             dispatch(userCreated(content));
             history.push("/products");
         } catch (error) {
-            dispatch(userCreateFailed());
+            dispatch(userCreateFailed(error));
         }
     };
 }
@@ -180,5 +197,7 @@ export const signOut = () => (dispatch) => {
 export const getParamsUser = (paramsId) => (state) => {
     return state.users.entities.find((u) => u._id === paramsId);
 };
-
+export const getAuthError = () => (state) => {
+    return state.users.error;
+};
 export default usersReducer;

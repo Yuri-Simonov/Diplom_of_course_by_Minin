@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { registerDate } from "../../../utils/displayDate";
 import { validator } from "../../../utils/validator";
-import { getCurrentUserId, signUp } from "../../store/users";
+import { getAuthError, getCurrentUserId, signUp } from "../../store/users";
 import Inputs from "./inputs";
 
 const Registration = () => {
@@ -19,6 +19,7 @@ const Registration = () => {
         amountReviews: 0
     });
     const [errors, setErrors] = useState();
+
     const handleChange = ({ target }) => {
         setData((prevState) => ({
             ...prevState,
@@ -26,6 +27,7 @@ const Registration = () => {
         }));
     };
     const currentUserId = useSelector(getCurrentUserId());
+    const signInError = useSelector(getAuthError());
 
     const validatorConfig = {
         name: {
@@ -147,6 +149,11 @@ const Registration = () => {
                             messagePlaceholder="Password"
                             classNameInput="authorization__password"
                         />
+                        {signInError && (
+                            <p className="authorization__error">
+                                {signInError}
+                            </p>
+                        )}
                         <button className={getSubmittClasses()}>
                             Зарегистрироваться
                         </button>

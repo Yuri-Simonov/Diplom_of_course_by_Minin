@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { validator } from "../../../utils/validator";
-import { getCurrentUserId, signIn } from "../../store/users";
+import { getAuthError, getCurrentUserId, signIn } from "../../store/users";
 import Inputs from "./inputs";
 
 const Authorization = () => {
@@ -16,13 +16,12 @@ const Authorization = () => {
     const dispatch = useDispatch();
     const currentUserId = useSelector(getCurrentUserId());
     const [errors, setErrors] = useState();
-    const [enterError, setEnterError] = useState(null);
+    const signInError = useSelector(getAuthError());
     const handleChange = ({ target }) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
-        setEnterError(null);
     };
     const handleChangeBoolean = () => {
         setData((prevState) => ({
@@ -71,7 +70,7 @@ const Authorization = () => {
     const getSubmittClasses = () => {
         return (
             "authorization__submit" +
-            (!isValidValue || enterError
+            (!isValidValue || signInError
                 ? " authorization__submit" + "-not-active"
                 : "")
         );
@@ -141,8 +140,10 @@ const Authorization = () => {
                                 Запомнить меня
                             </span>
                         </label>
-                        {enterError && (
-                            <p className="authorization__error">{enterError}</p>
+                        {signInError && (
+                            <p className="authorization__error">
+                                {signInError}
+                            </p>
                         )}
                         <button type="submit" className={getSubmittClasses()}>
                             Войти
