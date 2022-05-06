@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useBasket } from "../../../hooks/useBasket";
-import { useFavorite } from "../../../hooks/useFavorite";
 import { useErrors } from "../../../hooks/useErrors";
 import { constants } from "../../../constants/constants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUserId } from "../../../store/users";
+import { getFavouritesById, toggleFavourite } from "../../../store/favourite";
 
 const ProductsItem = ({ product }) => {
+    const dispatch = useDispatch();
     const { catcherError } = useErrors();
     const currentUserId = useSelector(getCurrentUserId());
+    const isFavourite = useSelector(getFavouritesById(product._id));
+
     const { addItemToBasket } = useBasket();
-    const { addItemToFavorites } = useFavorite();
     let reviewWord;
     if (Number(product.reviews) === 0 || Number(product.reviews) % 10 === 0) {
         reviewWord = "отзывов";
@@ -32,27 +34,6 @@ const ProductsItem = ({ product }) => {
     } else if (product.rating <= 3.7) {
         colorOfStar = "red";
     }
-
-    const [isFavorite, setFavorite] = useState(false);
-    function changeFavorite() {
-        if (
-            currentUserId &&
-            localStorage.getItem(`product-${product._id}-${currentUserId}`)
-        ) {
-            setFavorite(true);
-        } else {
-            setFavorite(false);
-        }
-    }
-    useEffect(() => {
-        changeFavorite();
-    }, []);
-    useEffect(() => {
-        changeFavorite();
-    }, [
-        currentUserId &&
-            localStorage.getItem(`product-${product._id}-${currentUserId}`)
-    ]);
 
     return (
         <div className="products__product product">
@@ -108,11 +89,11 @@ const ProductsItem = ({ product }) => {
             <div
                 className={
                     "product__favorites" +
-                    (isFavorite ? " product__favorites-active" : "")
+                    (isFavourite ? " product__favorites-active" : "")
                 }
                 onClick={
                     currentUserId
-                        ? (event) => addItemToFavorites(event, product)
+                        ? () => dispatch(toggleFavourite(product))
                         : () => catcherError(constants.messages.addToFavourite)
                 }
             >

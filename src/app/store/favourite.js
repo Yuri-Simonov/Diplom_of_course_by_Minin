@@ -15,34 +15,14 @@ const favouritesSlice = createSlice({
         favouritesReceivedLength: (state, action) => {
             state.entitiesAmount = action.payload;
         },
-        favouritesReceivedError: (state, action) => {},
-        favouriteAdded: (state, action) => {
-            state.entities.push(action.payload);
-        },
-        favouriteRemoved: (state, action) => {
-            state.entities = state.entities.filter(
-                (p) => p._id !== action.payload
-            );
-        }
+        favouritesReceivedError: (state, action) => {}
     }
 });
 
 const { reducer: favouritesReducer, actions } = favouritesSlice;
-const {
-    favouritesReceived,
-    favouritesReceivedLength,
-    favouriteAdded,
-    favouriteRemoved
-    // favouritesReceivedError,
-} = actions;
+const { favouritesReceived, favouritesReceivedLength } = actions;
 
 const favouritesRequested = createAction("favourites/favouritesRequested");
-// const removeFavouriteRequested = createAction(
-//     "favourites/removeFavouriteRequested"
-// );
-// const checkFavouriteRequested = createAction(
-//     "favourites/checkFavouriteRequested"
-// );
 
 export const loadFavouritesList = () => (dispatch, getState) => {
     dispatch(favouritesRequested());
@@ -50,28 +30,54 @@ export const loadFavouritesList = () => (dispatch, getState) => {
     const favouritesProducts = JSON.parse(
         localStorage.getItem(`productsFavorite-${currentUserId}`)
     );
-    dispatch(favouritesReceived(favouritesProducts));
-    dispatch(favouritesReceivedLength(favouritesProducts.length));
-};
-
-// export const getFavourites = () => (state) => state.favourites.entities;
-// export const getFavouritesLoadingStatus = () => (state) =>
-//     state.favourites.isLoading;
-
-export const toggleFavourite = (product) => (dispatch, getState) => {
-    console.log("product", product);
-    const currentUserId = getCurrentUserId()(getState());
-    const toggleProduct = `product-${product._id}-${currentUserId}`;
-    if (localStorage.getItem(toggleProduct)) {
-        localStorage.removeItem(toggleProduct);
-        dispatch(favouriteRemoved(product));
-    } else {
-        localStorage.setItem(toggleProduct, JSON.stringify(product));
-        dispatch(favouriteAdded(product));
+    if (favouritesProducts) {
+        dispatch(favouritesReceived(favouritesProducts));
+        dispatch(favouritesReceivedLength(favouritesProducts.length));
     }
 };
-// export const removeFavourite = () => async (dispatch) => {};
 
-// export function checkFavouritesAmount() {}
+export const getFavourites = () => (state) => state.favourites.entities;
+export const getFavouritesAmount = () => (state) =>
+    state.favourites.entitiesAmount;
+export const getFavouritesById = (productId) => (state) => {
+    if (state.favourites.entities) {
+        return state.favourites.entities.find((u) => u._id === productId);
+    }
+};
+
+export const toggleFavourite = (product) => (dispatch, getState) => {
+    const currentUserId = getCurrentUserId()(getState());
+    let currentUserFavourites = JSON.parse(
+        localStorage.getItem(`productsFavorite-${currentUserId}`)
+    );
+    let indexOfFindedProduct;
+    if (currentUserFavourites === null) {
+        currentUserFavourites = [];
+    } else if (currentUserFavourites.length > 0) {
+        indexOfFindedProduct = currentUserFavourites.findIndex(
+            (p) => p._id === product._id
+        );
+    }
+
+    if (indexOfFindedProduct >= 0) {
+        const newFavouriteProductsArray = currentUserFavourites.filter(
+            (p) => p._id !== product._id
+        );
+        localStorage.setItem(
+            `productsFavorite-${currentUserId}`,
+            JSON.stringify(newFavouriteProductsArray)
+        );
+        dispatch(favouritesReceived(newFavouriteProductsArray));
+        dispatch(favouritesReceivedLength(newFavouriteProductsArray.length));
+    } else {
+        currentUserFavourites.push(product);
+        localStorage.setItem(
+            `productsFavorite-${currentUserId}`,
+            JSON.stringify(currentUserFavourites)
+        );
+        dispatch(favouritesReceived(currentUserFavourites));
+        dispatch(favouritesReceivedLength(currentUserFavourites.length));
+    }
+};
 
 export default favouritesReducer;

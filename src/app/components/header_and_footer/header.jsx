@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { useFavorite } from "../../hooks/useFavorite";
 import { useBasket } from "../../hooks/useBasket";
 import { resizePage } from "../../../utils/resizePage";
 import ProfileDropdown from "./profile_dropdown";
 import { useSelector } from "react-redux";
 import { getCurrentUserId } from "../../store/users";
+import { getFavouritesAmount } from "../../store/favourite";
 
 const Header = () => {
-    const { foundFavoriteProducts } = useFavorite();
+    const foundFavoriteProductsAmount = useSelector(getFavouritesAmount());
     const { totalBasketCountArray } = useBasket();
     const currentUserId = useSelector(getCurrentUserId());
     const [width] = resizePage();
@@ -70,12 +69,11 @@ const Header = () => {
                                     >
                                         Избранное
                                     </Link>
-                                    {foundFavoriteProducts &&
-                                        foundFavoriteProducts.length > 0 && (
-                                            <span className="header__count-favorites">
-                                                {foundFavoriteProducts.length}
-                                            </span>
-                                        )}
+                                    {foundFavoriteProductsAmount > 0 && (
+                                        <span className="header__count-favorites">
+                                            {foundFavoriteProductsAmount}
+                                        </span>
+                                    )}
                                 </li>
                             )}
                             {currentUserId && (
@@ -115,10 +113,6 @@ const Header = () => {
             </div>
         </div>
     );
-};
-Header.propTypes = {
-    foundFavoriteProducts: PropTypes.array,
-    totalBasketCountArray: PropTypes.array
 };
 
 export default Header;
