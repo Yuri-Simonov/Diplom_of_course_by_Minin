@@ -4,13 +4,19 @@ import BackLink from "../backLinkComponent/backLink";
 import userDefaultImage from "./images/default-user.png";
 import PropTypes from "prop-types";
 import GlobalLoading from "../global_loading/global_loading";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUserData, getParamsUser } from "../../store/users";
+import { checkCommentsAmount } from "../../store/comments";
 
 const ProfileUser = ({ profileId }) => {
     const currentUser = useSelector(getCurrentUserData());
     const paramsUser = useSelector(getParamsUser(profileId));
     const [pageUser, setPageUser] = useState();
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(checkCommentsAmount());
+    }, []);
 
     useEffect(() => {
         setPageUser(paramsUser);

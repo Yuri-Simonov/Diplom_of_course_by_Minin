@@ -1,7 +1,7 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
 import commentService from "../services/comment.service";
 import { nanoid } from "nanoid";
-import { getCurrentUserId } from "./users";
+import { getCurrentUserId, updateCurrentUserData } from "./users";
 
 const commentsSlice = createSlice({
     name: "comments",
@@ -44,6 +44,7 @@ const {
 
 const addCommentRequested = createAction("comments/addCommentRequested");
 const removeCommentRequested = createAction("comments/removeCommentRequested");
+const checkCommentRequested = createAction("comments/checkCommentRequested");
 
 export const loadCommentsList = (productId) => async (dispatch) => {
     dispatch(commentsRequested());
@@ -80,9 +81,27 @@ export const removeComment = (commentId) => async (dispatch) => {
         const { content } = await commentService.removeComment(commentId);
         if (content === null) {
             dispatch(commentRemoved(commentId));
-            // checkAmountComments();
         }
-    } catch (error) {}
+    } catch (error) {
+        dispatch(commentsReceivedError(error));
+    }
 };
+
+export function checkCommentsAmount() {
+    return async function (dispatch, getState) {
+        dispatch(checkCommentRequested());
+        try {
+            const { content } = await commentService.fetchAll();
+            const amountComments = content.filter(
+                (elem) => elem.userId === getCurrentUserId()(getState())
+            );
+            dispatch(
+                updateCurrentUserData({ amountReviews: amountComments.length })
+            );
+        } catch (error) {
+            dispatch(commentsReceivedError(error));
+        }
+    };
+}
 
 export default commentsReducer;
