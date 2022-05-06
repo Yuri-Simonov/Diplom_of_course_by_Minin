@@ -17,7 +17,7 @@ const ProfileDropdown = ({ userId }) => {
             <div className="dropdown">
                 <h2 className="dropdown__title" onClick={toggleDropdown}>
                     <img
-                        src={userById ? userById.img : userDefaultImage}
+                        src={userById.img ? userById.img : userDefaultImage}
                         alt="user"
                     />
                     <span>{userById ? userById.name : "АНОНИМ !!!"}</span>

@@ -8,6 +8,7 @@ import {
     loadUsersList
 } from "../../store/users";
 import GlobalLoading from "../global_loading/global_loading";
+import { loadFavouritesList } from "../../store/favourite";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const AppLoader = ({ children }) => {
     const isLoggedIn = useSelector(getIsLoggedIn());
 
     useEffect(() => {
+        dispatch(loadFavouritesList());
         dispatch(loadProductsList());
         dispatch(loadUsersList());
     }, [isLoggedIn]);

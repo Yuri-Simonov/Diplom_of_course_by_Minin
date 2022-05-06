@@ -12,6 +12,7 @@ const ProfileUser = ({ profileId }) => {
     const currentUser = useSelector(getCurrentUserData());
     const paramsUser = useSelector(getParamsUser(profileId));
     const [pageUser, setPageUser] = useState();
+    console.log("pageUser", pageUser);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -32,7 +33,11 @@ const ProfileUser = ({ profileId }) => {
                             <div className="profile__flex">
                                 <article className="profile__flex-left">
                                     <img
-                                        src={pageUser.img || userDefaultImage}
+                                        src={
+                                            pageUser.img
+                                                ? pageUser.img
+                                                : userDefaultImage
+                                        }
                                         alt="user"
                                     />
                                 </article>

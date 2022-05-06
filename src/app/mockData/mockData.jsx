@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import products from "../mockData/products.json";
+import products from "./products.json";
 import httpService from "../services/http.service";
 
-const useMockData = () => {
+const mockData = () => {
     const statusConsts = {
         idle: "Не начато",
         pending: "В процессе...",
@@ -48,4 +48,4 @@ const useMockData = () => {
     return { error, initialize, progress, status };
 };
 
-export default useMockData;
+export default mockData;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useFavorite } from "../../hooks/useFavorite";
 import { useBasket } from "../../hooks/useBasket";
-import { useWindowSize } from "../../hooks/useSize";
+import { resizePage } from "../../../utils/resizePage";
 import ProfileDropdown from "./profile_dropdown";
 import { useSelector } from "react-redux";
 import { getCurrentUserId } from "../../store/users";
@@ -12,7 +12,7 @@ const Header = () => {
     const { foundFavoriteProducts } = useFavorite();
     const { totalBasketCountArray } = useBasket();
     const currentUserId = useSelector(getCurrentUserId());
-    const [width] = useWindowSize();
+    const [width] = resizePage();
 
     // вывод итогового количества товаров в корзине
     let totalBaksetProducts = "";
