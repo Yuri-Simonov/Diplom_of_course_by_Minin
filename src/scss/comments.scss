@@ -90,6 +90,7 @@
     &__item-text {
     }
     &__item-close {
+        cursor: pointer;
         position: absolute;
         top: 10px;
         right: 10px;

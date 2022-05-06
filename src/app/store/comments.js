@@ -71,6 +71,7 @@ export const createComment = (payload) => async (dispatch, getState) => {
     try {
         const { content } = await commentService.createComment(comment);
         dispatch(commentCreated(content));
+        dispatch(checkCommentsAmount());
     } catch (error) {
         dispatch(commentsReceivedError(error));
     }
@@ -81,6 +82,7 @@ export const removeComment = (commentId) => async (dispatch) => {
         const { content } = await commentService.removeComment(commentId);
         if (content === null) {
             dispatch(commentRemoved(commentId));
+            dispatch(checkCommentsAmount());
         }
     } catch (error) {
         dispatch(commentsReceivedError(error));
@@ -92,12 +94,22 @@ export function checkCommentsAmount() {
         dispatch(checkCommentRequested());
         try {
             const { content } = await commentService.fetchAll();
-            const amountComments = content.filter(
-                (elem) => elem.userId === getCurrentUserId()(getState())
-            );
-            dispatch(
-                updateCurrentUserData({ amountReviews: amountComments.length })
-            );
+            if (content) {
+                const amountComments = content.filter(
+                    (elem) => elem.userId === getCurrentUserId()(getState())
+                );
+                dispatch(
+                    updateCurrentUserData({
+                        amountReviews: amountComments.length
+                    })
+                );
+            } else {
+                dispatch(
+                    updateCurrentUserData({
+                        amountReviews: 1
+                    })
+                );
+            }
         } catch (error) {
             dispatch(commentsReceivedError(error));
         }
