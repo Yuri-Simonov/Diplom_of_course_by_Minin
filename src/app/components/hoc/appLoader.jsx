@@ -9,6 +9,7 @@ import {
 } from "../../store/users";
 import GlobalLoading from "../global_loading/global_loading";
 import { loadFavouritesList } from "../../store/favourite";
+import { loadBasketList } from "../../store/basket";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const AppLoader = ({ children }) => {
 
     useEffect(() => {
         dispatch(loadFavouritesList());
+        dispatch(loadBasketList());
         dispatch(loadProductsList());
         dispatch(loadUsersList());
     }, [isLoggedIn]);

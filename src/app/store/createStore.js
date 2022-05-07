@@ -1,3 +1,4 @@
+import basketReducer from "./basket";
 import commentsReducer from "./comments";
 import favouritesReducer from "./favourite";
 import productsReducer from "./products";
@@ -9,7 +10,8 @@ const rootReducer = combineReducers({
     products: productsReducer,
     users: usersReducer,
     comments: commentsReducer,
-    favourites: favouritesReducer
+    favourites: favouritesReducer,
+    basket: basketReducer
 });
 
 export function createStore() {

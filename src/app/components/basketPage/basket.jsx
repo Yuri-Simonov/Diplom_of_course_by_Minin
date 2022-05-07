@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useBasket } from "../../hooks/useBasket";
+import { useDispatch, useSelector } from "react-redux";
+import { clearBasketList } from "../../store/basket";
 import { getCurrentUserId } from "../../store/users";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
 const Basket = () => {
+    const dispatch = useDispatch();
     const currentUserId = useSelector(getCurrentUserId());
-    const { clearBasket } = useBasket();
     let baksetProducts = JSON.parse(
         localStorage.getItem(`productsForBasket-${currentUserId}`)
     );
@@ -44,7 +44,7 @@ const Basket = () => {
     const [isModal, setModal] = useState(false);
     const openFinalModalWindow = () => {
         setModal(true);
-        clearBasket();
+        dispatch(clearBasketList());
     };
     const closeFinalModalWindow = (event) => {
         setModal(false);

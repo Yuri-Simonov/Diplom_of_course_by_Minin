@@ -5,8 +5,7 @@ const favouritesSlice = createSlice({
     name: "favourites",
     initialState: {
         entities: null,
-        entitiesAmount: 0,
-        error: null
+        entitiesAmount: 0
     },
     reducers: {
         favouritesReceived: (state, action) => {
@@ -14,8 +13,7 @@ const favouritesSlice = createSlice({
         },
         favouritesReceivedLength: (state, action) => {
             state.entitiesAmount = action.payload;
-        },
-        favouritesReceivedError: (state, action) => {}
+        }
     }
 });
 

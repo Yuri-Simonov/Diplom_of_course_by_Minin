@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useBasket } from "../../hooks/useBasket";
 import { resizePage } from "../../../utils/resizePage";
 import ProfileDropdown from "./profile_dropdown";
 import { useSelector } from "react-redux";
 import { getCurrentUserId } from "../../store/users";
 import { getFavouritesAmount } from "../../store/favourite";
+import { getBasketAmount } from "../../store/basket";
 
 const Header = () => {
     const foundFavoriteProductsAmount = useSelector(getFavouritesAmount());
-    const { totalBasketCountArray } = useBasket();
+    const foundBasketProductsAmount = useSelector(getBasketAmount());
     const currentUserId = useSelector(getCurrentUserId());
     const [width] = resizePage();
 
@@ -81,12 +81,11 @@ const Header = () => {
                                     <Link to="/basket" className="header__link">
                                         Корзина
                                     </Link>
-                                    {totalBasketCountArray &&
-                                        totalBasketCountArray.length > 0 && (
-                                            <span className="header__count-basket">
-                                                {totalSumBaksetProducts}
-                                            </span>
-                                        )}
+                                    {foundBasketProductsAmount > 0 && (
+                                        <span className="header__count-basket">
+                                            {totalSumBaksetProducts}
+                                        </span>
+                                    )}
                                 </li>
                             )}
                             {currentUserId ? (
