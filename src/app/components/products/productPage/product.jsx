@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useBasket } from "../../../hooks/useBasket";
 import BackLink from "../../backLinkComponent/backLink";
 import PropTypes from "prop-types";
 import Comments from "../../comments/comments";
@@ -9,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../../store/products";
 import { getCurrentUserId } from "../../../store/users";
 import { getFavouritesById, toggleFavourite } from "../../../store/favourite";
+import { changeProductsToBasketList } from "../../../store/basket";
 
 const ProductPage = ({ productId }) => {
     const dispatch = useDispatch();
@@ -16,7 +16,6 @@ const ProductPage = ({ productId }) => {
 
     const { catcherError } = useErrors();
     const currentUserId = useSelector(getCurrentUserId());
-    const { addItemToBasket } = useBasket();
     const [foundProduct, setFoundProduct] = useState();
 
     useEffect(() => {
@@ -88,9 +87,11 @@ const ProductPage = ({ productId }) => {
                                         <button
                                             className="item-body__buy"
                                             onClick={() =>
-                                                addItemToBasket(
-                                                    foundProduct,
-                                                    productCount
+                                                dispatch(
+                                                    changeProductsToBasketList(
+                                                        foundProduct,
+                                                        productCount
+                                                    )
                                                 )
                                             }
                                         >

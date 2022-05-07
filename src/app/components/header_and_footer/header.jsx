@@ -13,19 +13,6 @@ const Header = () => {
     const currentUserId = useSelector(getCurrentUserId());
     const [width] = resizePage();
 
-    // вывод итогового количества товаров в корзине
-    let totalBaksetProducts = "";
-    if (currentUserId) {
-        totalBaksetProducts = JSON.parse(
-            localStorage.getItem(`productsForBasket-${currentUserId}`)
-        );
-    }
-    let totalSumBaksetProducts = 0;
-    totalBaksetProducts &&
-        totalBaksetProducts.forEach((element) => {
-            totalSumBaksetProducts += element.value;
-        });
-
     // Menu burger =======================================================================
     const headerBurger = document.querySelector(".header__burger");
     const headerMenu = document.querySelector(".header__menu");
@@ -83,7 +70,7 @@ const Header = () => {
                                     </Link>
                                     {foundBasketProductsAmount > 0 && (
                                         <span className="header__count-basket">
-                                            {totalSumBaksetProducts}
+                                            {foundBasketProductsAmount}
                                         </span>
                                     )}
                                 </li>

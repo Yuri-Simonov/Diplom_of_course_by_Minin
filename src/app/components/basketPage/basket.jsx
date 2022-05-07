@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearBasketList } from "../../store/basket";
-import { getCurrentUserId } from "../../store/users";
+import {
+    clearBasketList,
+    getBasket,
+    getTotalSumOfOrder
+} from "../../store/basket";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
 const Basket = () => {
     const dispatch = useDispatch();
-    const currentUserId = useSelector(getCurrentUserId());
-    let baksetProducts = JSON.parse(
-        localStorage.getItem(`productsForBasket-${currentUserId}`)
-    );
+    let baksetProducts = useSelector(getBasket());
 
-    let totalSum = 0;
-    baksetProducts &&
-        baksetProducts.forEach((element) => {
-            totalSum += element.price * element.value;
-        });
+    const totalSum = useSelector(getTotalSumOfOrder());
 
     if (baksetProducts && baksetProducts.length > 0) {
         baksetProducts = baksetProducts.map((product) => {

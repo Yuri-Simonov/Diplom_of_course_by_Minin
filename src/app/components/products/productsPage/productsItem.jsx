@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useBasket } from "../../../hooks/useBasket";
 import { useErrors } from "../../../hooks/useErrors";
 import { constants } from "../../../constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUserId } from "../../../store/users";
 import { getFavouritesById, toggleFavourite } from "../../../store/favourite";
+import { changeProductsToBasketList } from "../../../store/basket";
 
 const ProductsItem = ({ product }) => {
     const dispatch = useDispatch();
@@ -14,7 +14,6 @@ const ProductsItem = ({ product }) => {
     const currentUserId = useSelector(getCurrentUserId());
     const isFavourite = useSelector(getFavouritesById(product._id));
 
-    const { addItemToBasket } = useBasket();
     let reviewWord;
     if (Number(product.reviews) === 0 || Number(product.reviews) % 10 === 0) {
         reviewWord = "отзывов";
@@ -75,7 +74,10 @@ const ProductsItem = ({ product }) => {
                         className="product__add-basket item-body__buy"
                         onClick={
                             currentUserId
-                                ? () => addItemToBasket(product)
+                                ? () =>
+                                      dispatch(
+                                          changeProductsToBasketList(product)
+                                      )
                                 : () =>
                                       catcherError(
                                           constants.messages.addToBasket

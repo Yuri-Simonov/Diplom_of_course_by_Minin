@@ -8,7 +8,6 @@ import Basket from "./components/basketPage/basket";
 import Products from "./components/products/products";
 import PageNotFound from "./components/404/page-404";
 import FavoritesPage from "./components/favoritesPage/favoritesPage";
-import BasketProvider from "./hooks/useBasket";
 import Initialize from "./components/initialize/initialize";
 import ProtectedRoute from "./components/protectedRoutes/protectedRoute";
 import Profile from "./components/header_and_footer/profile";
@@ -22,39 +21,31 @@ const App = () => {
         <div className="wrapper">
             <AppLoader>
                 <ErrorsProvider>
-                    <BasketProvider>
-                        <Header />
-                        <Switch>
-                            <ProtectedRoute path="/basket" component={Basket} />
-                            <Route
-                                path="/favorites"
-                                component={FavoritesPage}
-                            />
-                            <Route
-                                path="/products/:productId?"
-                                component={Products}
-                            />
-                            <ProtectedRoute
-                                path="/profile/:profileId?/:edit?"
-                                component={Profile}
-                            />
-                            <Route path="/404" component={PageNotFound} />
-                            <Route
-                                path="/registration"
-                                component={Registration}
-                            />
-                            <Route path="/signout" component={SignOut} />
-                            <Route
-                                path="/authorization"
-                                exact
-                                component={Authorization}
-                            />
-                            <Route path="/" exact component={ProductsList} />
-                            <Route path="/initialize" component={Initialize} />
-                            <Redirect to="/404" />
-                        </Switch>
-                        <Footer />
-                    </BasketProvider>
+                    <Header />
+                    <Switch>
+                        <ProtectedRoute path="/basket" component={Basket} />
+                        <Route path="/favorites" component={FavoritesPage} />
+                        <Route
+                            path="/products/:productId?"
+                            component={Products}
+                        />
+                        <ProtectedRoute
+                            path="/profile/:profileId?/:edit?"
+                            component={Profile}
+                        />
+                        <Route path="/404" component={PageNotFound} />
+                        <Route path="/registration" component={Registration} />
+                        <Route path="/signout" component={SignOut} />
+                        <Route
+                            path="/authorization"
+                            exact
+                            component={Authorization}
+                        />
+                        <Route path="/" exact component={ProductsList} />
+                        <Route path="/initialize" component={Initialize} />
+                        <Redirect to="/404" />
+                    </Switch>
+                    <Footer />
                 </ErrorsProvider>
             </AppLoader>
         </div>
