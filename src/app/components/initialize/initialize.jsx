@@ -1,9 +1,9 @@
 import React from "react";
-import useMockData from "../../hooks/useMockData";
 import config from "../../config.json";
+import mockData from "../../mockData/mockData";
 
 const Initialize = () => {
-    const { error, initialize, progress, status } = useMockData();
+    const { error, initialize, progress, status } = mockData();
     const handleClick = () => {
         initialize();
     };

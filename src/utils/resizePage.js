@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useWindowSize = () => {
+export const resizePage = () => {
     const [size, setSize] = useState([
         document.documentElement.clientWidth,
         document.documentElement.clientHeight

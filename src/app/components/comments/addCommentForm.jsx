@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useAuth } from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { getCurrentUserId } from "../../store/users";
 
 const AddCommentForm = ({ onSubmit, productId }) => {
-    const { currentUser } = useAuth();
+    const currentUserId = useSelector(getCurrentUserId());
     const [data, setData] = useState({});
 
     const handleChange = ({ target }) => {
@@ -33,7 +34,7 @@ const AddCommentForm = ({ onSubmit, productId }) => {
 
     return (
         <>
-            {currentUser && (
+            {currentUserId && (
                 <article className="comments__add">
                     <form className="comments__add-form">
                         <textarea

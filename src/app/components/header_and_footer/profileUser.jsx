@@ -1,28 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 import BackLink from "../backLinkComponent/backLink";
 import userDefaultImage from "./images/default-user.png";
 import PropTypes from "prop-types";
 import GlobalLoading from "../global_loading/global_loading";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUserData, getParamsUser } from "../../store/users";
+import { checkCommentsAmount } from "../../store/comments";
 
 const ProfileUser = ({ profileId }) => {
-    const { currentUser, paramsUser, getParamsData } = useAuth(profileId);
+    const currentUser = useSelector(getCurrentUserData());
+    const paramsUser = useSelector(getParamsUser(profileId));
     const [pageUser, setPageUser] = useState();
+    console.log("pageUser", pageUser);
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(checkCommentsAmount());
+    }, []);
 
     useEffect(() => {
-        getParamsData(profileId);
-    }, [profileId]);
-
-    function currentPerson(id) {
-        if (id === currentUser._id) {
-            return setPageUser(currentUser);
-        } else {
-            return setPageUser(paramsUser);
-        }
-    }
-    useEffect(() => {
-        currentPerson();
+        setPageUser(paramsUser);
     }, [currentUser, paramsUser]);
 
     return (
@@ -35,7 +33,11 @@ const ProfileUser = ({ profileId }) => {
                             <div className="profile__flex">
                                 <article className="profile__flex-left">
                                     <img
-                                        src={pageUser.img || userDefaultImage}
+                                        src={
+                                            pageUser.img
+                                                ? pageUser.img
+                                                : userDefaultImage
+                                        }
                                         alt="user"
                                     />
                                 </article>

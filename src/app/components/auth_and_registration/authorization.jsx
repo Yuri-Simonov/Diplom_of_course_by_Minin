@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { validator } from "../../../utils/validator";
-import { useAuth } from "../../hooks/useAuth";
+import { getAuthError, getCurrentUserId, signIn } from "../../store/users";
 import Inputs from "./inputs";
 
 const Authorization = () => {
+    const history = useHistory();
     const [data, setData] = useState({
         email: "",
         password: "",
         rememberMe: true
     });
-
-    const history = useHistory();
-    const { currentUser, signIn } = useAuth();
+    const dispatch = useDispatch();
+    const currentUserId = useSelector(getCurrentUserId());
     const [errors, setErrors] = useState();
-    const [enterError, setEnterError] = useState(null);
+    const signInError = useSelector(getAuthError());
     const handleChange = ({ target }) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
-        setEnterError(null);
     };
     const handleChangeBoolean = () => {
         setData((prevState) => ({
@@ -56,33 +57,27 @@ const Authorization = () => {
         return Object.keys(errors).length === 0;
     };
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        try {
-            await signIn(data);
-            history.push(
-                history.location.state
-                    ? history.location.state.from
-                    : "/products"
-            );
-        } catch (error) {
-            setEnterError(error.message);
-        }
+        const redirect = history.location.state
+            ? history.location.state.from
+            : "/products";
+        dispatch(signIn({ payload: data, redirect }));
     };
 
     const getSubmittClasses = () => {
         return (
             "authorization__submit" +
-            (!isValidValue || enterError
+            (!isValidValue || signInError
                 ? " authorization__submit" + "-not-active"
                 : "")
         );
     };
 
     // Переброс на главную страницу, если пользователь авторизован и хочет зайти на авторизацию
-    if (currentUser) {
+    if (currentUserId) {
         history.push("/");
     }
 
@@ -145,8 +140,10 @@ const Authorization = () => {
                                 Запомнить меня
                             </span>
                         </label>
-                        {enterError && (
-                            <p className="authorization__error">{enterError}</p>
+                        {signInError && (
+                            <p className="authorization__error">
+                                {signInError}
+                            </p>
                         )}
                         <button type="submit" className={getSubmittClasses()}>
                             Войти

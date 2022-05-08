@@ -1,41 +1,51 @@
 import React, { useEffect } from "react";
-import { useComments } from "../../hooks/useComments";
 import AddCommentForm from "./addCommentForm";
 import Comment from "./comment";
 import PropTypes from "prop-types";
-import { useAuth } from "../../hooks/useAuth";
 import { orderBy } from "lodash";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUserId } from "../../store/users";
+import {
+    createComment,
+    getComments,
+    getCommentsLoadingStatus,
+    loadCommentsList,
+    removeComment
+} from "../../store/comments";
 
 const Comments = ({ productId }) => {
-    const { currentUser } = useAuth();
-    const { comments, createComment, getComments, removeComment } =
-        useComments();
+    const currentUserId = useSelector(getCurrentUserId());
+    const comments = useSelector(getComments());
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(loadCommentsList(productId));
+    }, []);
+    const isLoading = useSelector(getCommentsLoadingStatus());
+
+    const handleRemoveComment = (commentId) => {
+        dispatch(removeComment(commentId));
+    };
     const handleSubmit = (data, productId) => {
-        createComment(data, productId);
+        dispatch(createComment({ ...data, productId: productId }));
     };
 
     // Сортировка комментариев
     const sortedComments = orderBy(comments, ["created_at"], ["desc"]);
 
-    // Запрос данных по комментариям к FireBase при просмотре продукта
-    useEffect(() => {
-        getComments(productId);
-    }, [productId]);
-
     return (
         <div className="comments">
             <h2 className="comments__title">Отзывы</h2>
-            {sortedComments &&
+            {!isLoading &&
                 sortedComments.map((comment) => (
                     <Comment
                         key={comment._id}
                         {...comment}
-                        onRemove={removeComment}
+                        onRemove={handleRemoveComment}
                     />
                 ))}
-            {sortedComments && sortedComments.length === 0 && (
+            {!isLoading && sortedComments.length === 0 && (
                 <h2 className="comments__subtitle">
-                    {currentUser
+                    {currentUserId
                         ? "Еще никто не оставил отзыв о товаре. Будьте первым!"
                         : "Еще никто не оставил отзыв о товаре..."}
                 </h2>

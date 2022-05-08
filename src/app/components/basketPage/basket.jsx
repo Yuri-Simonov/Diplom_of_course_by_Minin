@@ -1,21 +1,18 @@
 import React, { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import { useBasket } from "../../hooks/useBasket";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    clearBasketList,
+    getBasket,
+    getTotalSumOfOrder
+} from "../../store/basket";
 import BackLink from "../backLinkComponent/backLink";
 import BasketItem from "./basketItem";
 
 const Basket = () => {
-    const { currentUser } = useAuth();
-    const { clearBasket } = useBasket();
-    let baksetProducts = JSON.parse(
-        localStorage.getItem(`productsForBasket-${currentUser._id}`)
-    );
+    const dispatch = useDispatch();
+    let baksetProducts = useSelector(getBasket());
 
-    let totalSum = 0;
-    baksetProducts &&
-        baksetProducts.forEach((element) => {
-            totalSum += element.price * element.value;
-        });
+    const totalSum = useSelector(getTotalSumOfOrder());
 
     if (baksetProducts && baksetProducts.length > 0) {
         baksetProducts = baksetProducts.map((product) => {
@@ -43,7 +40,7 @@ const Basket = () => {
     const [isModal, setModal] = useState(false);
     const openFinalModalWindow = () => {
         setModal(true);
-        clearBasket();
+        dispatch(clearBasketList());
     };
     const closeFinalModalWindow = (event) => {
         setModal(false);

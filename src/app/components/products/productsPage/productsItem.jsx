@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useBasket } from "../../../hooks/useBasket";
-import { useFavorite } from "../../../hooks/useFavorite";
-import { useAuth } from "../../../hooks/useAuth";
-import { useErrors } from "../../../hooks/useErrors";
 import { constants } from "../../../constants/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUserId } from "../../../store/users";
+import { getFavouritesById, toggleFavourite } from "../../../store/favourite";
+import { changeProductsToBasketList } from "../../../store/basket";
+import { getProductsError } from "../../../store/products";
+import { errorCatcher } from "../../../../utils/errorCatcher";
 
 const ProductsItem = ({ product }) => {
-    const { catcherError } = useErrors();
-    const { currentUser } = useAuth();
-    const { addItemToBasket } = useBasket();
-    const { addItemToFavorites } = useFavorite();
+    const dispatch = useDispatch();
+    const productError = useSelector(getProductsError());
+    if (productError) {
+        errorCatcher();
+    }
+    const currentUserId = useSelector(getCurrentUserId());
+    const isFavourite = useSelector(getFavouritesById(product._id));
+
     let reviewWord;
     if (Number(product.reviews) === 0 || Number(product.reviews) % 10 === 0) {
         reviewWord = "отзывов";
@@ -31,27 +37,6 @@ const ProductsItem = ({ product }) => {
     } else if (product.rating <= 3.7) {
         colorOfStar = "red";
     }
-
-    const [isFavorite, setFavorite] = useState(false);
-    function changeFavorite() {
-        if (
-            currentUser &&
-            localStorage.getItem(`product-${product._id}-${currentUser._id}`)
-        ) {
-            setFavorite(true);
-        } else {
-            setFavorite(false);
-        }
-    }
-    useEffect(() => {
-        changeFavorite();
-    }, []);
-    useEffect(() => {
-        changeFavorite();
-    }, [
-        currentUser &&
-            localStorage.getItem(`product-${product._id}-${currentUser._id}`)
-    ]);
 
     return (
         <div className="products__product product">
@@ -92,10 +77,13 @@ const ProductsItem = ({ product }) => {
                     <button
                         className="product__add-basket item-body__buy"
                         onClick={
-                            currentUser
-                                ? () => addItemToBasket(product)
+                            currentUserId
+                                ? () =>
+                                      dispatch(
+                                          changeProductsToBasketList(product)
+                                      )
                                 : () =>
-                                      catcherError(
+                                      errorCatcher(
                                           constants.messages.addToBasket
                                       )
                         }
@@ -107,12 +95,12 @@ const ProductsItem = ({ product }) => {
             <div
                 className={
                     "product__favorites" +
-                    (isFavorite ? " product__favorites-active" : "")
+                    (isFavourite ? " product__favorites-active" : "")
                 }
                 onClick={
-                    currentUser
-                        ? (event) => addItemToFavorites(event, product)
-                        : () => catcherError(constants.messages.addToFavourite)
+                    currentUserId
+                        ? () => dispatch(toggleFavourite(product))
+                        : () => errorCatcher(constants.messages.addToFavourite)
                 }
             >
                 <svg

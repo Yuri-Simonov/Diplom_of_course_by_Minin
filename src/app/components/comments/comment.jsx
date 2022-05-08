@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useUser } from "../../hooks/useUsers";
-import { useAuth } from "../../hooks/useAuth";
 import { displayDate } from "../../../utils/displayDate";
+import { useSelector } from "react-redux";
+import { getCurrentUserId, getUserById } from "../../store/users";
 
 const Comment = ({
     content,
@@ -11,9 +11,9 @@ const Comment = ({
     userId,
     onRemove
 }) => {
-    const { currentUser } = useAuth();
-    const { getUserById } = useUser();
-    const user = getUserById(userId);
+    const currentUserId = useSelector(getCurrentUserId());
+
+    const user = useSelector(getUserById(userId));
 
     const sliceLastame = (lastname) => {
         if (lastname) {
@@ -48,7 +48,7 @@ const Comment = ({
                         </div>
                     </div>
                 </div>
-                {currentUser && currentUser._id === userId && (
+                {currentUserId === userId && (
                     <div
                         className="comments__item-close"
                         onClick={() => onRemove(id)}

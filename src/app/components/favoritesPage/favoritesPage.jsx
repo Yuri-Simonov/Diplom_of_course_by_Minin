@@ -1,12 +1,14 @@
 import React from "react";
-import { useFavorite } from "../../hooks/useFavorite";
-import { useProducts } from "../../hooks/useProducts";
+import { useSelector } from "react-redux";
+import { getFavourites } from "../../store/favourite";
+import { getProducts } from "../../store/products";
 import BackLink from "../backLinkComponent/backLink";
 import ProductsItem from "../products/productsPage/productsItem";
 
 const FavoritesPage = () => {
-    const { products } = useProducts();
-    const { foundFavoriteProducts } = useFavorite();
+    const products = useSelector(getProducts());
+
+    const foundFavoriteProducts = useSelector(getFavourites());
 
     let favoriteProducts;
     if (foundFavoriteProducts && foundFavoriteProducts.length === 0) {

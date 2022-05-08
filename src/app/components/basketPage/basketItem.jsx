@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useBasket } from "../../hooks/useBasket";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import {
+    changeProductsToBasketList,
+    deleteBasketProductById
+} from "../../store/basket";
 
 const BasketItem = ({ product }) => {
-    const { deleteBasketItem, minusBasketItem, addItemToBasket } = useBasket();
+    const dispatch = useDispatch();
 
     return (
         <div className="basket-item">
@@ -23,7 +27,11 @@ const BasketItem = ({ product }) => {
                     <div className="item-body__amount">
                         <div
                             className="item-body__amount-minus"
-                            onClick={() => minusBasketItem(product)}
+                            onClick={() =>
+                                dispatch(
+                                    changeProductsToBasketList(product, 1, true)
+                                )
+                            }
                         >
                             -
                         </div>
@@ -32,7 +40,9 @@ const BasketItem = ({ product }) => {
                         </div>
                         <div
                             className="item-body__amount-plus"
-                            onClick={() => addItemToBasket(product)}
+                            onClick={() =>
+                                dispatch(changeProductsToBasketList(product))
+                            }
                         >
                             +
                         </div>
@@ -41,7 +51,7 @@ const BasketItem = ({ product }) => {
                 <div className="basket-item__price">{product.price} руб.</div>
                 <div
                     className="basket-item__close-btn"
-                    onClick={() => deleteBasketItem(product)}
+                    onClick={() => dispatch(deleteBasketProductById(product))}
                 >
                     <svg
                         width="27"

@@ -1,39 +1,28 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { useFavorite } from "../../hooks/useFavorite";
-import { useBasket } from "../../hooks/useBasket";
-import { useWindowSize } from "../../hooks/useSize";
-import { useAuth } from "../../hooks/useAuth";
+import { resizePage } from "../../../utils/resizePage";
 import ProfileDropdown from "./profile_dropdown";
+import { useSelector } from "react-redux";
+import { getCurrentUserId } from "../../store/users";
+import { getFavouritesAmount } from "../../store/favourite";
+import { getBasketAmount } from "../../store/basket";
 
 const Header = () => {
-    const { foundFavoriteProducts } = useFavorite();
-    const { totalBasketCountArray } = useBasket();
-    const { currentUser } = useAuth();
-    const [width] = useWindowSize();
-
-    // вывод итогового количества товаров в корзине
-    let totalBaksetProducts = "";
-    if (currentUser) {
-        totalBaksetProducts = JSON.parse(
-            localStorage.getItem(`productsForBasket-${currentUser._id}`)
-        );
-    }
-    let totalSumBaksetProducts = 0;
-    totalBaksetProducts &&
-        totalBaksetProducts.forEach((element) => {
-            totalSumBaksetProducts += element.value;
-        });
+    const foundFavoriteProductsAmount = useSelector(getFavouritesAmount());
+    const foundBasketProductsAmount = useSelector(getBasketAmount());
+    const currentUserId = useSelector(getCurrentUserId());
+    const [width] = resizePage();
 
     // Menu burger =======================================================================
     const headerBurger = document.querySelector(".header__burger");
     const headerMenu = document.querySelector(".header__menu");
     const body = document.querySelector("body");
     const toggleBurger = () => {
-        headerBurger.classList.toggle("active");
-        headerMenu.classList.toggle("active");
-        body.classList.toggle("lock");
+        if (headerBurger) {
+            headerBurger.classList.toggle("active");
+            headerMenu.classList.toggle("active");
+            body.classList.toggle("lock");
+        }
     };
     useEffect(() => {
         if (width >= 768 && headerBurger && headerMenu) {
@@ -59,7 +48,7 @@ const Header = () => {
                                     Продукты
                                 </Link>
                             </li>
-                            {currentUser && (
+                            {currentUserId && (
                                 <li onClick={toggleBurger}>
                                     <Link
                                         to="/favorites"
@@ -67,31 +56,31 @@ const Header = () => {
                                     >
                                         Избранное
                                     </Link>
-                                    {foundFavoriteProducts &&
-                                        foundFavoriteProducts.length > 0 && (
-                                            <span className="header__count-favorites">
-                                                {foundFavoriteProducts.length}
-                                            </span>
-                                        )}
+                                    {foundFavoriteProductsAmount > 0 && (
+                                        <span className="header__count-favorites">
+                                            {foundFavoriteProductsAmount}
+                                        </span>
+                                    )}
                                 </li>
                             )}
-                            {currentUser && (
+                            {currentUserId && (
                                 <li onClick={toggleBurger}>
                                     <Link to="/basket" className="header__link">
                                         Корзина
                                     </Link>
-                                    {totalBasketCountArray &&
-                                        totalBasketCountArray.length > 0 && (
-                                            <span className="header__count-basket">
-                                                {totalSumBaksetProducts}
-                                            </span>
-                                        )}
+                                    {foundBasketProductsAmount > 0 && (
+                                        <span className="header__count-basket">
+                                            {foundBasketProductsAmount}
+                                        </span>
+                                    )}
                                 </li>
                             )}
-                            {currentUser ? (
+                            {currentUserId ? (
                                 <li onClick={toggleBurger}>
                                     <div>
-                                        <ProfileDropdown />
+                                        <ProfileDropdown
+                                            userId={currentUserId}
+                                        />
                                     </div>
                                 </li>
                             ) : (
@@ -110,10 +99,6 @@ const Header = () => {
             </div>
         </div>
     );
-};
-Header.propTypes = {
-    foundFavoriteProducts: PropTypes.array,
-    totalBasketCountArray: PropTypes.array
 };
 
 export default Header;
