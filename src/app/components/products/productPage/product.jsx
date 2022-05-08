@@ -3,18 +3,21 @@ import BackLink from "../../backLinkComponent/backLink";
 import PropTypes from "prop-types";
 import Comments from "../../comments/comments";
 import { constants } from "../../../constants/constants";
-import { useErrors } from "../../../hooks/useErrors";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../../store/products";
+import { getProducts, getProductsError } from "../../../store/products";
 import { getCurrentUserId } from "../../../store/users";
 import { getFavouritesById, toggleFavourite } from "../../../store/favourite";
 import { changeProductsToBasketList } from "../../../store/basket";
+import { errorCatcher } from "../../../../utils/errorCatcher";
 
 const ProductPage = ({ productId }) => {
     const dispatch = useDispatch();
     const products = useSelector(getProducts());
 
-    const { catcherError } = useErrors();
+    const productError = useSelector(getProductsError());
+    if (productError) {
+        errorCatcher(productError);
+    }
     const currentUserId = useSelector(getCurrentUserId());
     const [foundProduct, setFoundProduct] = useState();
 
@@ -102,7 +105,7 @@ const ProductPage = ({ productId }) => {
                                         <button
                                             className="item-body__buy"
                                             onClick={() =>
-                                                catcherError(
+                                                errorCatcher(
                                                     constants.messages
                                                         .addToBasket
                                                 )
@@ -127,7 +130,7 @@ const ProductPage = ({ productId }) => {
                                                   toggleFavourite(foundProduct)
                                               )
                                         : () =>
-                                              catcherError(
+                                              errorCatcher(
                                                   constants.messages
                                                       .addToFavourite
                                               )

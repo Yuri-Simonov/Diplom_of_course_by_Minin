@@ -1,16 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useErrors } from "../../../hooks/useErrors";
 import { constants } from "../../../constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUserId } from "../../../store/users";
 import { getFavouritesById, toggleFavourite } from "../../../store/favourite";
 import { changeProductsToBasketList } from "../../../store/basket";
+import { getProductsError } from "../../../store/products";
+import { errorCatcher } from "../../../../utils/errorCatcher";
 
 const ProductsItem = ({ product }) => {
     const dispatch = useDispatch();
-    const { catcherError } = useErrors();
+    const productError = useSelector(getProductsError());
+    if (productError) {
+        errorCatcher();
+    }
     const currentUserId = useSelector(getCurrentUserId());
     const isFavourite = useSelector(getFavouritesById(product._id));
 
@@ -79,7 +83,7 @@ const ProductsItem = ({ product }) => {
                                           changeProductsToBasketList(product)
                                       )
                                 : () =>
-                                      catcherError(
+                                      errorCatcher(
                                           constants.messages.addToBasket
                                       )
                         }
@@ -96,7 +100,7 @@ const ProductsItem = ({ product }) => {
                 onClick={
                     currentUserId
                         ? () => dispatch(toggleFavourite(product))
-                        : () => catcherError(constants.messages.addToFavourite)
+                        : () => errorCatcher(constants.messages.addToFavourite)
                 }
             >
                 <svg

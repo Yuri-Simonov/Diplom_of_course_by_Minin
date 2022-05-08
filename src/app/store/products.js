@@ -43,6 +43,7 @@ export const loadProductsList = () => async (dispatch, getState) => {
 };
 
 export const getProducts = () => (state) => state.products.entities;
+export const getProductsError = () => (state) => state.products.error;
 export const getProductsLoadingStatus = () => (state) =>
     state.products.isLoading;
 
