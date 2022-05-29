@@ -48,7 +48,6 @@ const ProductPage = ({ productId }) => {
         <main className="shop">
             <div className="container">
                 <BackLink name="Вернуться к покупкам" />
-                <h3 className="shop__item__breadcrumbs">Хлебные крошки</h3>
                 {foundProduct ? (
                     <section className="shop__item">
                         <div className="shop__item-body item-body">
