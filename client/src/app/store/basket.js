@@ -58,6 +58,7 @@ export const loadBasketList = () => (dispatch, getState) => {
             result += elem.value;
         });
         dispatch(basketReceivedLength(result));
+        dispatch(basketChangeTotalSum(changeTotalSumOfOrder(basketProducts)));
     }
 };
 
@@ -137,7 +138,7 @@ export const deleteBasketProductById = (product) => (dispatch, getState) => {
     );
     dispatch(basketDeleteProductById(product));
     dispatch(basketReceivedLengthLess(product.value));
-    dispatch(basketChangeTotalSum(changeTotalSumOfOrder(currentUserBasket)));
+    dispatch(basketChangeTotalSum(changeTotalSumOfOrder(newCurrentUserBasket)));
 };
 
 function changeTotalSumOfOrder(arr) {

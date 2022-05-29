@@ -14,26 +14,28 @@ const ProfileDropdown = ({ userId }) => {
 
     return (
         <>
-            <div className="dropdown">
-                <h2 className="dropdown__title" onClick={toggleDropdown}>
-                    <img
-                        src={userById.img ? userById.img : userDefaultImage}
-                        alt="user"
-                    />
-                    <span>{userById ? userById.name : "АНОНИМ !!!"}</span>
-                </h2>
-                <div className="dropdown__list" onClick={toggleDropdown}>
-                    <Link
-                        to={`/profile/${userId}`}
-                        className="dropdown__list-link"
-                    >
-                        Профиль
-                    </Link>
-                    <Link to={"/signout"} className="dropdown__list-link">
-                        Выйти
-                    </Link>
+            {userById && (
+                <div className="dropdown">
+                    <h2 className="dropdown__title" onClick={toggleDropdown}>
+                        <img
+                            src={userById.img ? userById.img : userDefaultImage}
+                            alt="user"
+                        />
+                        <span>{userById ? userById.name : "АНОНИМ !!!"}</span>
+                    </h2>
+                    <div className="dropdown__list" onClick={toggleDropdown}>
+                        <Link
+                            to={`/profile/${userId}`}
+                            className="dropdown__list-link"
+                        >
+                            Профиль
+                        </Link>
+                        <Link to={"/signout"} className="dropdown__list-link">
+                            Выйти
+                        </Link>
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     );
 };

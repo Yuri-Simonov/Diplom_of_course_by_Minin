@@ -64,6 +64,7 @@ const Authorization = () => {
         const redirect = history.location.state
             ? history.location.state.from
             : "/products";
+
         dispatch(signIn({ payload: data, redirect }));
     };
 

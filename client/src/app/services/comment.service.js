@@ -3,17 +3,14 @@ const commentEndpoint = "comments/";
 
 const commentService = {
     createComment: async (payload) => {
-        const { data } = await httpService.put(
-            commentEndpoint + payload._id,
-            payload
-        );
+        const { data } = await httpService.post(commentEndpoint, payload);
         return data;
     },
     getComments: async (productId) => {
         const { data } = await httpService.get(commentEndpoint, {
             params: {
-                orderBy: '"productId"',
-                equalTo: `"${productId}"`
+                orderBy: "productId",
+                equalTo: `${productId}`
             }
         });
         return data;

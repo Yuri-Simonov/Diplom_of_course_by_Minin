@@ -48,9 +48,6 @@ const usersSlice = createSlice({
         usersRequestedFailed: (state, action) => {
             state.error = action.payload;
         },
-        userCreated: (state, action) => {
-            state.entities.push(action.payload);
-        },
         usersUpdated: (state, action) => {
             const res = state.entities.findIndex((u) => {
                 return u._id === action.payload._id;
@@ -75,14 +72,11 @@ const {
     usersReceivedFailed,
     usersRequestedSuccess,
     usersRequestedFailed,
-    userCreated,
     usersUpdated,
     userSignOut
 } = actions;
 
 const authRequested = createAction("users/authRequested");
-const userCreateRequested = createAction("users/userCreateRequested");
-const userCreateFailed = createAction("users/userCreateFailed");
 const userUpdateRequested = createAction("users/userUpdateRequested");
 
 export const signIn =
@@ -92,8 +86,8 @@ export const signIn =
         dispatch(authRequested());
         try {
             const data = await authService.login({ email, password });
-            dispatch(usersRequestedSuccess({ userId: data.localId }));
             localStorageService.setTokens(data);
+            dispatch(usersRequestedSuccess({ userId: data.userId }));
             history.push(redirect);
         } catch (error) {
             const { code, message } = error.response.data.error;
@@ -106,39 +100,23 @@ export const signIn =
         }
     };
 
-export const signUp =
-    ({ email, password, ...rest }) =>
-    async (dispatch) => {
-        dispatch(authRequested());
-        try {
-            const data = await authService.register({ email, password });
-            localStorageService.setTokens(data);
-            dispatch(usersRequestedSuccess({ userId: data.localId }));
-            dispatch(createUser({ _id: data.localId, email, ...rest }));
-        } catch (error) {
-            const { code, message } = error.response.data.error;
-            console.log("code, message", code, message);
-            if (code === 400) {
-                const errorMessage = generateAuthErrors(message);
-                dispatch(usersRequestedFailed(errorMessage));
-            } else {
-                dispatch(usersRequestedFailed(error));
-            }
+export const signUp = (payload) => async (dispatch) => {
+    dispatch(authRequested());
+    try {
+        const data = await authService.register(payload);
+        localStorageService.setTokens(data);
+        dispatch(usersRequestedSuccess({ userId: data.userId }));
+        history.push("/products");
+    } catch (error) {
+        const { code, message } = error.response.data.error;
+        if (code === 400) {
+            const errorMessage = generateAuthErrors(message);
+            dispatch(usersRequestedFailed(errorMessage));
+        } else {
+            dispatch(usersRequestedFailed(error));
         }
-    };
-
-function createUser(payload) {
-    return async function (dispatch) {
-        dispatch(userCreateRequested());
-        try {
-            const { content } = await userService.update(payload);
-            dispatch(userCreated(content));
-            history.push("/products");
-        } catch (error) {
-            dispatch(userCreateFailed(error));
-        }
-    };
-}
+    }
+};
 
 export const loadUsersList = () => async (dispatch) => {
     dispatch(usersRequested());
@@ -167,9 +145,8 @@ export const getCurrentUserData = () => (state) => {
 export const updateCurrentUserData = (payload) => async (dispatch) => {
     dispatch(userUpdateRequested());
     try {
-        await userService.update(payload);
-        const { content } = await userService.getCurrentUser();
-        dispatch(usersUpdated(content));
+        const contentInner = await userService.update(payload);
+        dispatch(usersUpdated(contentInner.content));
     } catch (error) {
         dispatch(usersRequestedFailed());
     }

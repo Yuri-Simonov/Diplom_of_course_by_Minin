@@ -12,7 +12,6 @@ const ProfileUser = ({ profileId }) => {
     const currentUser = useSelector(getCurrentUserData());
     const paramsUser = useSelector(getParamsUser(profileId));
     const [pageUser, setPageUser] = useState();
-    console.log("pageUser", pageUser);
 
     const dispatch = useDispatch();
     useEffect(() => {

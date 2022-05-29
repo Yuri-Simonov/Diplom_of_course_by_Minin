@@ -1,6 +1,5 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
 import commentService from "../services/comment.service";
-import { nanoid } from "nanoid";
 import { getCurrentUserId, updateCurrentUserData } from "./users";
 
 const commentsSlice = createSlice({
@@ -60,16 +59,10 @@ export const getComments = () => (state) => state.comments.entities;
 export const getCommentsLoadingStatus = () => (state) =>
     state.comments.isLoading;
 
-export const createComment = (payload) => async (dispatch, getState) => {
+export const createComment = (payload) => async (dispatch) => {
     dispatch(addCommentRequested());
-    const comment = {
-        ...payload,
-        _id: nanoid(),
-        created_at: Date.now(),
-        userId: getCurrentUserId()(getState())
-    };
     try {
-        const { content } = await commentService.createComment(comment);
+        const { content } = await commentService.createComment(payload);
         dispatch(commentCreated(content));
         dispatch(checkCommentsAmount());
     } catch (error) {
@@ -80,7 +73,7 @@ export const removeComment = (commentId) => async (dispatch) => {
     dispatch(removeCommentRequested());
     try {
         const { content } = await commentService.removeComment(commentId);
-        if (content === null) {
+        if (!content) {
             dispatch(commentRemoved(commentId));
             dispatch(checkCommentsAmount());
         }

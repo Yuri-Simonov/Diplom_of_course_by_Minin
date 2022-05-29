@@ -26,7 +26,13 @@ const Comments = ({ productId }) => {
         dispatch(removeComment(commentId));
     };
     const handleSubmit = (data, productId) => {
-        dispatch(createComment({ ...data, productId: productId }));
+        dispatch(
+            createComment({
+                ...data,
+                productId: productId,
+                userId: currentUserId
+            })
+        );
     };
 
     // Сортировка комментариев

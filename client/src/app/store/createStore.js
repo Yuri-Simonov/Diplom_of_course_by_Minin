@@ -4,7 +4,15 @@ import favouritesReducer from "./favourite";
 import productsReducer from "./products";
 import usersReducer from "./users";
 
-const { combineReducers, configureStore } = require("@reduxjs/toolkit");
+const {
+    combineReducers,
+    configureStore,
+    getDefaultMiddleware
+} = require("@reduxjs/toolkit");
+
+const customizedMiddleware = getDefaultMiddleware({
+    serializableCheck: false
+});
 
 const rootReducer = combineReducers({
     products: productsReducer,
@@ -16,6 +24,7 @@ const rootReducer = combineReducers({
 
 export function createStore() {
     return configureStore({
-        reducer: rootReducer
+        reducer: rootReducer,
+        middleware: customizedMiddleware
     });
 }
