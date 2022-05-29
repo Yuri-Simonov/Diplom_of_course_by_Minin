@@ -28,6 +28,10 @@ const schema = new Schema(
         reviews: {
             type: Number,
             default: 0
+        },
+        imgSrc: {
+            type: String,
+            default: ""
         }
     },
     {
