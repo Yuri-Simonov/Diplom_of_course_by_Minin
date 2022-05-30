@@ -1,4 +1,4 @@
-# Интернет магазин с имитацией API
+# Интернет магазин с REST API
 
 # Getting Started with Create React App
 
